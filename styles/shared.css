@@ -239,6 +239,16 @@ body {
     box-shadow: 0 8px 25px rgba(16, 185, 129, 0.25);
 }
 
+.btn-primary {
+    background: #3b82f6;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: rgba(59, 130, 246, 0.9);
+    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.25);
+}
+
 .btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
