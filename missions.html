@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Builder - MIL Missions</title>
+    <link rel="stylesheet" href="styles/shared.css">
+    <script src="js/shared.js"></script>
+    <script src="js/missions.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">P</div>
+                <span style="font-weight: 600;">Prompt Builder</span>
+                <div style="font-size: 10px; color: var(--text-tertiary); margin-left: 8px; padding: 2px 6px; background: rgba(255,255,255,0.1); border-radius: 4px;">UNESCO MIL</div>
+            </div>
+        </div>
+        <div class="header">
+            <h1>Gamified MIL Missions</h1>
+            <p>Build critical thinking skills through interactive challenges and earn points on the leaderboard</p>
+        </div>
+        <div class="card">
+            <div class="missions-section" style="padding: 48px 32px;">
+                <!-- Mission Selection -->
+                <div id="missionSelection" class="mission-selection">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 32px; margin-bottom: 48px;">
+                        <!-- Spot the Fake Mission -->
+                        <div class="mission-card" onclick="startMission('spot-fake')" style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(239, 68, 68, 0.05)); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 20px; padding: 32px; cursor: pointer; transition: all 0.3s ease;">
+                            <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
+                                <div style="width: 60px; height: 60px; background: rgba(239, 68, 68, 0.2); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px;">🔍</div>
+                                <div>
+                                    <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">Spot the Fake</h3>
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <span style="background: var(--error); color: white; padding: 4px 8px; border-radius: 12px; font-size: 11px; font-weight: 600;">MEDIUM</span>
+                                        <span style="color: var(--text-secondary); font-size: 14px;">10 points each</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px;">
+                                Identify AI-generated content from real content. Test your ability to detect deepfakes, 
+                                synthetic text, and manipulated media.
+                            </p>
+                            <div style="display: flex; align-items: center; justify-content: between; gap: 16px;">
+                                <div style="flex: 1;">
+                                    <div style="background: var(--bg-tertiary); height: 6px; border-radius: 3px; overflow: hidden;">
+                                        <div style="height: 100%; background: var(--error); width: 0%; border-radius: 3px; transition: width 0.3s ease;" class="progress-bar"></div>
+                                    </div>
+                                    <div style="color: var(--text-tertiary); font-size: 12px; margin-top: 4px;">0/5 completed</div>
+                                </div>
+                                <button class="btn" style="background: var(--error); padding: 8px 16px; font-size: 12px;">Start Mission</button>
+                            </div>
+                        </div>
+                        <!-- Ethics Challenge Mission -->
+                        <div class="mission-card" onclick="startMission('ethics')" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(245, 158, 11, 0.05)); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 20px; padding: 32px; cursor: pointer; transition: all 0.3s ease;">
+                            <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
+                                <div style="width: 60px; height: 60px; background: rgba(245, 158, 11, 0.2); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px;">⚖️</div>
+                                <div>
+                                    <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">Ethics Challenge</h3>
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <span style="background: var(--warning); color: var(--bg-primary); padding: 4px 8px; border-radius: 12px; font-size: 11px; font-weight: 600;">HARD</span>
+                                        <span style="color: var(--text-secondary); font-size: 14px;">15 points each</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px;">
+                                Navigate complex ethical scenarios involving AI usage. Learn responsible AI practices 
+                                and understand the impact on different communities.
+                            </p>
+                            <div style="display: flex; align-items: center; justify-content: between; gap: 16px;">
+                                <div style="flex: 1;">
+                                    <div style="background: var(--bg-tertiary); height: 6px; border-radius: 3px; overflow: hidden;">
+                                        <div style="height: 100%; background: var(--warning); width: 0%; border-radius: 3px; transition: width 0.3s ease;" class="progress-bar"></div>
+                                    </div>
+                                    <div style="color: var(--text-tertiary); font-size: 12px; margin-top: 4px;">0/4 completed</div>
+                                </div>
+                                <button class="btn" style="background: var(--warning); color: var(--bg-primary); padding: 8px 16px; font-size: 12px;">Start Mission</button>
+                            </div>
+                        </div>
+                        <!-- Myth Busters Mission -->
+                        <div class="mission-card" onclick="startMission('myths')" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05)); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 20px; padding: 32px; cursor: pointer; transition: all 0.3s ease;">
+                            <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
+                                <div style="width: 60px; height: 60px; background: rgba(16, 185, 129, 0.2); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px;">💡</div>
+                                <div>
+                                    <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">Myth Busters</h3>
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <span style="background: var(--success); color: white; padding: 4px 8px; border-radius: 12px; font-size: 11px; font-weight: 600;">EASY</span>
+                                        <span style="color: var(--text-secondary); font-size: 14px;">5 points each</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px;">
+                                Identify and correct common misconceptions about AI. Learn the facts behind 
+                                artificial intelligence and separate reality from science fiction.
+                            </p>
+                            <div style="display: flex; align-items: center; justify-content: between; gap: 16px;">
+                                <div style="flex: 1;">
+                                    <div style="background: var(--bg-tertiary); height: 6px; border-radius: 3px; overflow: hidden;">
+                                        <div style="height: 100%; background: var(--success); width: 0%; border-radius: 3px; transition: width 0.3s ease;" class="progress-bar"></div>
+                                    </div>
+                                    <div style="color: var(--text-tertiary); font-size: 12px; margin-top: 4px;">0/6 completed</div>
+                                </div>
+                                <button class="btn btn-success" style="padding: 8px 16px; font-size: 12px;">Start Mission</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Leaderboard Section -->
+                    <div style="background: var(--bg-secondary); border: 1px solid var(--border-primary); border-radius: 20px; padding: 32px; margin-top: 48px;">
+                        <div style="display: flex; align-items: center; justify-content: between; margin-bottom: 24px;">
+                            <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary);">🏆 Leaderboard</h3>
+                            <div style="background: var(--accent); color: var(--bg-primary); padding: 8px 16px; border-radius: 12px; font-size: 14px; font-weight: 600;">
+                                Your Score: <span id="userScore">0</span> points
+                            </div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px;">
+                            <div style="text-align: center; padding: 20px;">
+                                <div style="width: 60px; height: 60px; background: #FFD700; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-size: 24px;">🥇</div>
+                                <div style="font-weight: 600; color: var(--text-primary);">MIL Expert</div>
+                                <div style="color: var(--text-secondary); font-size: 14px;">250+ points</div>
+                            </div>
+                            <div style="text-align: center; padding: 20px;">
+                                <div style="width: 60px; height: 60px; background: #C0C0C0; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-size: 24px;">🥈</div>
+                                <div style="font-weight: 600; color: var(--text-primary);">Critical Thinker</div>
+                                <div style="color: var(--text-secondary); font-size: 14px;">150+ points</div>
+                            </div>
+                            <div style="text-align: center; padding: 20px;">
+                                <div style="width: 60px; height: 60px; background: #CD7F32; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-size: 24px;">🥉</div>
+                                <div style="font-weight: 600; color: var(--text-primary);">AI Aware</div>
+                                <div style="color: var(--text-secondary); font-size: 14px;">75+ points</div>
+                            </div>
+                            <div style="text-align: center; padding: 20px;">
+                                <div style="width: 60px; height: 60px; background: var(--bg-tertiary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-size: 24px;">🌱</div>
+                                <div style="font-weight: 600; color: var(--text-primary);">Beginner</div>
+                                <div style="color: var(--text-secondary); font-size: 14px;">0+ points</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Mission Interface (hidden by default) -->
+                <div id="missionInterface" style="display: none;">
+                    <div style="text-align: center; margin-bottom: 32px;">
+                        <button class="btn btn-outline" onclick="returnToMissions()" style="float: left;">
+                            <span>←</span>
+                            Back to Missions
+                        </button>
+                        <div style="display: inline-block;">
+                            <h3 id="missionTitle" style="font-size: 1.5rem; margin-bottom: 8px;"></h3>
+                            <div style="display: flex; align-items: center; justify-content: center; gap: 16px;">
+                                <span id="missionProgress">Question 1 of 5</span>
+                                <span>•</span>
+                                <span id="missionScore">Score: 0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="missionContent" style="background: var(--bg-secondary); border: 1px solid var(--border-primary); border-radius: 20px; padding: 40px; margin-bottom: 32px;">
+                        <!-- Mission content will be dynamically inserted here -->
+                    </div>
+                    <div style="text-align: center;">
+                        <button id="missionNextBtn" class="btn btn-success" onclick="nextMissionQuestion()" style="display: none;">
+                            Next Question
+                        </button>
+                        <button id="missionCompleteBtn" class="btn btn-success" onclick="completeMission()" style="display: none;">
+                            Complete Mission
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

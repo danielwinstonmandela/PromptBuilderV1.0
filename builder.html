@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Builder - Guided Prompt Builder</title>
+    <link rel="stylesheet" href="styles/shared.css">
+    <script src="js/shared.js"></script>
+    <script src="js/builder.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">P</div>
+                <span style="font-weight: 600;">Prompt Builder</span>
+                <div style="font-size: 10px; color: var(--text-tertiary); margin-left: 8px; padding: 2px 6px; background: rgba(255,255,255,0.1); border-radius: 4px;">UNESCO MIL</div>
+            </div>
+        </div>
+        <div class="header">
+            <h1>Guided Prompt Builder</h1>
+            <p>Build structured, powerful prompts using our step-by-step methodology aligned with UNESCO's MIL framework</p>
+        </div>
+        <div class="card">
+            <div class="prompt-builder">
+                <div class="builder-section">
+                    <div class="section-header">
+                        <div class="section-icon">⚙️</div>
+                        <div>
+                            <div class="section-title">Construct Your Prompt</div>
+                            <div class="status-indicator building" id="buildingStatus">
+                                <div class="pulse"></div>
+                                Building...
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="persona">
+                            Persona
+                            <div class="label-description">Define who the AI should be</div>
+                        </label>
+                        <div class="select-wrapper">
+                            <select id="persona" onchange="updatePrompt()">
+                                <option value="">Choose a persona...</option>
+                                <option value="You are a knowledgeable educator who specializes in making complex topics accessible to young learners">Expert Educator</option>
+                                <option value="You are a patient tutor focused on helping students develop critical thinking skills">Critical Thinking Tutor</option>
+                                <option value="You are a research specialist who helps students evaluate information sources">Research Specialist</option>
+                                <option value="You are a media literacy expert who teaches students to analyze digital content">Media Literacy Expert</option>
+                                <option value="You are a career mentor with expertise in AI and technology fields">AI Career Mentor</option>
+                                <option value="You are a study companion focused on ethical learning and academic integrity">Ethical Study Companion</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="task">
+                            Task
+                            <div class="label-description">Specify what you want the AI to do</div>
+                        </label>
+                        <div class="select-wrapper">
+                            <select id="task" onchange="updatePrompt()">
+                                <option value="">Choose a task...</option>
+                                <option value="help me critically analyze and understand">Critically Analyze</option>
+                                <option value="create an educational guide that explains">Create Educational Guide</option>
+                                <option value="develop a research strategy for investigating">Develop Research Strategy</option>
+                                <option value="evaluate the credibility and bias of information about">Evaluate Information Quality</option>
+                                <option value="teach me to identify misinformation and reliable sources regarding">Identify Reliable Sources</option>
+                                <option value="explain the ethical implications and considerations of">Explain Ethical Implications</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="context">
+                            Context
+                            <div class="label-description">Provide specific topic or subject matter</div>
+                        </label>
+                        <div class="select-wrapper">
+                            <select id="context" onchange="updatePrompt()">
+                                <option value="">Select context...</option>
+                                <option value="AI-generated content and deepfakes in social media platforms affecting youth">AI Content & Deepfakes</option>
+                                <option value="misinformation and disinformation campaigns targeting young people online">Online Misinformation Campaigns</option>
+                                <option value="ethical use of AI tools for academic work and research by students">Ethical AI Use in Education</option>
+                                <option value="digital privacy and data protection for young internet users">Digital Privacy Protection</option>
+                                <option value="bias and discrimination in AI systems affecting marginalized communities">AI Bias & Discrimination</option>
+                                <option value="sustainable technology and AI solutions for climate change">AI for Climate Solutions</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="format">
+                            Format
+                            <div class="label-description">Define how the response should be structured</div>
+                        </label>
+                        <div class="select-wrapper">
+                            <select id="format" onchange="updatePrompt()">
+                                <option value="">Select format...</option>
+                                <option value="Provide a structured analysis with clear evidence, source evaluation, and actionable recommendations">Structured Evidence-Based Analysis</option>
+                                <option value="Create an interactive guide with examples, self-assessment questions, and practical exercises">Interactive Learning Guide</option>
+                                <option value="Develop a step-by-step checklist with verification methods and red flag indicators">Verification Checklist</option>
+                                <option value="Format as a comprehensive Q&A covering common misconceptions and expert insights">Expert Q&A Format</option>
+                                <option value="Present information using youth-friendly language with real-world examples and case studies">Youth-Friendly Case Studies</option>
+                                <option value="Organize as a critical thinking framework with evaluation criteria and decision-making tools">Critical Thinking Framework</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="builder-section">
+                    <div class="section-header">
+                        <div class="section-icon">✨</div>
+                        <div class="section-title">Generated Prompt</div>
+                    </div>
+                    <div class="prompt-output">
+                        <div class="prompt-output-header">
+                            <h4>Your Complete Prompt</h4>
+                            <button class="copy-btn" onclick="copyPrompt()">
+                                <span>📋</span>
+                                Copy
+                            </button>
+                        </div>
+                        <div id="promptText" class="prompt-text empty">
+                            Select components from the left to build your structured prompt...
+                        </div>
+                    </div>
+                    <div class="progress-indicators">
+                        <div class="progress-dot" id="dot1"></div>
+                        <div class="progress-dot" id="dot2"></div>
+                        <div class="progress-dot" id="dot3"></div>
+                        <div class="progress-dot" id="dot4"></div>
+                    </div>
+                    <div style="text-align: center; margin-top: 24px;">
+                        <button class="btn btn-outline" onclick="navigateToPage('analyzer')">
+                            <span>📊</span>
+                            Analyze This Prompt
+                        </button>
+                        <button class="btn" onclick="navigateToPage('missions')">
+                            <span>🎮</span>
+                            Try MIL Missions
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

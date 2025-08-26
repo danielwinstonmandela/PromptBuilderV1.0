@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Builder - Impact Analyzer</title>
+    <link rel="stylesheet" href="styles/shared.css">
+    <script src="js/shared.js"></script>
+    <script src="js/analyzer.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">P</div>
+                <span style="font-weight: 600;">Prompt Builder</span>
+                <div style="font-size: 10px; color: var(--text-tertiary); margin-left: 8px; padding: 2px 6px; background: rgba(255,255,255,0.1); border-radius: 4px;">UNESCO MIL</div>
+            </div>
+        </div>
+        <div class="header">
+            <h1>Impact Analyzer</h1>
+            <p>Witness the dramatic difference between generic and structured prompts with real AI responses</p>
+        </div>
+        <div class="card">
+            <div class="comparison-section">
+                <div id="noPromptMessage" class="no-prompt-message" style="text-align: center; padding: 48px 32px; background: var(--bg-secondary); border-radius: 16px; margin-bottom: 32px;">
+                    <h3 style="color: var(--text-primary); margin-bottom: 16px;">Ready to See the Impact?</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 24px;">Create a structured prompt first to see the powerful comparison with real AI responses!</p>
+                    <button class="btn btn-success" onclick="navigateToPage('builder')">
+                        <span>⚡</span>
+                        Build a Structured Prompt
+                    </button>
+                </div>
+                <div id="comparisonContent" style="display: none;">
+                    <div style="text-align: center; margin-bottom: 48px;">
+                        <h3 style="font-size: 2rem; font-weight: 700; margin-bottom: 16px; background: linear-gradient(135deg, var(--text-primary), var(--text-secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">AI Response Comparison</h3>
+                        <p style="color: var(--text-secondary); font-size: 1.125rem; max-width: 700px; margin: 0 auto;">See how structured prompting dramatically improves AI response quality and relevance - powered by real AI responses</p>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 48px;" class="comparison-grid">
+                        <div style="padding: 32px; border-radius: 20px; position: relative; overflow: hidden; background: linear-gradient(135deg, rgba(239, 68, 68, 0.05), rgba(239, 68, 68, 0.02)); border: 1px solid rgba(239, 68, 68, 0.2);" class="comparison-card bad">
+                            <div style="content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--error);"></div>
+                            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+                                <div style="width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: bold; background: rgba(239, 68, 68, 0.2); color: var(--error);">✕</div>
+                                <h4 style="font-weight: 600; color: var(--text-primary);">Generic Prompt</h4>
+                            </div>
+                            <div class="prompt-text" style="margin-bottom: 20px; font-size: 13px;">
+                                "Tell me about AI bias"
+                            </div>
+                            <div style="background: var(--bg-tertiary); height: 8px; border-radius: 4px; margin: 20px 0; overflow: hidden; position: relative;">
+                                <div style="height: 100%; border-radius: 4px; width: 25%; background: linear-gradient(90deg, var(--error), rgba(239, 68, 68, 0.8));"></div>
+                            </div>
+                            <div style="font-weight: 600; font-size: 18px; margin-bottom: 12px; color: var(--error);">Quality: 25%</div>
+                            <div style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">
+                                Produces vague, unfocused content lacking depth, specific context, or clear direction for the reader.
+                            </div>
+                        </div>
+                        <div style="padding: 32px; border-radius: 20px; position: relative; overflow: hidden; background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(16, 185, 129, 0.02)); border: 1px solid rgba(16, 185, 129, 0.2);" class="comparison-card good">
+                            <div style="content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--success);"></div>
+                            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+                                <div style="width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: bold; background: rgba(16, 185, 129, 0.2); color: var(--success);">✓</div>
+                                <h4 style="font-weight: 600; color: var(--text-primary);">Your Structured Prompt</h4>
+                            </div>
+                            <div id="analyzedPrompt" class="prompt-text" style="margin-bottom: 20px; font-size: 13px;">
+                                Your structured prompt will appear here...
+                            </div>
+                            <div style="background: var(--bg-tertiary); height: 8px; border-radius: 4px; margin: 20px 0; overflow: hidden; position: relative;">
+                                <div id="qualityBar" style="height: 100%; border-radius: 4px; width: 0%; background: linear-gradient(90deg, var(--success), rgba(16, 185, 129, 0.8)); transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);"></div>
+                            </div>
+                            <div id="qualityScore" style="font-weight: 600; font-size: 18px; margin-bottom: 12px; color: var(--success);">Quality: 0%</div>
+                            <div id="qualityExplanation" style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">
+                                Analysis will appear here...
+                            </div>
+                        </div>
+                    </div>
+                    <div style="text-align: center;">
+                        <button class="btn btn-outline" onclick="navigateToPage('builder')">
+                            <span>⚡</span>
+                            Build Another Prompt
+                        </button>
+                        <button class="btn btn-success" onclick="navigateToPage('missions')">
+                            <span>🎮</span>
+                            Try MIL Missions
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
