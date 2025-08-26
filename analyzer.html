@@ -7,8 +7,212 @@
     <link rel="stylesheet" href="styles/shared.css">
     <script src="js/shared.js"></script>
     <script src="js/analyzer.js"></script>
+    <style>
+        /* Navigation Styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-primary);
+            z-index: 1000;
+            padding: 16px 0;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .navbar-brand:hover {
+            color: var(--text-primary);
+        }
+
+        .navbar-logo {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--accent), var(--text-secondary));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: var(--bg-primary);
+            font-size: 16px;
+        }
+
+        .navbar-title {
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .navbar-badge {
+            font-size: 10px;
+            color: var(--text-tertiary);
+            padding: 2px 6px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 4px;
+            margin-left: 8px;
+        }
+
+        .navbar-nav {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-link.active {
+            color: var(--accent);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-icon {
+            font-size: 16px;
+        }
+
+        /* Mobile menu toggle */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 20px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+        }
+
+        .mobile-menu-toggle:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Adjust body padding for fixed navbar */
+        body {
+            padding-top: 80px;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .navbar-container {
+                padding: 0 16px;
+            }
+            
+            .mobile-menu-toggle {
+                display: block;
+            }
+            
+            .navbar-nav {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(10, 10, 10, 0.98);
+                backdrop-filter: blur(20px);
+                border-bottom: 1px solid var(--border-primary);
+                flex-direction: column;
+                padding: 16px;
+                gap: 4px;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+            }
+            
+            .navbar-nav.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            .nav-link {
+                width: 100%;
+                justify-content: flex-start;
+                padding: 12px 16px;
+            }
+            
+            .navbar-title {
+                display: none;
+            }
+            
+            .navbar-badge {
+                margin-left: 4px;
+            }
+        }
+    </style>
 </head>
 <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="spa.html" class="navbar-brand">
+                <div class="navbar-logo">P</div>
+                <span class="navbar-title">Prompt Builder</span>
+                <span class="navbar-badge">UNESCO MIL</span>
+            </a>
+            
+            <div class="navbar-nav" id="navbarNav">
+                <a href="spa.html" class="nav-link">
+                    <span class="nav-icon">🏠</span>
+                    Home
+                </a>
+                <a href="builder.html" class="nav-link">
+                    <span class="nav-icon">🛠️</span>
+                    Builder
+                </a>
+                <a href="analyzer.html" class="nav-link active">
+                    <span class="nav-icon">📊</span>
+                    Analyzer
+                </a>
+                <a href="missions.html" class="nav-link">
+                    <span class="nav-icon">🎯</span>
+                    Missions
+                </a>
+                <a href="learning.html" class="nav-link">
+                    <span class="nav-icon">📚</span>
+                    Learning
+                </a>
+            </div>
+            
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                ☰
+            </button>
+        </div>
+    </nav>
+
     <div class="container">
         <div class="header">
             <div class="logo">
@@ -86,5 +290,31 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Mobile menu toggle functionality
+        document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+            const nav = document.getElementById('navbarNav');
+            nav.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function() {
+                const nav = document.getElementById('navbarNav');
+                nav.classList.remove('active');
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const nav = document.getElementById('navbarNav');
+            const toggle = document.getElementById('mobileMenuToggle');
+            
+            if (!nav.contains(event.target) && !toggle.contains(event.target)) {
+                nav.classList.remove('active');
+            }
+        });
+    </script>
 </body>
 </html>
