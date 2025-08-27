@@ -225,71 +225,107 @@
             <h1>Impact Analyzer</h1>
             <p>Witness the dramatic difference between generic and structured prompts with real AI responses</p>
         </div>
-        <div class="card">
-            <div class="comparison-section">
-                <div id="noPromptMessage" class="no-prompt-message" style="text-align: center; padding: 48px 32px; background: var(--bg-secondary); border-radius: 16px; margin-bottom: 32px;">
-                    <h3 style="color: var(--text-primary); margin-bottom: 16px;">Ready to See the Impact?</h3>
-                    <p style="color: var(--text-secondary); margin-bottom: 24px;">Create a structured prompt first to see the powerful comparison with real AI responses!</p>
-                    <button class="btn btn-success" onclick="navigateToPage('builder')">
-                        <span>⚡</span>
-                        Build a Structured Prompt
-                    </button>
+
+        <!-- No Prompt State -->
+        <div id="noPromptState" class="card" style="text-align: center; padding: 48px 32px;">
+            <div style="font-size: 3rem; margin-bottom: 16px;">🔍</div>
+            <h3 style="color: var(--text-primary); margin-bottom: 16px; font-size: 1.5rem;">Ready to See the Impact?</h3>
+            <p style="color: var(--text-secondary); margin-bottom: 32px; max-width: 500px; margin-left: auto; margin-right: auto;">Create a structured prompt first to see the powerful comparison with real AI responses!</p>
+            <a href="builder.html" class="btn btn-success">
+                ⚡ Build a Structured Prompt
+            </a>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loadingState" class="card" style="display: none; text-align: center; padding: 48px 32px;">
+            <div class="loading-spinner" style="width: 48px; height: 48px; border: 3px solid var(--border-primary); border-top: 3px solid var(--accent); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 24px;"></div>
+            <h3 style="color: var(--text-primary); margin-bottom: 16px;">Analyzing Impact...</h3>
+            <p style="color: var(--text-secondary);">Comparing your structured prompt with a generic version using real AI responses</p>
+        </div>
+
+        <!-- Comparison Results -->
+        <div id="comparisonResults" style="display: none;">
+            <!-- Results Header -->
+            <div class="card" style="text-align: center; margin-bottom: 32px; padding: 32px;">
+                <h2 style="font-size: 2rem; font-weight: 700; margin-bottom: 16px; background: linear-gradient(135deg, var(--text-primary), var(--text-secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">AI Response Comparison</h2>
+                <p style="color: var(--text-secondary); font-size: 1.125rem; max-width: 700px; margin: 0 auto;">See how structured prompting dramatically improves AI response quality and relevance</p>
+            </div>
+
+            <!-- Side-by-Side Comparison -->
+            <div class="comparison-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px;">
+                <!-- Good Prompt Result -->
+                <div class="comparison-card good-prompt">
+                    <div class="card" style="height: 100%; background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(16, 185, 129, 0.02)); border: 1px solid rgba(16, 185, 129, 0.3);">
+                        <div style="position: relative;">
+                            <div style="position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--success); border-radius: 20px 20px 0 0;"></div>
+                            <div style="padding: 24px;">
+                                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+                                    <div style="width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: rgba(16, 185, 129, 0.2); color: var(--success); font-weight: bold;">✓</div>
+                                    <h3 style="font-weight: 600; color: var(--text-primary); margin: 0;">Your Structured Prompt</h3>
+                                </div>
+                                
+                                <div class="prompt-preview" style="background: var(--bg-secondary); border: 1px solid var(--border-primary); border-radius: 12px; padding: 16px; margin-bottom: 20px;">
+                                    <div style="font-size: 12px; color: var(--text-tertiary); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Your Prompt</div>
+                                    <div id="goodPromptText" style="font-family: monospace; font-size: 13px; color: var(--text-secondary); white-space: pre-wrap; max-height: 120px; overflow-y: auto;"></div>
+                                </div>
+
+                                <div class="ai-response" style="background: var(--bg-tertiary); border-radius: 12px; padding: 20px;">
+                                    <div style="font-size: 12px; color: var(--success); margin-bottom: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">AI Response</div>
+                                    <div id="goodResponse" style="color: var(--text-primary); line-height: 1.6; max-height: 300px; overflow-y: auto; font-size: 14px;"></div>
+                                </div>
+
+                                <div class="analysis" style="margin-top: 16px; padding: 16px; background: rgba(16, 185, 129, 0.1); border-radius: 8px; border-left: 4px solid var(--success);">
+                                    <div style="font-size: 12px; color: var(--success); font-weight: 600; margin-bottom: 8px;">✓ WHY THIS WORKS</div>
+                                    <div style="font-size: 13px; color: var(--text-secondary);">This response is specific, detailed, and contextually relevant because your structured prompt provided clear persona, task, context, and format instructions.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div id="comparisonContent" style="display: none;">
-                    <div style="text-align: center; margin-bottom: 48px;">
-                        <h3 style="font-size: 2rem; font-weight: 700; margin-bottom: 16px; background: linear-gradient(135deg, var(--text-primary), var(--text-secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">AI Response Comparison</h3>
-                        <p style="color: var(--text-secondary); font-size: 1.125rem; max-width: 700px; margin: 0 auto;">See how structured prompting dramatically improves AI response quality and relevance - powered by real AI responses</p>
-                    </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 48px;" class="comparison-grid">
-                        <div style="padding: 32px; border-radius: 20px; position: relative; overflow: hidden; background: linear-gradient(135deg, rgba(239, 68, 68, 0.05), rgba(239, 68, 68, 0.02)); border: 1px solid rgba(239, 68, 68, 0.2);" class="comparison-card bad">
-                            <div style="content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--error);"></div>
-                            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
-                                <div style="width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: bold; background: rgba(239, 68, 68, 0.2); color: var(--error);">✕</div>
-                                <h4 style="font-weight: 600; color: var(--text-primary);">Generic Prompt</h4>
-                            </div>
-                            <div class="prompt-text" style="margin-bottom: 20px; font-size: 13px;">
-                                "Tell me about AI bias"
-                            </div>
-                            <div style="background: var(--bg-tertiary); height: 8px; border-radius: 4px; margin: 20px 0; overflow: hidden; position: relative;">
-                                <div style="height: 100%; border-radius: 4px; width: 25%; background: linear-gradient(90deg, var(--error), rgba(239, 68, 68, 0.8));"></div>
-                            </div>
-                            <div style="font-weight: 600; font-size: 18px; margin-bottom: 12px; color: var(--error);">Quality: 25%</div>
-                            <div style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">
-                                Produces vague, unfocused content lacking depth, specific context, or clear direction for the reader.
-                            </div>
-                        </div>
-                        <div style="padding: 32px; border-radius: 20px; position: relative; overflow: hidden; background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(16, 185, 129, 0.02)); border: 1px solid rgba(16, 185, 129, 0.2);" class="comparison-card good">
-                            <div style="content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--success);"></div>
-                            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
-                                <div style="width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: bold; background: rgba(16, 185, 129, 0.2); color: var(--success);">✓</div>
-                                <h4 style="font-weight: 600; color: var(--text-primary);">Your Structured Prompt</h4>
-                            </div>
-                            <div id="analyzedPrompt" class="prompt-text" style="margin-bottom: 20px; font-size: 13px;">
-                                Your structured prompt will appear here...
-                            </div>
-                            <div style="background: var(--bg-tertiary); height: 8px; border-radius: 4px; margin: 20px 0; overflow: hidden; position: relative;">
-                                <div id="qualityBar" style="height: 100%; border-radius: 4px; width: 0%; background: linear-gradient(90deg, var(--success), rgba(16, 185, 129, 0.8)); transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);"></div>
-                            </div>
-                            <div id="qualityScore" style="font-weight: 600; font-size: 18px; margin-bottom: 12px; color: var(--success);">Quality: 0%</div>
-                            <div id="qualityExplanation" style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">
-                                Analysis will appear here...
+
+                <!-- Bad Prompt Result -->
+                <div class="comparison-card bad-prompt">
+                    <div class="card" style="height: 100%; background: linear-gradient(135deg, rgba(239, 68, 68, 0.05), rgba(239, 68, 68, 0.02)); border: 1px solid rgba(239, 68, 68, 0.3);">
+                        <div style="position: relative;">
+                            <div style="position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--error); border-radius: 20px 20px 0 0;"></div>
+                            <div style="padding: 24px;">
+                                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+                                    <div style="width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: rgba(239, 68, 68, 0.2); color: var(--error); font-weight: bold;">✗</div>
+                                    <h3 style="font-weight: 600; color: var(--text-primary); margin: 0;">Generic Prompt</h3>
+                                </div>
+                                
+                                <div class="prompt-preview" style="background: var(--bg-secondary); border: 1px solid var(--border-primary); border-radius: 12px; padding: 16px; margin-bottom: 20px;">
+                                    <div style="font-size: 12px; color: var(--text-tertiary); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Generic Version</div>
+                                    <div id="badPromptText" style="font-family: monospace; font-size: 13px; color: var(--text-secondary); white-space: pre-wrap; max-height: 120px; overflow-y: auto;"></div>
+                                </div>
+
+                                <div class="ai-response" style="background: var(--bg-tertiary); border-radius: 12px; padding: 20px;">
+                                    <div style="font-size: 12px; color: var(--error); margin-bottom: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">AI Response</div>
+                                    <div id="badResponse" style="color: var(--text-primary); line-height: 1.6; max-height: 300px; overflow-y: auto; font-size: 14px;"></div>
+                                </div>
+
+                                <div class="analysis" style="margin-top: 16px; padding: 16px; background: rgba(239, 68, 68, 0.1); border-radius: 8px; border-left: 4px solid var(--error);">
+                                    <div style="font-size: 12px; color: var(--error); font-weight: 600; margin-bottom: 8px;">✗ WHY THIS FAILS</div>
+                                    <div style="font-size: 13px; color: var(--text-secondary);">This response is generic and lacks detail because the prompt was too vague and provided no specific guidance to the AI.</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div style="text-align: center;">
-                        <button class="btn btn-outline" onclick="navigateToPage('builder')">
-                            <span>⚡</span>
-                            Build Another Prompt
-                        </button>
-                        <button class="btn btn-success" onclick="navigateToPage('missions')">
-                            <span>🎮</span>
-                            Try MIL Missions
-                        </button>
                     </div>
                 </div>
             </div>
+
+            <!-- Action Buttons -->
+            <div style="text-align: center;">
+                <a href="builder.html" class="btn btn-outline" style="margin-right: 16px;">
+                    🔄 Build Another Prompt
+                </a>
+                <a href="missions.html" class="btn btn-success">
+                    🎯 Try MIL Missions
+                </a>
+            </div>
         </div>
-    </div>
+                                
+
 
     <script>
         // Mobile menu toggle functionality
@@ -315,6 +351,543 @@
                 nav.classList.remove('active');
             }
         });
+
+        // Impact Analyzer Core Functionality
+        class ImpactAnalyzer {
+            constructor() {
+                // Using simulated responses as per PRD - no external API calls
+                this.init();
+            }
+
+            init() {
+                // Check if we have a prompt from the builder
+                const urlParams = new URLSearchParams(window.location.search);
+                const promptFromUrl = urlParams.get('prompt');
+                const promptFromStorage = localStorage.getItem('generatedPrompt');
+                
+                if (promptFromUrl || promptFromStorage) {
+                    const structuredPrompt = promptFromUrl || promptFromStorage;
+                    this.analyzePrompt(structuredPrompt);
+                } else {
+                    this.showNoPromptState();
+                }
+            }
+
+            showNoPromptState() {
+                document.getElementById('noPromptState').style.display = 'block';
+                document.getElementById('loadingState').style.display = 'none';
+                document.getElementById('comparisonResults').style.display = 'none';
+            }
+
+            showLoadingState() {
+                document.getElementById('noPromptState').style.display = 'none';
+                document.getElementById('loadingState').style.display = 'block';
+                document.getElementById('comparisonResults').style.display = 'none';
+            }
+
+            showResults() {
+                document.getElementById('noPromptState').style.display = 'none';
+                document.getElementById('loadingState').style.display = 'none';
+                document.getElementById('comparisonResults').style.display = 'block';
+            }
+
+            generateBadPrompt(structuredPrompt) {
+                // Extract the core task from the structured prompt
+                // This is a simplified version - in production you'd have more sophisticated parsing
+                
+                // Remove common prompt engineering patterns
+                let badPrompt = structuredPrompt
+                    .replace(/Act as a[^.]*\./gi, '') // Remove "Act as..." instructions
+                    .replace(/You are a[^.]*\./gi, '') // Remove "You are..." instructions
+                    .replace(/Your task is to/gi, '') // Remove task framing
+                    .replace(/Context:[^]*?(?=\n\n|\n[A-Z]|$)/gi, '') // Remove context sections
+                    .replace(/Format:[^]*?(?=\n\n|\n[A-Z]|$)/gi, '') // Remove format instructions
+                    .replace(/Please provide[^.]*structured/gi, '') // Remove structure requests
+                    .replace(/\n+/g, ' ') // Replace multiple newlines with single space
+                    .trim();
+
+                // If we couldn't extract anything meaningful, create a basic version
+                if (badPrompt.length < 10) {
+                    // Extract the main action/topic from the original prompt
+                    const actionMatch = structuredPrompt.match(/(?:explain|describe|analyze|create|write|generate|help|tell|show)[^.]*\.?/i);
+                    if (actionMatch) {
+                        badPrompt = actionMatch[0].replace(/\.$/, '');
+                    } else {
+                        badPrompt = "Help me with this topic.";
+                    }
+                }
+
+                // Ensure it's actually simpler
+                return badPrompt.length > 100 ? badPrompt.substring(0, 100) + '...' : badPrompt;
+            }
+
+            async callGeminiAPI(prompt) {
+                try {
+                    // Simulate realistic API delay (2-3 seconds as specified in PRD)
+                    await new Promise(resolve => setTimeout(resolve, 2000 + Math.random() * 1000));
+
+                    // Return topic-specific simulated responses
+                    return this.getSimulatedResponse(prompt);
+                } catch (error) {
+                    console.error('Simulation Error:', error);
+                    throw new Error('Failed to generate response. Please try again.');
+                }
+            }
+
+            getSimulatedResponse(prompt) {
+                // Determine if this is a structured (good) or generic (bad) prompt
+                const isStructured = prompt.length > 150 && (
+                    prompt.includes('Act as') || 
+                    prompt.includes('You are') || 
+                    prompt.includes('Context:') || 
+                    prompt.includes('Format:') ||
+                    prompt.includes('persona') ||
+                    prompt.includes('specific') ||
+                    prompt.includes('detailed')
+                );
+
+                // Detect topic category for more relevant responses
+                const topic = this.detectTopic(prompt);
+                
+                if (isStructured) {
+                    return this.getGoodResponse(topic);
+                } else {
+                    return this.getBadResponse(topic);
+                }
+            }
+
+            detectTopic(prompt) {
+                const promptLower = prompt.toLowerCase();
+                
+                if (promptLower.includes('inflation') || promptLower.includes('economy') || promptLower.includes('financial')) {
+                    return 'finance';
+                } else if (promptLower.includes('misinformation') || promptLower.includes('fake news') || promptLower.includes('media literacy')) {
+                    return 'media_literacy';
+                } else if (promptLower.includes('climate') || promptLower.includes('environment') || promptLower.includes('sustainability')) {
+                    return 'environment';
+                } else if (promptLower.includes('social media') || promptLower.includes('digital') || promptLower.includes('technology')) {
+                    return 'technology';
+                } else if (promptLower.includes('education') || promptLower.includes('learning') || promptLower.includes('student')) {
+                    return 'education';
+                } else {
+                    return 'general';
+                }
+            }
+
+            getGoodResponse(topic) {
+                const responses = {
+                    finance: `**Understanding Inflation: A Comprehensive Guide for Teenagers**
+
+As your financial advisor, I'll break down inflation in terms that relate to your everyday experiences.
+
+**What is Inflation?**
+Inflation is the gradual increase in prices of goods and services over time, which reduces the purchasing power of money. Think of it like this: the $20 you have today won't buy as much in 10 years as it does now.
+
+**Real-World Examples:**
+• Movie tickets: Cost $5 in 2000, now cost $12-15
+• College tuition: Has increased 3x faster than inflation
+• Your favorite fast food meal: Probably costs more than it did 2 years ago
+
+**Why It Happens:**
+1. **Demand vs Supply**: More people wanting limited goods drives prices up
+2. **Money Supply**: When there's more money in circulation, prices tend to rise
+3. **Production Costs**: If it costs more to make things, companies charge more
+
+**Impact on Your Future:**
+- Your savings lose value if inflation outpaces your savings account interest
+- Your future salary needs to account for inflation to maintain your lifestyle
+- Investments like stocks historically outpace inflation
+
+**Action Steps for Teens:**
+✓ Start investing early (even small amounts)
+✓ Consider inflation when planning major purchases
+✓ Learn about different investment vehicles
+✓ Understand how inflation affects student loans
+
+This structured approach helps you not just understand inflation, but see how it directly impacts your financial decisions today and tomorrow.`,
+
+                    media_literacy: `**Identifying and Combating Misinformation: A Media Literacy Framework**
+
+As a digital literacy expert, I'll provide you with a systematic approach to identifying and responding to misinformation.
+
+**The SIFT Method for Source Verification:**
+
+**S - Stop and Check**
+Before sharing or believing content, pause and ask:
+- Who created this content?
+- What's their motivation?
+- Does this align with known facts?
+
+**I - Investigate the Source**
+• Check the website's "About" section
+• Look for editorial standards and correction policies
+• Verify author credentials and expertise
+• Cross-reference with established fact-checking sites
+
+**F - Find Better Coverage**
+• Search for the same story from multiple reputable sources
+• Look for primary sources (original research, official statements)
+• Check if mainstream media is covering the story
+
+**T - Trace Claims to Origin**
+• Find the original source of quotes or statistics
+• Verify that images haven't been manipulated or taken out of context
+• Check publication dates to ensure currency
+
+**Red Flags to Watch For:**
+🚩 Emotional language designed to trigger strong reactions
+🚩 Claims that seem too good/bad to be true
+🚩 No author or publication date listed
+🚩 Poor grammar, spelling, or unprofessional formatting
+🚩 Extraordinary claims without extraordinary evidence
+
+**Practical Response Strategy:**
+1. **Don't share questionable content** - even to debunk it
+2. **Report misinformation** on social platforms
+3. **Engage constructively** with friends who share false information
+4. **Promote reliable sources** in your networks
+
+**Building Long-term Media Literacy:**
+• Follow diverse, credible news sources
+• Understand media bias and how to account for it
+• Learn to distinguish between news, opinion, and analysis
+• Develop emotional regulation when consuming upsetting content
+
+This framework empowers you to be an active defender against misinformation while building critical thinking skills essential for digital citizenship.`,
+
+                    environment: `**Climate Change Action Plan: Evidence-Based Solutions for Young Activists**
+
+As an environmental policy advisor, I'll outline actionable strategies backed by scientific research.
+
+**Understanding the Current Climate Crisis:**
+
+**Key Metrics:**
+• Global temperature has risen 1.1°C since pre-industrial times
+• CO2 levels at highest point in 3+ million years (421 ppm)
+• We have ~8 years to halve emissions to avoid worst impacts
+
+**Most Impactful Individual Actions (ranked by carbon reduction):**
+1. **Transportation Changes**: 2.3 tons CO2/year reduction
+   - Use public transit, bike, or walk when possible
+   - Consider electric vehicles for families
+   - Reduce air travel or purchase carbon offsets
+
+2. **Dietary Modifications**: 0.8 tons CO2/year reduction
+   - Reduce meat consumption (especially beef)
+   - Support local, seasonal produce
+   - Minimize food waste
+
+3. **Home Energy Efficiency**: 0.9 tons CO2/year reduction
+   - Switch to renewable energy providers
+   - Improve home insulation
+   - Use energy-efficient appliances
+
+**Systemic Change Strategies:**
+🗳️ **Political Engagement**
+- Vote for climate-conscious candidates
+- Contact representatives about climate policies
+- Support carbon pricing and renewable energy subsidies
+
+🏢 **Community Organizing**
+- Join or start climate action groups
+- Advocate for sustainable practices in schools/workplaces
+- Organize community renewable energy projects
+
+💰 **Economic Pressure**
+- Divest from fossil fuel companies
+- Support businesses with strong environmental practices
+- Advocate for corporate sustainability reporting
+
+**Avoiding Climate Anxiety:**
+• Focus on actions within your control
+• Connect with like-minded communities
+• Celebrate small wins and progress
+• Balance activism with self-care
+
+**Evidence-Based Hope:**
+- Renewable energy costs have dropped 90% in the past decade
+- Many countries are exceeding Paris Agreement commitments
+- Youth activism is driving unprecedented policy attention
+
+This comprehensive approach combines personal responsibility with systemic change advocacy, empowering you to make meaningful impact while maintaining psychological well-being.`,
+
+                    technology: `**Digital Wellness and Social Media Literacy: A Balanced Approach**
+
+As a digital wellness consultant, I'll provide evidence-based strategies for healthy technology use.
+
+**Understanding Social Media's Impact:**
+
+**Positive Effects:**
+• Enhanced social connections across distances
+• Access to diverse perspectives and communities
+• Educational content and skill development
+• Creative expression and collaboration opportunities
+
+**Documented Risks:**
+• Increased anxiety and depression rates (especially 13-17 age group)
+• Sleep disruption from blue light and stimulating content
+• Comparison culture leading to reduced self-esteem
+• Attention fragmentation affecting deep focus abilities
+
+**The Balanced Usage Framework:**
+
+**1. Intentional Consumption (What)**
+✓ Curate feeds to include educational and inspiring content
+✓ Unfollow accounts that consistently make you feel worse
+✓ Use platform tools to limit exposure to negative content
+✓ Seek out diverse viewpoints to avoid echo chambers
+
+**2. Mindful Timing (When)**
+• Implement "no-phone" zones: meals, bedrooms, study time
+• Use app timers to track and limit usage
+• Avoid social media 1 hour before bed and upon waking
+• Schedule specific times for checking platforms vs. constant notifications
+
+**3. Active vs. Passive Engagement (How)**
+• Comment thoughtfully rather than endless scrolling
+• Create and share original content
+• Use platforms for genuine communication with friends
+• Engage with educational content actively (take notes, research further)
+
+**Digital Literacy Skills:**
+🔍 **Source Verification**: Check multiple sources before believing or sharing
+🤖 **Algorithm Awareness**: Understand how platforms decide what you see
+🎭 **Curated Reality Recognition**: Remember that social media shows highlight reels
+🛡️ **Privacy Protection**: Regular security settings reviews and data awareness
+
+**Warning Signs to Monitor:**
+- Feeling anxious when unable to check devices
+- Declining real-world social interactions
+- Sleep problems or changes in sleep patterns
+- Decreased academic or work performance
+- Physical symptoms (headaches, eye strain, neck pain)
+
+**Building Healthy Tech Habits:**
+• Use technology to enhance rather than replace real-world activities
+• Practice digital minimalism - quality over quantity
+• Develop offline hobbies and interests
+• Build face-to-face communication skills
+
+This framework helps you harness technology's benefits while protecting your mental health and developing critical digital citizenship skills.`,
+
+                    education: `**Effective Study Strategies: Evidence-Based Learning Optimization**
+
+As an educational psychologist, I'll share scientifically-proven methods to enhance your learning effectiveness.
+
+**Core Learning Principles:**
+
+**1. Active Recall vs. Passive Review**
+❌ **Passive**: Re-reading notes, highlighting text
+✅ **Active**: Testing yourself, explaining concepts aloud, creating flashcards
+
+**Research Finding**: Active recall improves retention by 50-80% compared to passive review.
+
+**2. Spaced Repetition System**
+• Review material at increasing intervals: 1 day, 3 days, 1 week, 2 weeks, 1 month
+• Use apps like Anki or create a manual scheduling system
+• Focus more time on difficult concepts, less on mastered material
+
+**3. Interleaving Practice**
+Instead of studying one topic for hours (blocking), mix different topics within study sessions.
+**Example**: Math session = 20 min algebra + 20 min geometry + 20 min statistics
+
+**Practical Study Schedule Framework:**
+
+**Daily (30-90 minutes):**
+- 10 minutes: Review yesterday's material (active recall)
+- 20-60 minutes: Learn new material with active techniques
+- 10-20 minutes: Preview tomorrow's content
+
+**Weekly Review (2-3 hours):**
+- Comprehensive testing of all week's material
+- Identify weak areas for focused practice
+- Connect new learning to previously learned concepts
+
+**Monthly Deep Review (3-4 hours):**
+- Practice exams or comprehensive projects
+- Analyze learning patterns and adjust strategies
+- Celebrate progress and set new goals
+
+**Environment Optimization:**
+🎯 **Focus Techniques**:
+- Pomodoro Technique: 25 min focused work + 5 min break
+- Remove distractions (phone in another room)
+- Use website blockers during study time
+
+🧠 **Cognitive Enhancement**:
+- Study in multiple locations to strengthen memory cues
+- Use background white noise or nature sounds
+- Maintain consistent sleep schedule (7-9 hours for teens)
+- Exercise regularly to boost cognitive function
+
+**Subject-Specific Strategies:**
+• **STEM**: Focus on problem-solving practice over memorization
+• **Languages**: Immersion techniques and conversation practice
+• **History/Social Studies**: Create timelines and cause-effect maps
+• **Literature**: Discuss themes and make personal connections
+
+**Motivation and Mindset:**
+- Set specific, measurable learning goals
+- Track progress visually (charts, apps)
+- Connect learning to personal interests and future goals
+- Develop growth mindset - embrace challenges as opportunities
+
+This systematic approach transforms studying from time-consuming drudgery into efficient, effective learning that builds lasting knowledge and skills.`,
+
+                    general: `**Comprehensive Problem-Solving Framework: A Structured Approach**
+
+As an expert consultant, I'll provide you with a systematic methodology for addressing complex challenges.
+
+**The 5-Phase Problem-Solving Model:**
+
+**Phase 1: Problem Definition (20% of effort)**
+• Clearly articulate the core issue
+• Distinguish between symptoms and root causes
+• Define success criteria and constraints
+• Identify stakeholders and their perspectives
+
+**Phase 2: Information Gathering (25% of effort)**
+• Research similar challenges and solutions
+• Collect relevant data and evidence
+• Consult subject matter experts
+• Map current processes and systems
+
+**Phase 3: Solution Generation (20% of effort)**
+• Brainstorm multiple approaches without judgment
+• Use structured creativity techniques (SCAMPER, mind mapping)
+• Consider both conventional and innovative solutions
+• Evaluate feasibility, cost, and potential impact
+
+**Phase 4: Implementation Planning (25% of effort)**
+• Develop detailed action steps with timelines
+• Identify required resources and potential obstacles
+• Create contingency plans for likely scenarios
+• Establish progress metrics and checkpoints
+
+**Phase 5: Evaluation and Iteration (10% of effort)**
+• Monitor results against success criteria
+• Gather feedback from stakeholders
+• Document lessons learned
+• Adjust approach based on outcomes
+
+**Critical Thinking Tools:**
+🔍 **Root Cause Analysis**: Use "5 Whys" technique
+📊 **Data Analysis**: Look for patterns and correlations
+🎯 **Priority Matrix**: Urgent vs. Important categorization
+🔄 **Systems Thinking**: Consider interconnections and feedback loops
+
+**Decision-Making Framework:**
+1. **Identify Options**: Generate at least 3 alternatives
+2. **Evaluate Criteria**: Cost, time, risk, alignment with goals
+3. **Weight Factors**: Determine relative importance of criteria
+4. **Score Options**: Rate each alternative against criteria
+5. **Make Decision**: Choose highest-scoring option
+6. **Plan Implementation**: Detailed action steps
+
+**Common Problem-Solving Pitfalls to Avoid:**
+❌ Jumping to solutions before understanding the problem
+❌ Considering only obvious or traditional approaches
+❌ Ignoring stakeholder perspectives and constraints
+❌ Failing to test solutions before full implementation
+❌ Not learning from failures or unexpected outcomes
+
+This structured approach ensures thorough analysis while maintaining efficiency and increasing the likelihood of successful outcomes.`
+                };
+
+                return responses[topic] || responses.general;
+            }
+
+            getBadResponse(topic) {
+                const responses = {
+                    finance: `Inflation is when prices go up. It happens because of supply and demand and other economic factors. It affects the economy and people's buying power. You should probably save money and invest to protect yourself from inflation.`,
+
+                    media_literacy: `Misinformation is false information that spreads online. You should fact-check things before believing them. Look at multiple sources and be careful about what you share. Some websites are more reliable than others.`,
+
+                    environment: `Climate change is a big problem caused by pollution and greenhouse gases. You can help by recycling, using less energy, and driving less. It's important to care about the environment for future generations.`,
+
+                    technology: `Social media can be good or bad. It helps you connect with people but can also be addictive. You should limit your screen time and be careful about what you post. Privacy is important online.`,
+
+                    education: `To study better, you should make a schedule and stay organized. Take notes and review them regularly. Find a quiet place to study and avoid distractions. Ask for help if you need it.`,
+
+                    general: `This is a complex topic with many different aspects to consider. There are various approaches you could take depending on your specific situation. You should research more and maybe consult with experts to get better information.`
+                };
+
+                return responses[topic] || responses.general;
+            }
+
+            async analyzePrompt(structuredPrompt) {
+                this.showLoadingState();
+
+                try {
+                    // Generate the simplified "bad" prompt
+                    const badPrompt = this.generateBadPrompt(structuredPrompt);
+
+                    // Display the prompts
+                    document.getElementById('goodPromptText').textContent = structuredPrompt;
+                    document.getElementById('badPromptText').textContent = badPrompt;
+
+                    // Make simultaneous API calls
+                    const [goodResponse, badResponse] = await Promise.all([
+                        this.callGeminiAPI(structuredPrompt),
+                        this.callGeminiAPI(badPrompt)
+                    ]);
+
+                    // Display responses
+                    document.getElementById('goodResponse').textContent = goodResponse;
+                    document.getElementById('badResponse').textContent = badResponse;
+
+                    // Show results
+                    this.showResults();
+
+                } catch (error) {
+                    console.error('Analysis failed:', error);
+                    // Show error state
+                    this.showErrorState(error.message);
+                }
+            }
+
+            showErrorState(message) {
+                document.getElementById('noPromptState').innerHTML = `
+                    <div style="text-align: center; padding: 48px 32px;">
+                        <div style="font-size: 3rem; margin-bottom: 16px;">⚠️</div>
+                        <h3 style="color: var(--error); margin-bottom: 16px;">Analysis Failed</h3>
+                        <p style="color: var(--text-secondary); margin-bottom: 32px;">${message}</p>
+                        <button class="btn btn-outline" onclick="location.reload()">Try Again</button>
+                    </div>
+                `;
+                document.getElementById('noPromptState').style.display = 'block';
+                document.getElementById('loadingState').style.display = 'none';
+                document.getElementById('comparisonResults').style.display = 'none';
+            }
+        }
+
+        // Add CSS for loading animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+            
+            @media (max-width: 768px) {
+                .comparison-grid {
+                    grid-template-columns: 1fr !important;
+                    gap: 16px !important;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialize the Impact Analyzer
+        document.addEventListener('DOMContentLoaded', function() {
+            new ImpactAnalyzer();
+        });
+
+        // Global function for external navigation (from builder)
+        window.analyzePrompt = function(prompt) {
+            localStorage.setItem('generatedPrompt', prompt);
+            new ImpactAnalyzer().analyzePrompt(prompt);
+        };
     </script>
 </body>
 </html>

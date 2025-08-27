@@ -714,9 +714,9 @@
                     <button class="btn btn-outline" onclick="startOver()">
                         🔄 Start Over
                     </button>
-                    <a href="analyzer.html" class="btn" style="text-decoration: none;">
+                    <button class="btn" onclick="analyzeImpact()" style="text-decoration: none;">
                         📊 Analyze Impact
-                    </a>
+                    </button>
                 </div>
             </div>
         </div>
@@ -856,6 +856,19 @@ Format: ${format}`;
 
         // Initialize
         updateProgress();
+
+        // Analyze Impact functionality
+        function analyzeImpact() {
+            const promptText = document.getElementById('generatedPrompt').textContent;
+            if (promptText && promptText.trim() !== '') {
+                // Store the prompt in localStorage for the analyzer
+                localStorage.setItem('generatedPrompt', promptText);
+                // Navigate to analyzer
+                window.location.href = 'analyzer.html';
+            } else {
+                alert('Please generate a prompt first before analyzing its impact.');
+            }
+        }
 
         // Mobile menu toggle functionality
         document.getElementById('mobileMenuToggle').addEventListener('click', function() {
