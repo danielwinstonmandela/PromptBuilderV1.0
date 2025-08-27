@@ -7,8 +7,267 @@
     <link rel="stylesheet" href="styles/shared.css">
     <script src="js/shared.js"></script>
     <script src="js/analyzer.js"></script>
+    <style>
+        /* Navigation Styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-primary);
+            z-index: 1000;
+            padding: 16px 0;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .navbar-brand:hover {
+            color: var(--text-primary);
+        }
+
+        .navbar-logo {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--accent), var(--text-secondary));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: var(--bg-primary);
+            font-size: 16px;
+        }
+
+        .navbar-title {
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .navbar-badge {
+            font-size: 10px;
+            color: var(--text-tertiary);
+            padding: 2px 6px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 4px;
+            margin-left: 8px;
+        }
+
+        .navbar-nav {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-link.active {
+            color: var(--accent);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-icon {
+            font-size: 16px;
+        }
+
+        /* Mobile menu toggle */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 20px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+        }
+
+        .mobile-menu-toggle:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Adjust body padding for fixed navbar */
+        body {
+            padding-top: 80px;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .navbar-container {
+                padding: 0 16px;
+            }
+            
+            .mobile-menu-toggle {
+                display: block;
+            }
+            
+            .navbar-nav {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(10, 10, 10, 0.98);
+                backdrop-filter: blur(20px);
+                border-bottom: 1px solid var(--border-primary);
+                flex-direction: column;
+                padding: 16px;
+                gap: 4px;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+            }
+            
+            .navbar-nav.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            .nav-link {
+                width: 100%;
+                justify-content: flex-start;
+                padding: 12px 16px;
+            }
+            
+            .navbar-title {
+                display: none;
+            }
+            
+            .navbar-badge {
+                margin-left: 4px;
+            }
+
+            /* Scenario buttons responsive */
+            .scenario-btn {
+                min-width: 120px !important;
+                font-size: 14px !important;
+            }
+        }
+
+        /* Scenario button styles */
+        .scenario-btn {
+            padding: 12px 20px;
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-primary);
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 140px;
+            font-size: 14px;
+        }
+
+        .scenario-btn:hover {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border-color: var(--border-secondary);
+            transform: translateY(-1px);
+        }
+
+        .scenario-btn.active {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            border-color: var(--text-primary);
+        }
+
+        .scenario-btn.active:hover {
+            background: var(--text-secondary);
+            color: var(--bg-primary);
+            border-color: var(--text-secondary);
+        }
+
+        @media (max-width: 480px) {
+            .scenario-btn {
+                min-width: 100px;
+                padding: 10px 16px;
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .scenario-btn {
+                min-width: 100px !important;
+                padding: 10px 16px !important;
+                font-size: 13px !important;
+            }
+        }
+    </style>
 </head>
 <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-brand">
+                <div class="navbar-logo">P</div>
+                <span class="navbar-title">Prompt Builder</span>
+                <span class="navbar-badge">UNESCO MIL</span>
+            </a>
+            
+            <div class="navbar-nav" id="navbarNav">
+                <a href="index.html" class="nav-link">
+                    <span class="nav-icon">🏠</span>
+                    Home
+                </a>
+                <a href="builder.html" class="nav-link">
+                    <span class="nav-icon">🛠️</span>
+                    Builder
+                </a>
+                <a href="analyzer.html" class="nav-link active">
+                    <span class="nav-icon">📊</span>
+                    Analyzer
+                </a>
+                <a href="missions.html" class="nav-link">
+                    <span class="nav-icon">🎯</span>
+                    Missions
+                </a>
+                <a href="learning.html" class="nav-link">
+                    <span class="nav-icon">📚</span>
+                    Learning
+                </a>
+            </div>
+            
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                ☰
+            </button>
+        </div>
+    </nav>
+
     <div class="container">
         <div class="header">
             <div class="logo">
@@ -21,70 +280,565 @@
             <h1>Impact Analyzer</h1>
             <p>Witness the dramatic difference between generic and structured prompts with real AI responses</p>
         </div>
-        <div class="card">
-            <div class="comparison-section">
-                <div id="noPromptMessage" class="no-prompt-message" style="text-align: center; padding: 48px 32px; background: var(--bg-secondary); border-radius: 16px; margin-bottom: 32px;">
-                    <h3 style="color: var(--text-primary); margin-bottom: 16px;">Ready to See the Impact?</h3>
-                    <p style="color: var(--text-secondary); margin-bottom: 24px;">Create a structured prompt first to see the powerful comparison with real AI responses!</p>
-                    <button class="btn btn-success" onclick="navigateToPage('builder')">
-                        <span>⚡</span>
-                        Build a Structured Prompt
+
+        <!-- No Prompt State -->
+        <div id="noPromptState" class="card" style="text-align: center; padding: 48px 32px;">
+            <div style="font-size: 3rem; margin-bottom: 16px;">📊</div>
+            <h3 style="color: var(--text-primary); margin-bottom: 16px; font-size: 1.5rem;">Prompt Impact Analyzer</h3>
+            <p style="color: var(--text-secondary); margin-bottom: 32px; max-width: 600px; margin-left: auto; margin-right: auto;">Discover the dramatic difference between structured and unstructured prompts across different professional scenarios.</p>
+            
+            <!-- Scenario Selection -->
+            <div style="margin-bottom: 32px;">
+                <h4 style="color: var(--text-primary); margin-bottom: 16px; font-size: 1.1rem;">Choose a Professional Scenario:</h4>
+                <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 24px;">
+                    <button class="scenario-btn active" data-scenario="creative-writer">
+                        📝 Creative Writer
+                    </button>
+                    <button class="scenario-btn" data-scenario="personal-trainer">
+                        💪 Personal Trainer
+                    </button>
+                    <button class="scenario-btn" data-scenario="software-developer">
+                        💻 Software Developer
                     </button>
                 </div>
-                <div id="comparisonContent" style="display: none;">
-                    <div style="text-align: center; margin-bottom: 48px;">
-                        <h3 style="font-size: 2rem; font-weight: 700; margin-bottom: 16px; background: linear-gradient(135deg, var(--text-primary), var(--text-secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">AI Response Comparison</h3>
-                        <p style="color: var(--text-secondary); font-size: 1.125rem; max-width: 700px; margin: 0 auto;">See how structured prompting dramatically improves AI response quality and relevance - powered by real AI responses</p>
-                    </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 48px;" class="comparison-grid">
-                        <div style="padding: 32px; border-radius: 20px; position: relative; overflow: hidden; background: linear-gradient(135deg, rgba(239, 68, 68, 0.05), rgba(239, 68, 68, 0.02)); border: 1px solid rgba(239, 68, 68, 0.2);" class="comparison-card bad">
-                            <div style="content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--error);"></div>
-                            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
-                                <div style="width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: bold; background: rgba(239, 68, 68, 0.2); color: var(--error);">✕</div>
-                                <h4 style="font-weight: 600; color: var(--text-primary);">Generic Prompt</h4>
-                            </div>
-                            <div class="prompt-text" style="margin-bottom: 20px; font-size: 13px;">
-                                "Tell me about AI bias"
-                            </div>
-                            <div style="background: var(--bg-tertiary); height: 8px; border-radius: 4px; margin: 20px 0; overflow: hidden; position: relative;">
-                                <div style="height: 100%; border-radius: 4px; width: 25%; background: linear-gradient(90deg, var(--error), rgba(239, 68, 68, 0.8));"></div>
-                            </div>
-                            <div style="font-weight: 600; font-size: 18px; margin-bottom: 12px; color: var(--error);">Quality: 25%</div>
-                            <div style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">
-                                Produces vague, unfocused content lacking depth, specific context, or clear direction for the reader.
+            </div>
+            
+            <button id="analyzePromptBtn" class="btn btn-success">
+                ⚡ Analyze Prompt Impact
+            </button>
+        </div>
+        
+
+        <!-- Loading State -->
+        <div id="loadingState" class="card" style="display: none; text-align: center; padding: 48px 32px;">
+            <div class="loading-spinner" style="width: 48px; height: 48px; border: 3px solid var(--border-primary); border-top: 3px solid var(--accent); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 24px;"></div>
+            <h3 style="color: var(--text-primary); margin-bottom: 16px;">Generating Responses...</h3>
+            <p style="color: var(--text-secondary);">Simulating AI responses to demonstrate the impact of structured prompting</p>
+        </div>
+
+        <!-- Comparison Results -->
+        <div id="comparisonResults" style="display: none;">
+            <!-- Results Header -->
+            <div class="card" style="text-align: center; margin-bottom: 32px; padding: 32px;">
+                <h2 style="font-size: 2rem; font-weight: 700; margin-bottom: 16px; background: linear-gradient(135deg, var(--text-primary), var(--text-secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">AI Response Comparison</h2>
+                <p style="color: var(--text-secondary); font-size: 1.125rem; max-width: 700px; margin: 0 auto;">See how structured prompting dramatically improves AI response quality and relevance</p>
+            </div>
+
+            <!-- Side-by-Side Comparison -->
+            <div class="comparison-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px;">
+                <!-- Good Prompt Result -->
+                <div class="comparison-card good-prompt">
+                    <div class="card" style="height: 100%; background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(16, 185, 129, 0.02)); border: 1px solid rgba(16, 185, 129, 0.3);">
+                        <div style="position: relative;">
+                            <div style="position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--success); border-radius: 20px 20px 0 0;"></div>
+                            <div style="padding: 24px;">
+                                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+                                    <div style="width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: rgba(16, 185, 129, 0.2); color: var(--success); font-weight: bold;">✓</div>
+                                    <h3 style="font-weight: 600; color: var(--text-primary); margin: 0;">Structured Prompt Output</h3>
+                                </div>
+                                
+                                <div class="prompt-preview" style="background: var(--bg-secondary); border: 1px solid var(--border-primary); border-radius: 12px; padding: 16px; margin-bottom: 20px;">
+                                    <div style="font-size: 12px; color: var(--text-tertiary); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Your Prompt</div>
+                                    <div id="goodPromptText" style="font-family: monospace; font-size: 13px; color: var(--text-secondary); white-space: pre-wrap; max-height: 120px; overflow-y: auto;"></div>
+                                </div>
+
+                                <div class="ai-response" style="background: var(--bg-tertiary); border-radius: 12px; padding: 20px;">
+                                    <div style="font-size: 12px; color: var(--success); margin-bottom: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">AI Response</div>
+                                    <div id="goodResponse" style="color: var(--text-primary); line-height: 1.6; max-height: 300px; overflow-y: auto; font-size: 14px;"></div>
+                                </div>
+
+                                <div class="analysis" style="margin-top: 16px; padding: 16px; background: rgba(16, 185, 129, 0.1); border-radius: 8px; border-left: 4px solid var(--success);">
+                                    <div style="font-size: 12px; color: var(--success); font-weight: 600; margin-bottom: 8px;">✓ WHY THIS WORKS</div>
+                                    <div style="font-size: 13px; color: var(--text-secondary);">This response is specific, detailed, and contextually relevant because your structured prompt provided clear persona, task, context, and format instructions.</div>
+                                </div>
                             </div>
                         </div>
-                        <div style="padding: 32px; border-radius: 20px; position: relative; overflow: hidden; background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(16, 185, 129, 0.02)); border: 1px solid rgba(16, 185, 129, 0.2);" class="comparison-card good">
-                            <div style="content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--success);"></div>
-                            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
-                                <div style="width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: bold; background: rgba(16, 185, 129, 0.2); color: var(--success);">✓</div>
-                                <h4 style="font-weight: 600; color: var(--text-primary);">Your Structured Prompt</h4>
-                            </div>
-                            <div id="analyzedPrompt" class="prompt-text" style="margin-bottom: 20px; font-size: 13px;">
-                                Your structured prompt will appear here...
-                            </div>
-                            <div style="background: var(--bg-tertiary); height: 8px; border-radius: 4px; margin: 20px 0; overflow: hidden; position: relative;">
-                                <div id="qualityBar" style="height: 100%; border-radius: 4px; width: 0%; background: linear-gradient(90deg, var(--success), rgba(16, 185, 129, 0.8)); transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);"></div>
-                            </div>
-                            <div id="qualityScore" style="font-weight: 600; font-size: 18px; margin-bottom: 12px; color: var(--success);">Quality: 0%</div>
-                            <div id="qualityExplanation" style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">
-                                Analysis will appear here...
+                    </div>
+                </div>
+
+                <!-- Bad Prompt Result -->
+                <div class="comparison-card bad-prompt">
+                    <div class="card" style="height: 100%; background: linear-gradient(135deg, rgba(239, 68, 68, 0.05), rgba(239, 68, 68, 0.02)); border: 1px solid rgba(239, 68, 68, 0.3);">
+                        <div style="position: relative;">
+                            <div style="position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--error); border-radius: 20px 20px 0 0;"></div>
+                            <div style="padding: 24px;">
+                                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+                                    <div style="width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: rgba(239, 68, 68, 0.2); color: var(--error); font-weight: bold;">✗</div>
+                                    <h3 style="font-weight: 600; color: var(--text-primary); margin: 0;">Unstructured Prompt Output</h3>
+                                </div>
+                                
+                                <div class="prompt-preview" style="background: var(--bg-secondary); border: 1px solid var(--border-primary); border-radius: 12px; padding: 16px; margin-bottom: 20px;">
+                                    <div style="font-size: 12px; color: var(--text-tertiary); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Generic Version</div>
+                                    <div id="badPromptText" style="font-family: monospace; font-size: 13px; color: var(--text-secondary); white-space: pre-wrap; max-height: 120px; overflow-y: auto;"></div>
+                                </div>
+
+                                <div class="ai-response" style="background: var(--bg-tertiary); border-radius: 12px; padding: 20px;">
+                                    <div style="font-size: 12px; color: var(--error); margin-bottom: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">AI Response</div>
+                                    <div id="badResponse" style="color: var(--text-primary); line-height: 1.6; max-height: 300px; overflow-y: auto; font-size: 14px;"></div>
+                                </div>
+
+                                <div class="analysis" style="margin-top: 16px; padding: 16px; background: rgba(239, 68, 68, 0.1); border-radius: 8px; border-left: 4px solid var(--error);">
+                                    <div style="font-size: 12px; color: var(--error); font-weight: 600; margin-bottom: 8px;">✗ WHY THIS FAILS</div>
+                                    <div style="font-size: 13px; color: var(--text-secondary);">This response is generic and lacks detail because the prompt was too vague and provided no specific guidance to the AI.</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div style="text-align: center;">
-                        <button class="btn btn-outline" onclick="navigateToPage('builder')">
-                            <span>⚡</span>
-                            Build Another Prompt
-                        </button>
-                        <button class="btn btn-success" onclick="navigateToPage('missions')">
-                            <span>🎮</span>
-                            Try MIL Missions
-                        </button>
                     </div>
                 </div>
             </div>
+
+            <!-- Analysis Section -->
+            <div id="analysisSection" class="card" style="display: none; margin-bottom: 32px; padding: 32px;">
+                <h3 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 16px; color: var(--text-primary); text-align: center;">📊 Impact Analysis</h3>
+                <div id="analysisContent" style="color: var(--text-secondary); line-height: 1.7; font-size: 1.1rem; text-align: justify; max-width: 800px; margin: 0 auto;"></div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div style="text-align: center;">
+                <a href="builder.html" class="btn btn-outline" style="margin-right: 16px;">
+                    🔄 Build Another Prompt
+                </a>
+                <a href="missions.html" class="btn btn-success">
+                    🎯 Try MIL Missions
+                </a>
+            </div>
         </div>
-    </div>
+                                
+
+
+    <script>
+        // Mobile menu toggle functionality
+        document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+            const nav = document.getElementById('navbarNav');
+            nav.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function() {
+                const nav = document.getElementById('navbarNav');
+                nav.classList.remove('active');
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const nav = document.getElementById('navbarNav');
+            const toggle = document.getElementById('mobileMenuToggle');
+            
+            if (!nav.contains(event.target) && !toggle.contains(event.target)) {
+                nav.classList.remove('active');
+            }
+        });
+
+        // Impact Analyzer with Three Professional Scenarios
+        class ImpactAnalyzer {
+            constructor() {
+                // Three professional scenarios with hardcoded prompts and responses
+                this.scenarios = {
+                    'creative-writer': {
+                        structuredPrompt: `Act as a suspense novelist with expertise in psychological thrillers.
+
+Write the opening paragraph of a short story where a character finds a hidden diary in their new house. 
+
+Context: This is the beginning of a gothic horror story aimed at adult readers who enjoy atmospheric tension and psychological depth.
+
+Requirements:
+- Create an immediate sense of foreboding and unease
+- Establish the character's emotional state and motivation
+- Use sensory details to build atmosphere
+- End with a hook that compels the reader to continue
+- Keep the tone dark and mysterious
+- Length: 100-150 words`,
+
+                        unstructuredPrompt: "Write a story about a house.",
+
+                        structuredResponse: `The floorboard groaned beneath Sarah's feet as she stepped into the master bedroom, dust motes dancing in the pale afternoon light that filtered through grimy windows. Three weeks since the inheritance, and she still felt like an intruder in her great-aunt's Victorian home. The realtor had assured her the house held no secrets, but as Sarah knelt beside the loose baseboard she'd discovered that morning, her fingers trembling as they traced the hidden compartment's edge, she wondered what lies people tell themselves to sleep at night. The leather-bound diary that emerged was warm to the touch—impossibly warm, as if someone had just been holding it. The brass clasp clicked open with a sound like breaking bones, and Sarah's breath caught as she read the first line, written in her own handwriting: "Day 1: I've finally found someone who looks exactly like me."`,
+
+                        unstructuredResponse: `There was a house and someone lived in it. They found some stuff and it was interesting. The house was old and had many rooms. The person was curious about what they found. It was mysterious and made them think about things. The end.`,
+
+                        analysisText: `The structured prompt produced a compelling, atmospheric opening with rich sensory details, character development, and a psychological hook that draws readers in. The specific requirements for tone, length, and genre elements resulted in professional-quality fiction writing.
+
+In contrast, the unstructured prompt yielded a simplistic, generic response with no atmosphere, character depth, or narrative tension. The difference demonstrates how detailed prompt engineering transforms AI from a basic text generator into a sophisticated creative writing assistant capable of producing publishable content.`
+                    },
+
+                    'personal-trainer': {
+                        structuredPrompt: `Act as a certified personal trainer with NASM certification and 5 years of experience working with beginners.
+
+Create a comprehensive 3-day full-body workout plan for a complete beginner with no gym equipment access.
+
+Client Profile: Sedentary lifestyle, no previous exercise experience, looking to build basic fitness and strength at home.
+
+Requirements:
+- Include specific exercises, sets, and reps for each day
+- Provide form cues and safety tips for each exercise
+- Include warm-up and cool-down routines
+- Progress recommendations for week 2-4
+- Modifications for different fitness levels
+- Total workout time should be 30-45 minutes
+- Focus on compound movements and functional fitness`,
+
+                        unstructuredPrompt: "Give me a workout plan.",
+
+                        structuredResponse: `**BEGINNER 3-DAY FULL-BODY HOME WORKOUT PLAN**
+
+**WARM-UP (5-7 minutes):**
+• Arm circles: 30 seconds each direction
+• Leg swings: 10 each leg, forward/back and side-to-side
+• Bodyweight squats: 10 slow reps (focus on form)
+• March in place with high knees: 1 minute
+
+**DAY 1: FOUNDATION STRENGTH**
+1. **Wall Push-ups**: 2 sets of 8-12 reps
+   - Stand arm's length from wall, hands flat against wall at shoulder height
+   - Keep body straight, push away from wall slowly
+
+2. **Bodyweight Squats**: 3 sets of 10-15 reps
+   - Feet shoulder-width apart, weight in heels
+   - Lower as if sitting in chair, knees track over toes
+
+3. **Modified Plank**: 2 sets of 15-30 seconds
+   - Start on knees and forearms, maintain straight line
+   - Progress to full plank when comfortable
+
+4. **Glute Bridges**: 3 sets of 12-15 reps
+   - Lie on back, knees bent, squeeze glutes and lift hips
+   - Hold 2 seconds at top
+
+**DAY 2: CARDIO & MOBILITY**
+1. **Step-ups** (using sturdy chair): 3 sets of 10 each leg
+2. **Mountain Climbers**: 3 sets of 20 total (10 each leg)
+3. **Standing Side Bends**: 2 sets of 15 each side
+4. **Calf Raises**: 3 sets of 15-20 reps
+
+**DAY 3: UPPER BODY FOCUS**
+1. **Incline Push-ups** (hands on couch/chair): 3 sets of 8-12 reps
+2. **Pike Push-ups**: 2 sets of 5-8 reps (targets shoulders)
+3. **Tricep Dips** (using chair): 2 sets of 8-12 reps
+4. **Superman**: 3 sets of 10-12 reps (back strengthening)
+
+**COOL-DOWN (5-7 minutes):**
+• Forward fold stretch: 30 seconds
+• Quad stretch: 30 seconds each leg
+• Shoulder crossover stretch: 30 seconds each arm
+• Child's pose: 1 minute
+
+**PROGRESSION (Weeks 2-4):**
+- Increase reps by 2-3 per week
+- Add 5-10 seconds to plank holds
+- Progress to standard push-ups from wall push-ups
+- Add resistance with water bottles or books
+
+**SAFETY NOTES:**
+- Stop immediately if you feel pain (discomfort is normal, pain is not)
+- Focus on form over speed or rep count
+- Rest 1-2 days between workouts initially
+- Stay hydrated and listen to your body`,
+
+                        unstructuredResponse: `Do some push-ups, squats, and planks. Maybe run around or do jumping jacks. Try to exercise 3 times a week. Start slow and build up. That should be good for getting in shape.`,
+
+                        analysisText: `The structured prompt delivered a comprehensive, professional workout plan with specific exercises, progressions, safety guidelines, and client-appropriate modifications. The detailed requirements produced actionable fitness guidance that a beginner could safely follow at home.
+
+The unstructured prompt resulted in vague, potentially unsafe advice with no specificity, progressions, or safety considerations. This comparison highlights how detailed prompting transforms AI from giving generic fitness advice into providing professional-level personal training guidance with proper exercise prescription and client safety protocols.`
+                    },
+
+                    'software-developer': {
+                        structuredPrompt: `You are a senior Python developer with expertise in clean code practices and documentation.
+
+Write a Python function called get_average_word_length that takes a string of text and returns the average length of the words.
+
+Requirements:
+- Include comprehensive docstrings following Google style
+- Handle edge cases (empty strings, None input, punctuation)
+- Use type hints for parameters and return value
+- Include error handling with appropriate exceptions
+- Write the function to be production-ready
+- Add inline comments explaining complex logic
+- Consider performance for large text inputs`,
+
+                        unstructuredPrompt: "Code something to get the word length from a sentence.",
+
+                        structuredResponse: `\`\`\`python
+import re
+from typing import Optional
+
+def get_average_word_length(text: Optional[str]) -> float:
+    """
+    Calculate the average length of words in a given text string.
+    
+    This function processes text by removing punctuation, splitting into words,
+    and computing the mean word length. It handles various edge cases including
+    empty strings, None inputs, and text with only punctuation or whitespace.
+    
+    Args:
+        text (Optional[str]): The input text to analyze. Can be None.
+        
+    Returns:
+        float: The average length of words in the text. Returns 0.0 if no
+               valid words are found.
+               
+    Raises:
+        TypeError: If the input is not a string or None.
+        
+    Examples:
+        >>> get_average_word_length("Hello world")
+        5.0
+        >>> get_average_word_length("The quick brown fox")
+        3.75
+        >>> get_average_word_length("")
+        0.0
+        >>> get_average_word_length("Hello, world!")
+        5.0
+    """
+    # Handle None input
+    if text is None:
+        return 0.0
+    
+    # Validate input type
+    if not isinstance(text, str):
+        raise TypeError(f"Expected string or None, got {type(text).__name__}")
+    
+    # Handle empty string
+    if not text.strip():
+        return 0.0
+    
+    # Remove punctuation and convert to lowercase for consistency
+    # Using regex to keep only letters and spaces
+    cleaned_text = re.sub(r'[^a-zA-Z\s]', '', text)
+    
+    # Split into words and filter out empty strings
+    words = [word for word in cleaned_text.split() if word]
+    
+    # Handle case where no valid words remain after cleaning
+    if not words:
+        return 0.0
+    
+    # Calculate average length
+    total_length = sum(len(word) for word in words)
+    average_length = total_length / len(words)
+    
+    return round(average_length, 2)  # Round to 2 decimal places for readability
+
+
+# Example usage and testing
+if __name__ == "__main__":
+    # Test cases
+    test_cases = [
+        "Hello world",
+        "The quick brown fox jumps over the lazy dog",
+        "Python is awesome!",
+        "",
+        None,
+        "   ",
+        "123 456 789",  # Numbers only
+        "Hello, world! How are you today?",
+    ]
+    
+    for test in test_cases:
+        try:
+            result = get_average_word_length(test)
+            print(f"Input: {repr(test)} -> Average word length: {result}")
+        except Exception as e:
+            print(f"Input: {repr(test)} -> Error: {e}")
+\`\`\``,
+
+                        unstructuredResponse: `def word_length(sentence):
+    words = sentence.split()
+    total = 0
+    for word in words:
+        total += len(word)
+    return total / len(words)`,
+
+                        analysisText: `The structured prompt produced production-ready code with comprehensive documentation, type hints, error handling, edge case management, and professional coding standards. The function includes detailed docstrings, example usage, and robust error handling that would pass code review in a professional environment.
+
+The unstructured prompt resulted in a basic function with no documentation, error handling, or edge case consideration. It would fail on empty inputs and lacks the professional standards expected in production code. This demonstrates how detailed prompting transforms AI from a basic code generator into a professional development assistant capable of producing enterprise-grade software.`
+                    }
+                };
+
+                this.currentScenario = 'creative-writer';
+                this.init();
+            }
+
+            init() {
+                // Always show the demo interface
+                this.showDemoInterface();
+                this.attachEventListeners();
+            }
+
+            showDemoInterface() {
+                document.getElementById('noPromptState').style.display = 'block';
+                document.getElementById('loadingState').style.display = 'none';
+                document.getElementById('comparisonResults').style.display = 'none';
+                document.getElementById('analysisSection').style.display = 'none';
+            }
+
+            showLoadingState() {
+                document.getElementById('noPromptState').style.display = 'none';
+                document.getElementById('loadingState').style.display = 'block';
+                document.getElementById('comparisonResults').style.display = 'none';
+                document.getElementById('analysisSection').style.display = 'none';
+            }
+
+            showResults() {
+                document.getElementById('noPromptState').style.display = 'none';
+                document.getElementById('loadingState').style.display = 'none';
+                document.getElementById('comparisonResults').style.display = 'block';
+                
+                // Show analysis section with a slight delay for better UX
+                setTimeout(() => {
+                    document.getElementById('analysisSection').style.display = 'block';
+                    this.typeWriterEffect(document.getElementById('analysisContent'), this.getCurrentScenario().analysisText, 5);
+                }, 1000);
+            }
+
+            attachEventListeners() {
+                // Analyze button
+                const analyzeBtn = document.getElementById('analyzePromptBtn');
+                if (analyzeBtn) {
+                    analyzeBtn.addEventListener('click', () => this.analyzePromptImpact());
+                }
+
+                // Scenario selection buttons
+                const scenarioButtons = document.querySelectorAll('.scenario-btn');
+                scenarioButtons.forEach(btn => {
+                    btn.addEventListener('click', (e) => this.selectScenario(e.target.dataset.scenario));
+                });
+            }
+
+            selectScenario(scenario) {
+                this.currentScenario = scenario;
+                
+                // Update button states using CSS classes
+                document.querySelectorAll('.scenario-btn').forEach(btn => {
+                    const isActive = btn.dataset.scenario === scenario;
+                    btn.classList.toggle('active', isActive);
+                });
+            }
+
+            getCurrentScenario() {
+                return this.scenarios[this.currentScenario];
+            }
+
+            async analyzePromptImpact() {
+                try {
+                    const scenario = this.getCurrentScenario();
+                    
+                    // Clear any previous content
+                    document.getElementById('goodPromptText').textContent = '';
+                    document.getElementById('badPromptText').textContent = '';
+                    document.getElementById('goodResponse').textContent = '';
+                    document.getElementById('badResponse').textContent = '';
+                    document.getElementById('analysisContent').textContent = '';
+
+                    // Show loading state
+                    this.showLoadingState();
+
+                    // Simulate network delay (2-3 seconds as specified)
+                    await new Promise(resolve => setTimeout(resolve, 2500));
+
+                    // Display the prompts for the selected scenario
+                    document.getElementById('goodPromptText').textContent = scenario.structuredPrompt;
+                    document.getElementById('badPromptText').textContent = scenario.unstructuredPrompt;
+
+                    // Show results
+                    this.showResults();
+
+                    // Animate the responses appearing with typewriter effect
+                    await Promise.all([
+                        this.typeWriterEffect(document.getElementById('goodResponse'), scenario.structuredResponse, 2),
+                        this.typeWriterEffect(document.getElementById('badResponse'), scenario.unstructuredResponse, 5)
+                    ]);
+
+                } catch (error) {
+                    console.error('Demo error:', error);
+                    this.showErrorState('Demo encountered an error. Please try again.');
+                }
+            }
+
+            typeWriterEffect(element, text, speed = 20) {
+                return new Promise((resolve) => {
+                    // Convert markdown to HTML
+                    const htmlText = this.convertMarkdownToHTML(text);
+                    element.innerHTML = '';
+                    let i = 0;
+                    
+                    const typeInterval = setInterval(() => {
+                        if (i < htmlText.length) {
+                            element.innerHTML = htmlText.substring(0, i + 1);
+                            i++;
+                        } else {
+                            clearInterval(typeInterval);
+                            resolve();
+                        }
+                    }, speed);
+                });
+            }
+
+            convertMarkdownToHTML(text) {
+                return text
+                    // Convert **bold** to <strong>
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    // Convert *italic* to <em>
+                    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                    // Convert ```code blocks``` to <pre><code>
+                    .replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>')
+                    // Convert `inline code` to <code>
+                    .replace(/`(.*?)`/g, '<code>$1</code>')
+                    // Convert line breaks to <br>
+                    .replace(/\n/g, '<br>')
+                    // Convert bullet points (•) to proper list items
+                    .replace(/^• (.+)$/gm, '<div style="margin-left: 20px;">• $1</div>')
+                    // Convert numbered lists
+                    .replace(/^(\d+)\. (.+)$/gm, '<div style="margin-left: 20px;"><strong>$1.</strong> $2</div>')
+                    // Convert sub-items with dashes
+                    .replace(/^   - (.+)$/gm, '<div style="margin-left: 40px; color: var(--text-secondary);">- $1</div>')
+                    // Convert section headers (all caps with colons)
+                    .replace(/^([A-Z\s\-\(\)0-9]+:)$/gm, '<div style="margin: 16px 0 8px 0; font-weight: bold; color: var(--text-primary);">$1</div>');
+            }
+
+            showErrorState(message) {
+                document.getElementById('noPromptState').innerHTML = `
+                    <div style="text-align: center; padding: 48px 32px;">
+                        <div style="font-size: 3rem; margin-bottom: 16px;">⚠️</div>
+                        <h3 style="color: var(--error); margin-bottom: 16px;">Demo Error</h3>
+                        <p style="color: var(--text-secondary); margin-bottom: 32px;">${message}</p>
+                        <button class="btn btn-outline" onclick="location.reload()">Try Again</button>
+                    </div>
+                `;
+                document.getElementById('noPromptState').style.display = 'block';
+                document.getElementById('loadingState').style.display = 'none';
+                document.getElementById('comparisonResults').style.display = 'none';
+                document.getElementById('analysisSection').style.display = 'none';
+            }
+        }
+
+        // Add CSS for loading animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+            
+            @media (max-width: 768px) {
+                .comparison-grid {
+                    grid-template-columns: 1fr !important;
+                    gap: 16px !important;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialize the Impact Analyzer
+        document.addEventListener('DOMContentLoaded', function() {
+            new ImpactAnalyzer();
+        });
+
+        // Global function for external navigation (from builder)
+        window.analyzePrompt = function(prompt) {
+            localStorage.setItem('generatedPrompt', prompt);
+            new ImpactAnalyzer().analyzePrompt(prompt);
+        };
+    </script>
 </body>
 </html>
