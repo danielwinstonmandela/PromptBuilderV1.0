@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>App - Educational Content Hub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="/index.css" rel="stylesheet" />
+</head>
+<body class="bg-background text-foreground">
+  <!-- Toaster (notification area) -->
+  <div id="toaster"></div>
+  <!-- TooltipProvider area (tooltips are not implemented in static HTML) -->
+  <!-- Simulated BrowserRouter & Routes -->
+  <div id="app-router">
+    <!-- Home Route ("/") -->
+    <div id="route-home">
+      <!-- You can replace this with content from Index.html -->
+      <h1 class="text-3xl font-bold p-8 text-center">Educational Content Hub</h1>
+      <p class="text-center text-muted-foreground">Go to <a href="Index.html" class="text-primary underline">Index.html</a> for the main content.</p>
+    </div>
+    <!-- NotFound Route ("*") -->
+    <!-- Uncomment to preview Not Found -->
+    <!--
+    <div id="route-notfound">
+      <h1 class="text-8xl font-bold text-blue-600">404</h1>
+      <h2 class="text-2xl font-semibold text-gray-800">Page Not Found</h2>
+      <p class="text-muted-foreground">
+        The page you're looking for doesn't exist or may have been moved.
+      </p>
+      <a href="Index.html" class="text-primary underline">Return Home</a>
+    </div>
+    -->
+  </div>
+</body>
+</html>
