@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prompt Builder - Youth Leading the Way in AI Communication</title>
+    <title>Prompt Builder - Master AI Communication & Critical Thinking</title>
     <link rel="stylesheet" href="styles/shared.css">
     <style>
         /* Navigation Styles */
@@ -171,19 +171,13 @@
             }
         }
 
-        /* Additional styles for SPA layout */
-        .page-container {
-            position: relative;
-            min-height: 60vh;
-        }
-
-        /* Home page specific styles */
+        /* Hero Section Enhancements */
         .hero-section {
             text-align: center;
-            padding: 80px 0;
+            padding: 60px 40px;
             background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
-            border-radius: 20px;
-            margin-bottom: 64px;
+            border-radius: 24px;
+            margin-bottom: 80px;
             position: relative;
             overflow: hidden;
         }
@@ -204,43 +198,140 @@
             z-index: 2;
         }
 
+        .hero-layout {
+            display: grid;
+            grid-template-columns: 6fr 4fr;
+            gap: 60px;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .hero-text {
+            text-align: left;
+            padding-right: 20px;
+        }
+
+        .hero-visual {
+            text-align: center;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-gif {
+            max-width: 85%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .hero-gif:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.3);
+        }
+
         .hero-title {
-            font-size: clamp(3rem, 6vw, 5rem);
-            font-weight: 900;
-            letter-spacing: -0.03em;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
             margin-bottom: 24px;
             background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            line-height: 1.2;
         }
 
         .hero-subtitle {
-            font-size: 1.5rem;
+            font-size: 1.1rem;
             color: var(--text-secondary);
-            margin-bottom: 40px;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
+            margin-bottom: 32px;
+            line-height: 1.6;
+            max-width: 90%;
+        }
+
+        .cta-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--accent), var(--text-secondary));
+            color: var(--bg-primary);
+            padding: 16px 32px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            color: var(--bg-primary);
+        }
+
+        .cta-primary:active {
+            transform: translateY(-1px);
+        }
+
+        /* Section Separators */
+        .section-separator {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-primary), transparent);
+            margin: 80px 0;
+        }
+
+        /* Features Section */
+        .features-section {
+            margin-bottom: 80px;
+        }
+
+        .features-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .features-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+
+        .features-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 32px;
-            margin-top: 64px;
+            max-width: 900px;
+            margin: 0 auto;
         }
 
         .feature-card {
             background: var(--bg-card);
             border: 1px solid var(--border-primary);
             border-radius: 20px;
-            padding: 40px;
-            text-align: center;
-            transition: all 0.3s ease;
+            padding: 40px 32px;
+            text-decoration: none;
+            transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
-            cursor: pointer;
+            text-align: center;
         }
 
         .feature-card::before {
@@ -266,44 +357,113 @@
         }
 
         .feature-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, var(--accent), var(--text-secondary));
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            margin: 0 auto 24px;
-            color: var(--bg-primary);
+            font-size: 3rem;
+            margin-bottom: 24px;
+            filter: grayscale(1);
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            filter: grayscale(0);
+            opacity: 1;
+            transform: scale(1.1);
         }
 
         .feature-title {
-            font-size: 1.5rem;
             font-weight: 700;
-            margin-bottom: 16px;
+            font-size: 1.4rem;
             color: var(--text-primary);
+            margin-bottom: 16px;
         }
 
         .feature-description {
             color: var(--text-secondary);
+            font-size: 1rem;
             line-height: 1.6;
-            margin-bottom: 24px;
+            margin-bottom: 16px;
         }
 
+        .feature-benefit {
+            color: var(--text-tertiary);
+            font-size: 0.9rem;
+            font-style: italic;
+            line-height: 1.4;
+        }
+
+        /* Final CTA Section */
+        .final-cta-section {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+            border: 1px solid var(--border-primary);
+            border-radius: 24px;
+            padding: 60px 40px;
+            text-align: center;
+            margin: 80px 0 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 0%, rgba(255, 255, 255, 0.02) 50%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .final-cta-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .final-cta-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
+        }
+
+        .final-cta-text {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+
+        /* Stats Section Enhancement */
         .stats-section {
             background: var(--bg-secondary);
-            border-radius: 20px;
-            padding: 48px;
-            margin: 64px 0;
+            border: 1px solid var(--border-primary);
+            border-radius: 24px;
+            padding: 60px 40px;
             text-align: center;
+            margin: 80px 0;
+        }
+
+        .stats-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .stats-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 48px;
+            line-height: 1.6;
         }
 
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 32px;
-            margin-top: 32px;
+            gap: 40px;
         }
 
         .stat-item {
@@ -314,12 +474,13 @@
             font-size: 3rem;
             font-weight: 800;
             color: var(--accent);
-            margin-bottom: 8px;
+            margin-bottom: 12px;
         }
 
         .stat-label {
             color: var(--text-secondary);
             font-weight: 500;
+            font-size: 0.95rem;
         }
 
         /* Builder page specific styles */
@@ -552,6 +713,26 @@
         }
 
         @media (max-width: 1024px) {
+            .hero-layout {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                text-align: center;
+                padding: 10px;
+            }
+
+            .hero-text {
+                text-align: center;
+                padding-right: 0;
+            }
+
+            .hero-visual {
+                padding: 10px;
+            }
+
+            .hero-gif {
+                max-width: 70%;
+            }
+
             .prompt-builder {
                 grid-template-columns: 1fr;
                 gap: 24px;
@@ -566,33 +747,88 @@
                 grid-template-columns: 1fr !important;
                 gap: 24px !important;
             }
-        }
 
-        /* Additional hover effects and modern styling */
-        .card:hover {
-            transform: translateY(-8px);
-            border-color: var(--border-secondary);
-            box-shadow: 0 20px 40px var(--shadow);
-        }
-
-        .card:hover > div:first-child {
-            transform: scaleX(1);
-        }
-
-        .card:hover > div:nth-child(2) {
-            filter: grayscale(0) !important;
-            opacity: 1 !important;
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 24px;
+            }
         }
 
         @media (max-width: 768px) {
             .container {
                 padding: 24px 16px;
             }
+
+            .hero-section {
+                padding: 40px 20px;
+            }
+            
+            .hero-layout {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                text-align: center;
+                padding: 0;
+            }
+
+            .hero-text {
+                text-align: center;
+                padding-right: 0;
+            }
+
+            .hero-visual {
+                padding: 0;
+            }
+
+            .hero-gif {
+                max-width: 80%;
+            }
+            
+            .hero-title {
+                font-size: clamp(2rem, 6vw, 3rem);
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+                max-width: 100%;
+            }
+
+            .features-title {
+                font-size: 2.2rem;
+            }
+
+            .final-cta-title {
+                font-size: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
             
             /* Stack cards vertically on mobile */
             div[style*="grid-template-columns: repeat(2, 1fr)"] {
                 grid-template-columns: 1fr !important;
                 gap: 24px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-section {
+                padding: 30px 15px;
+            }
+
+            .hero-gif {
+                max-width: 90%;
+            }
+
+            .cta-primary {
+                padding: 14px 28px;
+                font-size: 0.95rem;
+            }
+
+            .final-cta-section,
+            .stats-section {
+                padding: 40px 24px;
             }
         }
     </style>
@@ -639,97 +875,127 @@
     <div class="grain-overlay"></div>
     <div class="floating-elements"></div>
     
-    <div class="container" style="min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative;">
+    <div class="container" style="min-height: 100vh; position: relative;">
         <!-- Hero Section -->
-                <!-- Hero Section -->
-        <div style="text-align: center; margin-bottom: 64px; position: relative;">
-            <div class="logo" style="justify-content: center; margin-bottom: 32px; transform: scale(1.2); margin: 0 auto 32px;">
-                <div class="logo-icon">P</div>
-                <span style="font-weight: 600; font-size: 1.8rem;">Prompt Builder</span>
-                <div style="font-size: 11px; color: var(--text-tertiary); margin-left: 12px; padding: 4px 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px;">UNESCO MIL</div>
+        <div class="hero-section">
+            <div class="hero-content">
+                <div class="logo" style="justify-content: center; margin-bottom: 40px; transform: scale(1.2);">
+                    <div class="logo-icon">P</div>
+                    <span style="font-weight: 600; font-size: 1.8rem;">Prompt Builder</span>
+                    <div style="font-size: 11px; color: var(--text-tertiary); margin-left: 12px; padding: 4px 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px;">UNESCO MIL</div>
+                </div>
+                
+                <div class="hero-layout">
+                    <div class="hero-text">
+                        <h1 class="hero-title">
+                            Master AI Communication &amp; Critical Thinking
+                        </h1>
+                        
+                        <p class="hero-subtitle">
+                            Transform from passive AI consumer to proactive creator through structured prompting and Media Information Literacy skills.
+                        </p>
+
+                        <a href="builder.html" class="cta-primary">
+                            <span>⚡</span>
+                            Start Building Prompts
+                        </a>
+                    </div>
+                    
+                    <div class="hero-visual">
+                        <img src="assets/Prompt Builder Video .gif" alt="An animated demonstration of the Prompt Builder tool in action" class="hero-gif">
+                    </div>
+                </div>
             </div>
-            
-            <h1 style="font-size: clamp(3rem, 6vw, 5rem); font-weight: 900; margin-bottom: 24px; letter-spacing: -0.03em; background: linear-gradient(135deg, var(--text-primary), var(--text-secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-align: center;">
-                Youth Leading the Way
-            </h1>
-            
-            <p style="color: var(--text-secondary); font-size: 1.25rem; margin: 0 auto 48px; max-width: 700px; line-height: 1.6; text-align: center;">
-                Master AI communication and Media Information Literacy through structured prompting. 
-                Transform from passive AI consumer to proactive creator.
-            </p>
         </div>
 
-        <!-- Features Section Header -->
-        <div style="text-align: center; margin-bottom: 48px;">
-            <h2 style="font-size: 2.5rem; font-weight: 800; color: var(--text-primary); margin-bottom: 16px;">
-                Explore Our Tools
-            </h2>
-            <p style="color: var(--text-secondary); font-size: 1.1rem; max-width: 500px; margin: 0 auto;">
-                Choose your path to mastering AI communication and critical thinking!
-            </p>
+        <!-- Section Separator -->
+        <div class="section-separator"></div>
+
+        <!-- Features Section -->
+        <div class="features-section">
+            <div class="features-header">
+                <h2 class="features-title">Choose Your Path to Mastery</h2>
+                <p class="features-subtitle">
+                    Explore our comprehensive tools designed to elevate your AI communication skills and critical thinking abilities.
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <a href="builder.html" class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-title">Guided Prompt Builder</div>
+                    <div class="feature-description">Create structured, effective prompts using our step-by-step methodology</div>
+                    <div class="feature-benefit">Build professional-grade prompts that deliver precise AI responses</div>
+                </a>
+                
+                <a href="analyzer.html" class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <div class="feature-title">Impact Analyzer</div>
+                    <div class="feature-description">Compare and analyze prompt effectiveness with real AI responses</div>
+                    <div class="feature-benefit">See dramatic quality improvements through structured prompting</div>
+                </a>
+                
+                <a href="missions.html" class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <div class="feature-title">MIL Missions</div>
+                    <div class="feature-description">Gamified challenges building critical thinking skills</div>
+                    <div class="feature-benefit">Develop media literacy through interactive problem-solving</div>
+                </a>
+                
+                <a href="learning.html" class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <div class="feature-title">Educational Content Hub</div>
+                    <div class="feature-description">Curated resources, guides, and educational videos</div>
+                    <div class="feature-benefit">Access expert knowledge on AI ethics and responsible usage</div>
+                </a>
+            </div>
         </div>
 
-        <!-- Feature Cards Grid -->
-        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; width: 100%; max-width: 800px; margin-bottom: 64px;">
-            <a href="builder.html" class="card" style="text-decoration: none; padding: 40px 32px; border-radius: 24px; background: var(--bg-card); border: 1px solid var(--border-primary); transition: all 0.4s ease; position: relative; overflow: hidden;">
-                <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--text-primary), var(--text-secondary)); transform: scaleX(0); transition: transform 0.3s ease;"></div>
-                <div style="font-size: 2.5rem; margin-bottom: 20px; filter: grayscale(1); opacity: 0.8; text-align: center;">⚡</div>
-                <div style="font-weight: 700; font-size: 1.3rem; color: var(--text-primary); margin-bottom: 12px; text-align: center;">Guided Prompt Builder</div>
-                <div style="color: var(--text-secondary); font-size: 1rem; line-height: 1.5; text-align: center;">Create structured, effective prompts using our step-by-step methodology</div>
-            </a>
-            
-            <a href="analyzer.html" class="card" style="text-decoration: none; padding: 40px 32px; border-radius: 24px; background: var(--bg-card); border: 1px solid var(--border-primary); transition: all 0.4s ease; position: relative; overflow: hidden;">
-                <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--text-primary), var(--text-secondary)); transform: scaleX(0); transition: transform 0.3s ease;"></div>
-                <div style="font-size: 2.5rem; margin-bottom: 20px; filter: grayscale(1); opacity: 0.8; text-align: center;">📊</div>
-                <div style="font-weight: 700; font-size: 1.3rem; color: var(--text-primary); margin-bottom: 12px; text-align: center;">Impact Analyzer</div>
-                <div style="color: var(--text-secondary); font-size: 1rem; line-height: 1.5; text-align: center;">Compare and analyze prompt effectiveness with real AI responses</div>
-            </a>
-            
-            <a href="missions.html" class="card" style="text-decoration: none; padding: 40px 32px; border-radius: 24px; background: var(--bg-card); border: 1px solid var(--border-primary); transition: all 0.4s ease; position: relative; overflow: hidden;">
-                <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--text-primary), var(--text-secondary)); transform: scaleX(0); transition: transform 0.3s ease;"></div>
-                <div style="font-size: 2.5rem; margin-bottom: 20px; filter: grayscale(1); opacity: 0.8; text-align: center;">🎯</div>
-                <div style="font-weight: 700; font-size: 1.3rem; color: var(--text-primary); margin-bottom: 12px; text-align: center;">MIL Missions</div>
-                <div style="color: var(--text-secondary); font-size: 1rem; line-height: 1.5; text-align: center;">Gamified challenges building critical thinking skills</div>
-            </a>
-            
-            <a href="learning.html" class="card" style="text-decoration: none; padding: 40px 32px; border-radius: 24px; background: var(--bg-card); border: 1px solid var(--border-primary); transition: all 0.4s ease; position: relative; overflow: hidden;">
-                <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--text-primary), var(--text-secondary)); transform: scaleX(0); transition: transform 0.3s ease;"></div>
-                <div style="font-size: 2.5rem; margin-bottom: 20px; filter: grayscale(1); opacity: 0.8; text-align: center;">📚</div>
-                <div style="font-weight: 700; font-size: 1.3rem; color: var(--text-primary); margin-bottom: 12px; text-align: center;">Educational Content Hub</div>
-                <div style="color: var(--text-secondary); font-size: 1rem; line-height: 1.5; text-align: center;">Curated resources, guides, and educational videos</div>
-            </a>
-        </div>
+        <!-- Section Separator -->
+        <div class="section-separator"></div>
 
         <!-- Stats Section -->
-        <div style="background: var(--bg-secondary); border: 1px solid var(--border-primary); border-radius: 24px; padding: 48px 40px; text-align: center; width: 100%; max-width: 900px; margin-bottom: 48px;">
-            <h2 style="font-size: 2rem; font-weight: 700; margin-bottom: 16px; color: var(--text-primary);">
-                Building MIL Solutions for Impact
-            </h2>
-            <p style="color: var(--text-secondary); font-size: 1.1rem; max-width: 600px; margin: 0 auto 40px;">
+        <div class="stats-section">
+            <h2 class="stats-title">Building MIL Solutions for Impact</h2>
+            <p class="stats-subtitle">
                 Empowering youth with critical thinking skills to combat misinformation and use AI responsibly
             </p>
             
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 32px;">
-                <div style="padding: 24px;">
-                    <div style="font-size: 2.5rem; font-weight: 800; color: var(--text-primary); margin-bottom: 8px;">400%</div>
-                    <div style="color: var(--text-secondary); font-weight: 500; font-size: 14px;">Better AI Response Quality</div>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">400%</div>
+                    <div class="stat-label">Better AI Response Quality</div>
                 </div>
-                <div style="padding: 24px;">
-                    <div style="font-size: 2.5rem; font-weight: 800; color: var(--text-primary); margin-bottom: 8px;">90%</div>
-                    <div style="color: var(--text-secondary); font-weight: 500; font-size: 14px;">Improved Critical Thinking</div>
+                <div class="stat-item">
+                    <div class="stat-number">90%</div>
+                    <div class="stat-label">Improved Critical Thinking</div>
                 </div>
-                <div style="padding: 24px;">
-                    <div style="font-size: 2.5rem; font-weight: 800; color: var(--text-primary); margin-bottom: 8px;">3x</div>
-                    <div style="color: var(--text-secondary); font-weight: 500; font-size: 14px;">Faster Problem Solving</div>
+                <div class="stat-item">
+                    <div class="stat-number">3x</div>
+                    <div class="stat-label">Faster Problem Solving</div>
                 </div>
-                <div style="padding: 24px;">
-                    <div style="font-size: 2.5rem; font-weight: 800; color: var(--text-primary); margin-bottom: 8px;">85%</div>
-                    <div style="color: var(--text-secondary); font-weight: 500; font-size: 14px;">Better Misinformation Detection</div>
+                <div class="stat-item">
+                    <div class="stat-number">85%</div>
+                    <div class="stat-label">Better Misinformation Detection</div>
                 </div>
             </div>
         </div>
 
-        <footer style="color: var(--text-tertiary); font-size: 13px; text-align: center; margin-top: 32px;">
+        <!-- Final Call-to-Action -->
+        <div class="final-cta-section">
+            <div class="final-cta-content">
+                <h2 class="final-cta-title">Ready to Become an AI Pro?</h2>
+                <p class="final-cta-text">
+                    Join thousands of youth who are already mastering AI communication and building critical thinking skills. Start your journey toward becoming a responsible AI leader in your community.
+                </p>
+                <a href="builder.html" class="cta-primary">
+                    <span>🚀</span>
+                    Start Building Prompts
+                </a>
+            </div>
+        </div>
+
+        <footer style="color: var(--text-tertiary); font-size: 13px; text-align: center; margin-top: 40px; padding-bottom: 40px;">
             &copy; 2025 UNESCO Youth Hackathon. All rights reserved.
         </footer>
     </div>
