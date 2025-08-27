@@ -7,6 +7,67 @@
     <link rel="stylesheet" href="styles/shared.css">
     <script src="js/shared.js"></script>
     <script src="js/missions.js"></script>
+    <style>
+        .start-here-section {
+            background: linear-gradient(135deg, rgba(59,130,246,0.12), rgba(16,185,129,0.10));
+            border-radius: 20px;
+            padding: 32px 24px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 24px rgba(59,130,246,0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .start-here-heading {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent, #3b82f6);
+            margin-bottom: 12px;
+        }
+
+        .start-here-desc {
+            color: var(--text-secondary, #6b7280);
+            font-size: 1.1rem;
+            margin-bottom: 24px;
+            max-width: 480px;
+        }
+
+        .start-here-btn {
+            background: var(--accent, #3b82f6);
+            color: var(--bg-primary, #fff);
+            font-size: 1.15rem;
+            font-weight: 600;
+            padding: 14px 36px;
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(59,130,246,0.15);
+            cursor: pointer;
+            transition: background 0.2s, box-shadow 0.2s;
+        }
+        .start-here-btn:hover, .start-here-btn:focus {
+            background: #2563eb;
+            box-shadow: 0 4px 20px rgba(59,130,246,0.22);
+        }
+
+        @media (max-width: 600px) {
+            .start-here-section {
+                padding: 20px 8px;
+                border-radius: 14px;
+            }
+            .start-here-heading {
+                font-size: 1.3rem;
+            }
+            .start-here-desc {
+                font-size: 1rem;
+            }
+            .start-here-btn {
+                font-size: 1rem;
+                padding: 12px 20px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -21,6 +82,16 @@
             <h1>Educational Content Hub</h1>
             <p>Explore curated resources, guides, and videos to deepen your understanding of AI, MIL, and prompt engineering</p>
         </div>
+        <!-- Start Here Section -->
+        <div class="start-here-section">
+            <h2 class="start-here-heading">New to AI?</h2>
+            <p class="start-here-desc">
+                Not sure where to begin? Start your guided journey with our AI Fundamentals learning path designed for beginners. Get a clear introduction before exploring advanced topics!
+            </p>
+            <button id="startHereBtn" class="start-here-btn">
+                🚀 Start Here
+            </button>
+        </div>
         <div class="card">
             <div class="learning-section" style="padding: 48px 32px;">
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 32px; margin-bottom: 48px;">
@@ -29,7 +100,7 @@
                         <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
                             <div style="width: 60px; height: 60px; background: rgba(59, 130, 246, 0.2); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px;">🤖</div>
                             <div>
-                                <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">AI Fundamentals</h3>
+                                <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">AI - The Fundamentals</h3>
                                 <div style="color: var(--text-secondary); font-size: 14px;">Beginner</div>
                             </div>
                         </div>
@@ -40,6 +111,8 @@
                             <li><a href="https://www.unesco.org/en/artificial-intelligence" target="_blank">UNESCO: What is AI?</a></li>
                             <li><a href="https://www.youtube.com/watch?v=2ePf9rue1Ao" target="_blank">Crash Course: AI Explained</a></li>
                         </ul>
+                        <!-- Example for AI Fundamentals card -->
+                        <a href="ai-fundamentals-beginner.html" class="learning-hub-btn ai" target="_self">Go to AI Fundamentals</a>
                     </div>
                     <!-- MIL & Critical Thinking -->
                     <div class="learning-card" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05)); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 20px; padding: 32px;">
@@ -57,6 +130,8 @@
                             <li><a href="https://en.unesco.org/themes/media-and-information-literacy" target="_blank">UNESCO: MIL Resources</a></li>
                             <li><a href="https://www.youtube.com/watch?v=QzZyua4X1sI" target="_blank">Video: Critical Thinking in the Age of AI</a></li>
                         </ul>
+                        <!-- For MIL & Critical Thinking -->
+                        <a href="mil-critical-thinking.html" class="learning-hub-btn mil" target="_self">Go to MIL & Critical Thinking</a>
                     </div>
                     <!-- Prompt Engineering Guides -->
                     <div class="learning-card" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(245, 158, 11, 0.05)); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 20px; padding: 32px;">
@@ -74,6 +149,8 @@
                             <li><a href="https://learnprompting.org/" target="_blank">Learn Prompting</a></li>
                             <li><a href="https://www.promptingguide.ai/" target="_blank">Prompt Engineering Guide</a></li>
                         </ul>
+                        <!-- For Prompt Engineering Guides -->
+                        <a href="prompt-engineering-guides.html" class="learning-hub-btn prompt" target="_self">Go to Prompt Engineering Guides</a>
                     </div>
                 </div>
                 <!-- Video Section -->

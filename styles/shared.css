@@ -200,12 +200,12 @@ body {
     font-size: 14px;
     font-weight: 600;
     font-family: inherit;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     display: inline-flex;
     align-items: center;
     gap: 8px;
     margin: 8px;
     text-decoration: none;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
 }
 
 .btn:hover {
@@ -358,6 +358,13 @@ body {
     visibility: visible;
 }
 
+.status-card.active {
+    border: 3px solid var(--success);
+    box-shadow: 0 0 0 4px rgba(16,185,129,0.15);
+    background: rgba(16,185,129,0.08);
+    transition: border 0.3s, box-shadow 0.3s, background 0.3s;
+}
+
 @media (max-width: 768px) {
     .container {
         padding: 16px;
@@ -387,4 +394,62 @@ body {
     .page.fade-in {
         transform: translateY(10px);
     }
+}
+
+/* Neater, grouped, and consistent button styles for the educational content hub */
+
+.learning-hub-btn {
+    display: inline-block;
+    padding: 10px 28px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    margin-top: 16px;
+    margin-bottom: 0;
+    text-align: center;
+    outline: none;
+    color: #18181b !important;      /* Black text */
+    text-decoration: none !important; /* No underline */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: 
+        background 0.2s,
+        box-shadow 0.2s,
+        color 0.2s,
+        transform 0.2s;
+}
+
+/* Color variants */
+.learning-hub-btn.ai {
+    background: #2563eb;
+}
+.learning-hub-btn.mil {
+    background: #10b981;
+}
+.learning-hub-btn.prompt {
+    background: #fbbf24;
+}
+
+/* Hover/focus effects (shared) */
+.learning-hub-btn:hover,
+.learning-hub-btn:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255,255,255,0.15);
+}
+
+/* Individual hover backgrounds */
+.learning-hub-btn.ai:hover,
+.learning-hub-btn.ai:focus {
+    background: #3b82f6;
+}
+
+.learning-hub-btn.mil:hover,
+.learning-hub-btn.mil:focus {
+    background: #34d399;
+}
+
+.learning-hub-btn.prompt:hover,
+.learning-hub-btn.prompt:focus {
+    background: #fde68a;
 }
