@@ -501,6 +501,54 @@
             }
         }
     </style>
+    <style>
+        .upload-btn {
+            padding: 16px 32px;
+            font-size: 16px;
+            font-weight: 600;
+            background: var(--accent);
+            color: var(--bg-primary);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .upload-btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .upload-files-section {
+            margin-top: 24px;
+            text-align: center;
+        }
+
+        .upload-files-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .upload-files-description {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .drag-drop-area {
+            border: 2px dashed var(--border-primary);
+            border-radius: 12px;
+            padding: 24px;
+            background: var(--bg-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .drag-drop-area.dragging {
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.05);
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation Bar -->
@@ -677,7 +725,19 @@
                             placeholder="Example: Provide a structured analysis with clear evidence, source evaluation, and actionable recommendations. Include real-world examples and end with a practical checklist for students."
                             oninput="validateStep(3)"
                         ></textarea>
-                        
+
+                        <!-- Upload Files Section -->
+                        <div class="upload-files-section">
+                            <h3 class="upload-files-title">Upload Your File</h3>
+                            <p class="upload-files-description">Drag and drop a file here, or click to upload. Supported formats: PDF, TXT, DOCX.</p>
+                            <div class="drag-drop-area" id="dragDropArea" ondrop="handleFileDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                                <p>Drag and drop your file here</p>
+                                <button class="upload-btn" onclick="triggerFileUpload()">Choose File</button>
+                                <input type="file" id="fileInput" style="display: none;" onchange="handleFileUpload(event)">
+                            </div>
+                        </div>
+
+                        <!-- Quick Suggestions -->
                         <div class="suggestions">
                             <div class="suggestions-label">Quick suggestions:</div>
                             <div class="suggestion-chips">

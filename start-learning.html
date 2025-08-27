@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Educational Content Hub</title>
+	<link rel="stylesheet" href="styles/shared.css">
+	<script src="js/shared.js"></script>
+	<script src="js/content-hub.js"></script>
+	<style>
+		/* Navbar Styles */
+		.navbar {
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			background: rgba(10, 10, 10, 0.95);
+			backdrop-filter: blur(20px);
+			border-bottom: 1px solid var(--border-primary);
+			z-index: 1000;
+			padding: 16px 0;
+		}
+
+		.navbar-container {
+			max-width: 1400px;
+			margin: 0 auto;
+			padding: 0 32px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		}
+
+		.navbar-brand {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			text-decoration: none;
+			color: var(--text-primary);
+		}
+
+		.navbar-logo {
+			width: 32px;
+			height: 32px;
+			background: linear-gradient(135deg, var(--accent), var(--text-secondary));
+			border-radius: 8px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-weight: 800;
+			color: var(--bg-primary);
+			font-size: 16px;
+		}
+
+		.navbar-title {
+			font-weight: 600;
+			font-size: 1.2rem;
+		}
+
+		.navbar-badge {
+			font-size: 10px;
+			color: var(--text-tertiary);
+			padding: 2px 6px;
+			background: rgba(255, 255, 255, 0.05);
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			border-radius: 4px;
+			margin-left: 8px;
+		}
+
+		.navbar-nav {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+		}
+
+		.nav-link {
+			display: flex;
+			align-items: center;
+			gap: 6px;
+			padding: 8px 16px;
+			color: var(--text-secondary);
+			text-decoration: none;
+			border-radius: 8px;
+			font-size: 14px;
+			font-weight: 500;
+			transition: all 0.3s ease;
+		}
+
+		.nav-link:hover {
+			color: var(--text-primary);
+			background: rgba(255, 255, 255, 0.05);
+		}
+
+		.nav-link.active {
+			color: var(--accent);
+			background: rgba(255, 255, 255, 0.1);
+		}
+
+		.mobile-menu-toggle {
+			display: none;
+			background: none;
+			border: none;
+			color: var(--text-primary);
+			font-size: 20px;
+			cursor: pointer;
+			padding: 8px;
+			border-radius: 8px;
+		}
+
+		/* Adjust body padding for fixed navbar */
+		body {
+			padding-top: 80px;
+		}
+
+		/* Mobile Responsive Styles */
+		@media (max-width: 768px) {
+			.navbar-container {
+				padding: 0 16px;
+			}
+
+			.mobile-menu-toggle {
+				display: block;
+			}
+
+			.navbar-nav {
+				position: absolute;
+				top: 100%;
+				left: 0;
+				right: 0;
+				background: rgba(10, 10, 10, 0.98);
+				backdrop-filter: blur(20px);
+				border-bottom: 1px solid var(--border-primary);
+				flex-direction: column;
+				padding: 16px;
+				gap: 4px;
+				transform: translateY(-100%);
+				opacity: 0;
+				visibility: hidden;
+				transition: all 0.3s ease;
+			}
+
+			.navbar-nav.active {
+				transform: translateY(0);
+				opacity: 1;
+				visibility: visible;
+			}
+
+			.nav-link {
+				width: 100%;
+				justify-content: flex-start;
+				padding: 12px 16px;
+			}
+
+			.navbar-title {
+				display: none;
+			}
+		}
+
+		/* General Styles */
+		body {
+			background: #121212;
+			color: var(--text-primary);
+			font-family: 'Inter', sans-serif;
+			margin: 0;
+			padding: 0;
+			padding-top: 80px; /* Adjust for fixed navbar */
+		}
+
+		.container {
+			max-width: 1200px;
+			margin: 0 auto;
+			padding: 40px 16px;
+		}
+
+		h1, p {
+			text-align: center;
+		}
+
+		h1 {
+			font-size: 2.5rem;
+			margin-bottom: 24px;
+		}
+
+		p {
+			font-size: 1.1rem;
+			color: var(--text-secondary);
+			margin-bottom: 48px;
+		}
+
+		/* Search Bar */
+		.search-bar {
+			display: flex;
+			align-items: center;
+			gap: 16px;
+			background: var(--bg-secondary);
+			border: 1px solid var(--border-primary);
+			border-radius: 12px;
+			padding: 12px 16px;
+			margin-bottom: 32px;
+		}
+
+		.search-bar input {
+			flex: 1;
+			background: transparent;
+			border: none;
+			color: var(--text-primary);
+			font-size: 1rem;
+			outline: none;
+		}
+
+		.search-bar button {
+			background: var(--accent);
+			color: var(--bg-primary);
+			border: none;
+			padding: 8px 16px;
+			border-radius: 8px;
+			font-size: 1rem;
+			cursor: pointer;
+			transition: all 0.3s ease;
+		}
+
+		.search-bar button:hover {
+			background: var(--accent-hover);
+		}
+
+		/* Content Hub */
+		.content-hub {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+			gap: 24px;
+		}
+
+		.content-card {
+			background: var(--bg-secondary);
+			border: 1px solid var(--border-primary);
+			border-radius: 16px;
+			padding: 24px;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			position: relative;
+		}
+
+		.content-card:hover {
+			transform: translateY(-4px);
+			box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+		}
+
+		.content-card .icon {
+			width: 50px;
+			height: 50px;
+			background: rgba(255, 255, 255, 0.1);
+			border-radius: 12px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 24px;
+			margin-bottom: 16px;
+		}
+
+		.content-card h3 {
+			font-size: 1.2rem;
+			font-weight: 700;
+			margin-bottom: 8px;
+		}
+
+		.content-card p {
+			font-size: 0.9rem;
+			color: var(--text-secondary);
+			margin-bottom: 16px;
+		}
+
+		.content-card .tags {
+			display: flex;
+			gap: 8px;
+			flex-wrap: wrap;
+		}
+
+		.content-card .tag {
+			background: var(--bg-tertiary);
+			color: var(--text-secondary);
+			padding: 4px 8px;
+			border-radius: 8px;
+			font-size: 0.8rem;
+			font-weight: 600;
+		}
+
+		.content-card .actions {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-top: 16px;
+		}
+
+		.content-card .actions button {
+			background: var(--accent);
+			color: var(--bg-primary);
+			border: none;
+			padding: 6px 12px;
+			border-radius: 8px;
+			font-size: 0.9rem;
+			cursor: pointer;
+			transition: all 0.3s ease;
+		}
+
+		.content-card .actions button:hover {
+			background: var(--accent-hover);
+		}
+
+		.content-card .actions .bookmark {
+			background: transparent;
+			color: var(--text-secondary);
+			border: none;
+			font-size: 1.2rem;
+			cursor: pointer;
+			transition: all 0.3s ease;
+		}
+
+		.content-card .actions .bookmark:hover {
+			color: var(--accent);
+		}
+
+		/* Responsive Design */
+		@media (max-width: 768px) {
+			.content-hub {
+				grid-template-columns: 1fr;
+			}
+		}
+	</style>
+</head>
+<body>
+	<!-- Navigation Bar -->
+	<nav class="navbar">
+		<div class="navbar-container">
+			<!-- Brand Section -->
+			<a href="index.html" class="navbar-brand">
+				<div class="navbar-logo">P</div>
+				<span class="navbar-title">Prompt Builder</span>
+				<span class="navbar-badge">UNESCO MIL</span>
+			</a>
+
+			<!-- Navigation Links -->
+			<div class="navbar-nav" id="navbarNav">
+				<a href="index.html" class="nav-link"><span>🏠</span> Home</a>
+				<a href="builder.html" class="nav-link"><span>🛠️</span> Builder</a>
+				<a href="analyzer.html" class="nav-link"><span>📊</span> Analyzer</a>
+				<a href="missions.html" class="nav-link"><span>🎯</span> Missions</a>
+				<a href="learning.html" class="nav-link active"><span>📚</span> Learning</a>
+			</div>
+
+			<!-- Mobile Menu Toggle -->
+			<button class="mobile-menu-toggle" id="mobileMenuToggle">☰</button>
+		</div>
+	</nav>
+
+	<!-- Content Hub -->
+	<div class="container">
+		<h1>Educational Content Hub</h1>
+		<p>Explore curated content on AI, ethics, and media literacy. Learn at your own pace and save your favorite resources.</p>
+
+		<!-- Search Bar -->
+		<div class="search-bar">
+			<input type="text" id="searchInput" placeholder="Search for topics, e.g., 'AI Ethics'">
+			<button onclick="searchContent()">Search</button>
+		</div>
+
+        <!-- Content Cards -->
+        <div class="content-hub" id="contentHub">
+            <!-- Example Content Card -->
+            <div class="content-card">
+                <div class="icon">📄</div>
+                <h3>Understanding AI Ethics</h3>
+                <p>Learn the fundamentals of AI ethics and how it impacts society.</p>
+                <div class="tags">
+                    <span class="tag">#Beginner</span>
+                    <span class="tag">#AI Ethics</span>
+                </div>
+                <div class="actions">
+                    <button onclick="viewContent('Understanding AI Ethics')">View</button>
+                    <button class="bookmark" onclick="bookmarkContent('Understanding AI Ethics')">⭐</button>
+                    <button onclick="shareContent('Understanding AI Ethics')">🔗 Share</button>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <div class="icon">🎥</div>
+                <h3>Spotting Deepfakes</h3>
+                <p>Watch this video to learn how to identify AI-generated deepfakes.</p>
+                <div class="tags">
+                    <span class="tag">#Intermediate</span>
+                    <span class="tag">#Deepfakes</span>
+                </div>
+                <div class="actions">
+                    <button onclick="viewContent('Spotting Deepfakes')">View</button>
+                    <button class="bookmark" onclick="bookmarkContent('Spotting Deepfakes')">⭐</button>
+                    <button onclick="shareContent('Spotting Deepfakes')">🔗 Share</button>
+                </div>
+            </div>
+        </div>
+					<button class="bookmark" onclick="bookmarkContent('Spotting Deepfakes')">⭐</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		function searchContent() {
+			const query = document.getElementById('searchInput').value;
+			alert(`Searching for: ${query}`);
+		}
+
+		function viewContent(title) {
+			alert(`Viewing content: ${title}`);
+		}
+
+		function bookmarkContent(title) {
+			alert(`Bookmarked: ${title}`);
+		}
+
+		document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+			document.getElementById('navbarNav').classList.toggle('active');
+		});
+
+		document.querySelectorAll('.nav-link').forEach(link => {
+			link.addEventListener('click', function() {
+				document.getElementById('navbarNav').classList.remove('active');
+			});
+		});
+
+		document.addEventListener('click', function(event) {
+			const nav = document.getElementById('navbarNav');
+			const toggle = document.getElementById('mobileMenuToggle');
+			if (!nav.contains(event.target) && !toggle.contains(event.target)) {
+				nav.classList.remove('active');
+			}
+		});
+	</script>
+</body>
+</html>

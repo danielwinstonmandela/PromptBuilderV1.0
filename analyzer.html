@@ -1,10 +1,242 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prompt Builder - Impact Analyzer</title>
+    <title>Impact Analyzer</title>
     <link rel="stylesheet" href="styles/shared.css">
+    <style>
+        /* General Styles */
+        body {
+            background: #121212;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 16px;
+        }
+
+        h1, p {
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 24px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 48px;
+        }
+
+        /* Analyze Button */
+        .analyze-btn {
+            display: block;
+            margin: 0 auto;
+            padding: 14px 24px;
+            background: var(--success);
+            color: #ffffff;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+            animation: pulse 1.5s infinite;
+        }
+
+        .analyze-btn:hover {
+            background: #16a34a;
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.6);
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            color: #ffffff;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .loading-animation {
+            font-size: 3rem;
+            margin-bottom: 24px;
+            animation: spin 1.5s linear infinite;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+            }
+
+            .loading-text {
+                font-size: 1.2rem;
+                font-weight: 600;
+                color: var(--text-secondary);
+            }
+
+            /* Side-by-Side Comparison */
+            .comparison-section {
+                display: grid;
+                grid-template-columns: 2fr 1.5fr;
+                gap: 24px;
+                margin-top: 32px;
+            }
+
+            .comparison-panel {
+                border-radius: 16px;
+                padding: 24px;
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+            }
+
+            .comparison-panel.success {
+                background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05));
+                border: 1px solid rgba(16, 185, 129, 0.3);
+            }
+
+            .comparison-panel.warning {
+                background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(239, 68, 68, 0.05));
+                border: 1px solid rgba(239, 68, 68, 0.3);
+            }
+
+            .panel-header {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                margin-bottom: 16px;
+            }
+
+            .panel-header .icon {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.5rem;
+                font-weight: bold;
+            }
+
+            .panel-header.success .icon {
+                background: rgba(16, 185, 129, 0.2);
+                color: var(--success);
+            }
+
+            .panel-header.warning .icon {
+                background: rgba(239, 68, 68, 0.2);
+                color: var(--danger);
+            }
+
+            .panel-header h3 {
+                font-size: 1.5rem;
+                font-weight: 600;
+                margin: 0;
+            }
+
+            .prompt-output {
+                background: var(--bg-secondary);
+                border: 1px solid var(--border-primary);
+                border-radius: 12px;
+                padding: 16px;
+                margin-bottom: 16px;
+                font-family: 'SF Mono', monospace;
+                font-size: 14px;
+                color: var(--text-secondary);
+                white-space: pre-wrap;
+                overflow-y: auto;
+                max-height: 150px;
+            }
+
+            .ai-response {
+                background: var(--bg-tertiary);
+                border-radius: 12px;
+                padding: 16px;
+                font-size: 14px;
+                line-height: 1.6;
+                color: var(--text-primary);
+            }
+
+            .highlight {
+                font-weight: bold;
+                color: var(--accent);
+            }
+
+            .json-key {
+                color: var(--success);
+                font-weight: bold;
+            }
+
+            .json-value {
+                color: var(--accent);
+            }
+
+            /* Educational Feedback */
+            .feedback-section {
+                margin-top: 32px;
+                padding: 24px;
+                background: var(--bg-secondary);
+                border-radius: 12px;
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+            }
+
+            .feedback-section h3 {
+                font-size: 1.5rem;
+                font-weight: 600;
+                margin-bottom: 16px;
+            }
+
+            .feedback-section ul {
+                list-style: disc;
+                padding-left: 20px;
+            }
+
+            .feedback-section ul li {
+                margin-bottom: 8px;
+                font-size: 14px;
+                color: var(--text-secondary);
+            }
+
+            /* Responsive Design */
+            @media (max-width: 768px) {
+                .comparison-section {
+                grid-template-columns: 1fr;
+                }
+            }
+    </style>
     <script src="js/shared.js"></script>
     <script src="js/analyzer.js"></script>
     <style>
