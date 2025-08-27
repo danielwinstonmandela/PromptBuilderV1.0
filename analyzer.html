@@ -171,6 +171,61 @@
             .navbar-badge {
                 margin-left: 4px;
             }
+
+            /* Scenario buttons responsive */
+            .scenario-btn {
+                min-width: 120px !important;
+                font-size: 14px !important;
+            }
+        }
+
+        /* Scenario button styles */
+        .scenario-btn {
+            padding: 12px 20px;
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-primary);
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 140px;
+            font-size: 14px;
+        }
+
+        .scenario-btn:hover {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border-color: var(--border-secondary);
+            transform: translateY(-1px);
+        }
+
+        .scenario-btn.active {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            border-color: var(--text-primary);
+        }
+
+        .scenario-btn.active:hover {
+            background: var(--text-secondary);
+            color: var(--bg-primary);
+            border-color: var(--text-secondary);
+        }
+
+        @media (max-width: 480px) {
+            .scenario-btn {
+                min-width: 100px;
+                padding: 10px 16px;
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .scenario-btn {
+                min-width: 100px !important;
+                padding: 10px 16px !important;
+                font-size: 13px !important;
+            }
         }
     </style>
 </head>
@@ -228,19 +283,37 @@
 
         <!-- No Prompt State -->
         <div id="noPromptState" class="card" style="text-align: center; padding: 48px 32px;">
-            <div style="font-size: 3rem; margin-bottom: 16px;">🔍</div>
-            <h3 style="color: var(--text-primary); margin-bottom: 16px; font-size: 1.5rem;">Ready to See the Impact?</h3>
-            <p style="color: var(--text-secondary); margin-bottom: 32px; max-width: 500px; margin-left: auto; margin-right: auto;">Create a structured prompt first to see the powerful comparison with real AI responses!</p>
-            <a href="builder.html" class="btn btn-success">
-                ⚡ Build a Structured Prompt
-            </a>
+            <div style="font-size: 3rem; margin-bottom: 16px;">📊</div>
+            <h3 style="color: var(--text-primary); margin-bottom: 16px; font-size: 1.5rem;">Prompt Impact Analyzer</h3>
+            <p style="color: var(--text-secondary); margin-bottom: 32px; max-width: 600px; margin-left: auto; margin-right: auto;">Discover the dramatic difference between structured and unstructured prompts across different professional scenarios.</p>
+            
+            <!-- Scenario Selection -->
+            <div style="margin-bottom: 32px;">
+                <h4 style="color: var(--text-primary); margin-bottom: 16px; font-size: 1.1rem;">Choose a Professional Scenario:</h4>
+                <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 24px;">
+                    <button class="scenario-btn active" data-scenario="creative-writer">
+                        📝 Creative Writer
+                    </button>
+                    <button class="scenario-btn" data-scenario="personal-trainer">
+                        💪 Personal Trainer
+                    </button>
+                    <button class="scenario-btn" data-scenario="software-developer">
+                        💻 Software Developer
+                    </button>
+                </div>
+            </div>
+            
+            <button id="analyzePromptBtn" class="btn btn-success">
+                ⚡ Analyze Prompt Impact
+            </button>
         </div>
+        
 
         <!-- Loading State -->
         <div id="loadingState" class="card" style="display: none; text-align: center; padding: 48px 32px;">
             <div class="loading-spinner" style="width: 48px; height: 48px; border: 3px solid var(--border-primary); border-top: 3px solid var(--accent); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 24px;"></div>
-            <h3 style="color: var(--text-primary); margin-bottom: 16px;">Analyzing Impact...</h3>
-            <p style="color: var(--text-secondary);">Comparing your structured prompt with a generic version using real AI responses</p>
+            <h3 style="color: var(--text-primary); margin-bottom: 16px;">Generating Responses...</h3>
+            <p style="color: var(--text-secondary);">Simulating AI responses to demonstrate the impact of structured prompting</p>
         </div>
 
         <!-- Comparison Results -->
@@ -261,7 +334,7 @@
                             <div style="padding: 24px;">
                                 <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
                                     <div style="width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: rgba(16, 185, 129, 0.2); color: var(--success); font-weight: bold;">✓</div>
-                                    <h3 style="font-weight: 600; color: var(--text-primary); margin: 0;">Your Structured Prompt</h3>
+                                    <h3 style="font-weight: 600; color: var(--text-primary); margin: 0;">Structured Prompt Output</h3>
                                 </div>
                                 
                                 <div class="prompt-preview" style="background: var(--bg-secondary); border: 1px solid var(--border-primary); border-radius: 12px; padding: 16px; margin-bottom: 20px;">
@@ -291,7 +364,7 @@
                             <div style="padding: 24px;">
                                 <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
                                     <div style="width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: rgba(239, 68, 68, 0.2); color: var(--error); font-weight: bold;">✗</div>
-                                    <h3 style="font-weight: 600; color: var(--text-primary); margin: 0;">Generic Prompt</h3>
+                                    <h3 style="font-weight: 600; color: var(--text-primary); margin: 0;">Unstructured Prompt Output</h3>
                                 </div>
                                 
                                 <div class="prompt-preview" style="background: var(--bg-secondary); border: 1px solid var(--border-primary); border-radius: 12px; padding: 16px; margin-bottom: 20px;">
@@ -312,6 +385,12 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <!-- Analysis Section -->
+            <div id="analysisSection" class="card" style="display: none; margin-bottom: 32px; padding: 32px;">
+                <h3 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 16px; color: var(--text-primary); text-align: center;">📊 Impact Analysis</h3>
+                <div id="analysisContent" style="color: var(--text-secondary); line-height: 1.7; font-size: 1.1rem; text-align: justify; max-width: 800px; margin: 0 auto;"></div>
             </div>
 
             <!-- Action Buttons -->
@@ -352,505 +431,376 @@
             }
         });
 
-        // Impact Analyzer Core Functionality
+        // Impact Analyzer with Three Professional Scenarios
         class ImpactAnalyzer {
             constructor() {
-                // Using simulated responses as per PRD - no external API calls
+                // Three professional scenarios with hardcoded prompts and responses
+                this.scenarios = {
+                    'creative-writer': {
+                        structuredPrompt: `Act as a suspense novelist with expertise in psychological thrillers.
+
+Write the opening paragraph of a short story where a character finds a hidden diary in their new house. 
+
+Context: This is the beginning of a gothic horror story aimed at adult readers who enjoy atmospheric tension and psychological depth.
+
+Requirements:
+- Create an immediate sense of foreboding and unease
+- Establish the character's emotional state and motivation
+- Use sensory details to build atmosphere
+- End with a hook that compels the reader to continue
+- Keep the tone dark and mysterious
+- Length: 100-150 words`,
+
+                        unstructuredPrompt: "Write a story about a house.",
+
+                        structuredResponse: `The floorboard groaned beneath Sarah's feet as she stepped into the master bedroom, dust motes dancing in the pale afternoon light that filtered through grimy windows. Three weeks since the inheritance, and she still felt like an intruder in her great-aunt's Victorian home. The realtor had assured her the house held no secrets, but as Sarah knelt beside the loose baseboard she'd discovered that morning, her fingers trembling as they traced the hidden compartment's edge, she wondered what lies people tell themselves to sleep at night. The leather-bound diary that emerged was warm to the touch—impossibly warm, as if someone had just been holding it. The brass clasp clicked open with a sound like breaking bones, and Sarah's breath caught as she read the first line, written in her own handwriting: "Day 1: I've finally found someone who looks exactly like me."`,
+
+                        unstructuredResponse: `There was a house and someone lived in it. They found some stuff and it was interesting. The house was old and had many rooms. The person was curious about what they found. It was mysterious and made them think about things. The end.`,
+
+                        analysisText: `The structured prompt produced a compelling, atmospheric opening with rich sensory details, character development, and a psychological hook that draws readers in. The specific requirements for tone, length, and genre elements resulted in professional-quality fiction writing.
+
+In contrast, the unstructured prompt yielded a simplistic, generic response with no atmosphere, character depth, or narrative tension. The difference demonstrates how detailed prompt engineering transforms AI from a basic text generator into a sophisticated creative writing assistant capable of producing publishable content.`
+                    },
+
+                    'personal-trainer': {
+                        structuredPrompt: `Act as a certified personal trainer with NASM certification and 5 years of experience working with beginners.
+
+Create a comprehensive 3-day full-body workout plan for a complete beginner with no gym equipment access.
+
+Client Profile: Sedentary lifestyle, no previous exercise experience, looking to build basic fitness and strength at home.
+
+Requirements:
+- Include specific exercises, sets, and reps for each day
+- Provide form cues and safety tips for each exercise
+- Include warm-up and cool-down routines
+- Progress recommendations for week 2-4
+- Modifications for different fitness levels
+- Total workout time should be 30-45 minutes
+- Focus on compound movements and functional fitness`,
+
+                        unstructuredPrompt: "Give me a workout plan.",
+
+                        structuredResponse: `**BEGINNER 3-DAY FULL-BODY HOME WORKOUT PLAN**
+
+**WARM-UP (5-7 minutes):**
+• Arm circles: 30 seconds each direction
+• Leg swings: 10 each leg, forward/back and side-to-side
+• Bodyweight squats: 10 slow reps (focus on form)
+• March in place with high knees: 1 minute
+
+**DAY 1: FOUNDATION STRENGTH**
+1. **Wall Push-ups**: 2 sets of 8-12 reps
+   - Stand arm's length from wall, hands flat against wall at shoulder height
+   - Keep body straight, push away from wall slowly
+
+2. **Bodyweight Squats**: 3 sets of 10-15 reps
+   - Feet shoulder-width apart, weight in heels
+   - Lower as if sitting in chair, knees track over toes
+
+3. **Modified Plank**: 2 sets of 15-30 seconds
+   - Start on knees and forearms, maintain straight line
+   - Progress to full plank when comfortable
+
+4. **Glute Bridges**: 3 sets of 12-15 reps
+   - Lie on back, knees bent, squeeze glutes and lift hips
+   - Hold 2 seconds at top
+
+**DAY 2: CARDIO & MOBILITY**
+1. **Step-ups** (using sturdy chair): 3 sets of 10 each leg
+2. **Mountain Climbers**: 3 sets of 20 total (10 each leg)
+3. **Standing Side Bends**: 2 sets of 15 each side
+4. **Calf Raises**: 3 sets of 15-20 reps
+
+**DAY 3: UPPER BODY FOCUS**
+1. **Incline Push-ups** (hands on couch/chair): 3 sets of 8-12 reps
+2. **Pike Push-ups**: 2 sets of 5-8 reps (targets shoulders)
+3. **Tricep Dips** (using chair): 2 sets of 8-12 reps
+4. **Superman**: 3 sets of 10-12 reps (back strengthening)
+
+**COOL-DOWN (5-7 minutes):**
+• Forward fold stretch: 30 seconds
+• Quad stretch: 30 seconds each leg
+• Shoulder crossover stretch: 30 seconds each arm
+• Child's pose: 1 minute
+
+**PROGRESSION (Weeks 2-4):**
+- Increase reps by 2-3 per week
+- Add 5-10 seconds to plank holds
+- Progress to standard push-ups from wall push-ups
+- Add resistance with water bottles or books
+
+**SAFETY NOTES:**
+- Stop immediately if you feel pain (discomfort is normal, pain is not)
+- Focus on form over speed or rep count
+- Rest 1-2 days between workouts initially
+- Stay hydrated and listen to your body`,
+
+                        unstructuredResponse: `Do some push-ups, squats, and planks. Maybe run around or do jumping jacks. Try to exercise 3 times a week. Start slow and build up. That should be good for getting in shape.`,
+
+                        analysisText: `The structured prompt delivered a comprehensive, professional workout plan with specific exercises, progressions, safety guidelines, and client-appropriate modifications. The detailed requirements produced actionable fitness guidance that a beginner could safely follow at home.
+
+The unstructured prompt resulted in vague, potentially unsafe advice with no specificity, progressions, or safety considerations. This comparison highlights how detailed prompting transforms AI from giving generic fitness advice into providing professional-level personal training guidance with proper exercise prescription and client safety protocols.`
+                    },
+
+                    'software-developer': {
+                        structuredPrompt: `You are a senior Python developer with expertise in clean code practices and documentation.
+
+Write a Python function called get_average_word_length that takes a string of text and returns the average length of the words.
+
+Requirements:
+- Include comprehensive docstrings following Google style
+- Handle edge cases (empty strings, None input, punctuation)
+- Use type hints for parameters and return value
+- Include error handling with appropriate exceptions
+- Write the function to be production-ready
+- Add inline comments explaining complex logic
+- Consider performance for large text inputs`,
+
+                        unstructuredPrompt: "Code something to get the word length from a sentence.",
+
+                        structuredResponse: `\`\`\`python
+import re
+from typing import Optional
+
+def get_average_word_length(text: Optional[str]) -> float:
+    """
+    Calculate the average length of words in a given text string.
+    
+    This function processes text by removing punctuation, splitting into words,
+    and computing the mean word length. It handles various edge cases including
+    empty strings, None inputs, and text with only punctuation or whitespace.
+    
+    Args:
+        text (Optional[str]): The input text to analyze. Can be None.
+        
+    Returns:
+        float: The average length of words in the text. Returns 0.0 if no
+               valid words are found.
+               
+    Raises:
+        TypeError: If the input is not a string or None.
+        
+    Examples:
+        >>> get_average_word_length("Hello world")
+        5.0
+        >>> get_average_word_length("The quick brown fox")
+        3.75
+        >>> get_average_word_length("")
+        0.0
+        >>> get_average_word_length("Hello, world!")
+        5.0
+    """
+    # Handle None input
+    if text is None:
+        return 0.0
+    
+    # Validate input type
+    if not isinstance(text, str):
+        raise TypeError(f"Expected string or None, got {type(text).__name__}")
+    
+    # Handle empty string
+    if not text.strip():
+        return 0.0
+    
+    # Remove punctuation and convert to lowercase for consistency
+    # Using regex to keep only letters and spaces
+    cleaned_text = re.sub(r'[^a-zA-Z\s]', '', text)
+    
+    # Split into words and filter out empty strings
+    words = [word for word in cleaned_text.split() if word]
+    
+    # Handle case where no valid words remain after cleaning
+    if not words:
+        return 0.0
+    
+    # Calculate average length
+    total_length = sum(len(word) for word in words)
+    average_length = total_length / len(words)
+    
+    return round(average_length, 2)  # Round to 2 decimal places for readability
+
+
+# Example usage and testing
+if __name__ == "__main__":
+    # Test cases
+    test_cases = [
+        "Hello world",
+        "The quick brown fox jumps over the lazy dog",
+        "Python is awesome!",
+        "",
+        None,
+        "   ",
+        "123 456 789",  # Numbers only
+        "Hello, world! How are you today?",
+    ]
+    
+    for test in test_cases:
+        try:
+            result = get_average_word_length(test)
+            print(f"Input: {repr(test)} -> Average word length: {result}")
+        except Exception as e:
+            print(f"Input: {repr(test)} -> Error: {e}")
+\`\`\``,
+
+                        unstructuredResponse: `def word_length(sentence):
+    words = sentence.split()
+    total = 0
+    for word in words:
+        total += len(word)
+    return total / len(words)`,
+
+                        analysisText: `The structured prompt produced production-ready code with comprehensive documentation, type hints, error handling, edge case management, and professional coding standards. The function includes detailed docstrings, example usage, and robust error handling that would pass code review in a professional environment.
+
+The unstructured prompt resulted in a basic function with no documentation, error handling, or edge case consideration. It would fail on empty inputs and lacks the professional standards expected in production code. This demonstrates how detailed prompting transforms AI from a basic code generator into a professional development assistant capable of producing enterprise-grade software.`
+                    }
+                };
+
+                this.currentScenario = 'creative-writer';
                 this.init();
             }
 
             init() {
-                // Check if we have a prompt from the builder
-                const urlParams = new URLSearchParams(window.location.search);
-                const promptFromUrl = urlParams.get('prompt');
-                const promptFromStorage = localStorage.getItem('generatedPrompt');
-                
-                if (promptFromUrl || promptFromStorage) {
-                    const structuredPrompt = promptFromUrl || promptFromStorage;
-                    this.analyzePrompt(structuredPrompt);
-                } else {
-                    this.showNoPromptState();
-                }
+                // Always show the demo interface
+                this.showDemoInterface();
+                this.attachEventListeners();
             }
 
-            showNoPromptState() {
+            showDemoInterface() {
                 document.getElementById('noPromptState').style.display = 'block';
                 document.getElementById('loadingState').style.display = 'none';
                 document.getElementById('comparisonResults').style.display = 'none';
+                document.getElementById('analysisSection').style.display = 'none';
             }
 
             showLoadingState() {
                 document.getElementById('noPromptState').style.display = 'none';
                 document.getElementById('loadingState').style.display = 'block';
                 document.getElementById('comparisonResults').style.display = 'none';
+                document.getElementById('analysisSection').style.display = 'none';
             }
 
             showResults() {
                 document.getElementById('noPromptState').style.display = 'none';
                 document.getElementById('loadingState').style.display = 'none';
                 document.getElementById('comparisonResults').style.display = 'block';
+                
+                // Show analysis section with a slight delay for better UX
+                setTimeout(() => {
+                    document.getElementById('analysisSection').style.display = 'block';
+                    this.typeWriterEffect(document.getElementById('analysisContent'), this.getCurrentScenario().analysisText, 5);
+                }, 1000);
             }
 
-            generateBadPrompt(structuredPrompt) {
-                // Extract the core task from the structured prompt
-                // This is a simplified version - in production you'd have more sophisticated parsing
-                
-                // Remove common prompt engineering patterns
-                let badPrompt = structuredPrompt
-                    .replace(/Act as a[^.]*\./gi, '') // Remove "Act as..." instructions
-                    .replace(/You are a[^.]*\./gi, '') // Remove "You are..." instructions
-                    .replace(/Your task is to/gi, '') // Remove task framing
-                    .replace(/Context:[^]*?(?=\n\n|\n[A-Z]|$)/gi, '') // Remove context sections
-                    .replace(/Format:[^]*?(?=\n\n|\n[A-Z]|$)/gi, '') // Remove format instructions
-                    .replace(/Please provide[^.]*structured/gi, '') // Remove structure requests
-                    .replace(/\n+/g, ' ') // Replace multiple newlines with single space
-                    .trim();
-
-                // If we couldn't extract anything meaningful, create a basic version
-                if (badPrompt.length < 10) {
-                    // Extract the main action/topic from the original prompt
-                    const actionMatch = structuredPrompt.match(/(?:explain|describe|analyze|create|write|generate|help|tell|show)[^.]*\.?/i);
-                    if (actionMatch) {
-                        badPrompt = actionMatch[0].replace(/\.$/, '');
-                    } else {
-                        badPrompt = "Help me with this topic.";
-                    }
+            attachEventListeners() {
+                // Analyze button
+                const analyzeBtn = document.getElementById('analyzePromptBtn');
+                if (analyzeBtn) {
+                    analyzeBtn.addEventListener('click', () => this.analyzePromptImpact());
                 }
 
-                // Ensure it's actually simpler
-                return badPrompt.length > 100 ? badPrompt.substring(0, 100) + '...' : badPrompt;
+                // Scenario selection buttons
+                const scenarioButtons = document.querySelectorAll('.scenario-btn');
+                scenarioButtons.forEach(btn => {
+                    btn.addEventListener('click', (e) => this.selectScenario(e.target.dataset.scenario));
+                });
             }
 
-            async callGeminiAPI(prompt) {
+            selectScenario(scenario) {
+                this.currentScenario = scenario;
+                
+                // Update button states using CSS classes
+                document.querySelectorAll('.scenario-btn').forEach(btn => {
+                    const isActive = btn.dataset.scenario === scenario;
+                    btn.classList.toggle('active', isActive);
+                });
+            }
+
+            getCurrentScenario() {
+                return this.scenarios[this.currentScenario];
+            }
+
+            async analyzePromptImpact() {
                 try {
-                    // Simulate realistic API delay (2-3 seconds as specified in PRD)
-                    await new Promise(resolve => setTimeout(resolve, 2000 + Math.random() * 1000));
-
-                    // Return topic-specific simulated responses
-                    return this.getSimulatedResponse(prompt);
-                } catch (error) {
-                    console.error('Simulation Error:', error);
-                    throw new Error('Failed to generate response. Please try again.');
-                }
-            }
-
-            getSimulatedResponse(prompt) {
-                // Determine if this is a structured (good) or generic (bad) prompt
-                const isStructured = prompt.length > 150 && (
-                    prompt.includes('Act as') || 
-                    prompt.includes('You are') || 
-                    prompt.includes('Context:') || 
-                    prompt.includes('Format:') ||
-                    prompt.includes('persona') ||
-                    prompt.includes('specific') ||
-                    prompt.includes('detailed')
-                );
-
-                // Detect topic category for more relevant responses
-                const topic = this.detectTopic(prompt);
-                
-                if (isStructured) {
-                    return this.getGoodResponse(topic);
-                } else {
-                    return this.getBadResponse(topic);
-                }
-            }
-
-            detectTopic(prompt) {
-                const promptLower = prompt.toLowerCase();
-                
-                if (promptLower.includes('inflation') || promptLower.includes('economy') || promptLower.includes('financial')) {
-                    return 'finance';
-                } else if (promptLower.includes('misinformation') || promptLower.includes('fake news') || promptLower.includes('media literacy')) {
-                    return 'media_literacy';
-                } else if (promptLower.includes('climate') || promptLower.includes('environment') || promptLower.includes('sustainability')) {
-                    return 'environment';
-                } else if (promptLower.includes('social media') || promptLower.includes('digital') || promptLower.includes('technology')) {
-                    return 'technology';
-                } else if (promptLower.includes('education') || promptLower.includes('learning') || promptLower.includes('student')) {
-                    return 'education';
-                } else {
-                    return 'general';
-                }
-            }
-
-            getGoodResponse(topic) {
-                const responses = {
-                    finance: `**Understanding Inflation: A Comprehensive Guide for Teenagers**
-
-As your financial advisor, I'll break down inflation in terms that relate to your everyday experiences.
-
-**What is Inflation?**
-Inflation is the gradual increase in prices of goods and services over time, which reduces the purchasing power of money. Think of it like this: the $20 you have today won't buy as much in 10 years as it does now.
-
-**Real-World Examples:**
-• Movie tickets: Cost $5 in 2000, now cost $12-15
-• College tuition: Has increased 3x faster than inflation
-• Your favorite fast food meal: Probably costs more than it did 2 years ago
-
-**Why It Happens:**
-1. **Demand vs Supply**: More people wanting limited goods drives prices up
-2. **Money Supply**: When there's more money in circulation, prices tend to rise
-3. **Production Costs**: If it costs more to make things, companies charge more
-
-**Impact on Your Future:**
-- Your savings lose value if inflation outpaces your savings account interest
-- Your future salary needs to account for inflation to maintain your lifestyle
-- Investments like stocks historically outpace inflation
-
-**Action Steps for Teens:**
-✓ Start investing early (even small amounts)
-✓ Consider inflation when planning major purchases
-✓ Learn about different investment vehicles
-✓ Understand how inflation affects student loans
-
-This structured approach helps you not just understand inflation, but see how it directly impacts your financial decisions today and tomorrow.`,
-
-                    media_literacy: `**Identifying and Combating Misinformation: A Media Literacy Framework**
-
-As a digital literacy expert, I'll provide you with a systematic approach to identifying and responding to misinformation.
-
-**The SIFT Method for Source Verification:**
-
-**S - Stop and Check**
-Before sharing or believing content, pause and ask:
-- Who created this content?
-- What's their motivation?
-- Does this align with known facts?
-
-**I - Investigate the Source**
-• Check the website's "About" section
-• Look for editorial standards and correction policies
-• Verify author credentials and expertise
-• Cross-reference with established fact-checking sites
-
-**F - Find Better Coverage**
-• Search for the same story from multiple reputable sources
-• Look for primary sources (original research, official statements)
-• Check if mainstream media is covering the story
-
-**T - Trace Claims to Origin**
-• Find the original source of quotes or statistics
-• Verify that images haven't been manipulated or taken out of context
-• Check publication dates to ensure currency
-
-**Red Flags to Watch For:**
-🚩 Emotional language designed to trigger strong reactions
-🚩 Claims that seem too good/bad to be true
-🚩 No author or publication date listed
-🚩 Poor grammar, spelling, or unprofessional formatting
-🚩 Extraordinary claims without extraordinary evidence
-
-**Practical Response Strategy:**
-1. **Don't share questionable content** - even to debunk it
-2. **Report misinformation** on social platforms
-3. **Engage constructively** with friends who share false information
-4. **Promote reliable sources** in your networks
-
-**Building Long-term Media Literacy:**
-• Follow diverse, credible news sources
-• Understand media bias and how to account for it
-• Learn to distinguish between news, opinion, and analysis
-• Develop emotional regulation when consuming upsetting content
-
-This framework empowers you to be an active defender against misinformation while building critical thinking skills essential for digital citizenship.`,
-
-                    environment: `**Climate Change Action Plan: Evidence-Based Solutions for Young Activists**
-
-As an environmental policy advisor, I'll outline actionable strategies backed by scientific research.
-
-**Understanding the Current Climate Crisis:**
-
-**Key Metrics:**
-• Global temperature has risen 1.1°C since pre-industrial times
-• CO2 levels at highest point in 3+ million years (421 ppm)
-• We have ~8 years to halve emissions to avoid worst impacts
-
-**Most Impactful Individual Actions (ranked by carbon reduction):**
-1. **Transportation Changes**: 2.3 tons CO2/year reduction
-   - Use public transit, bike, or walk when possible
-   - Consider electric vehicles for families
-   - Reduce air travel or purchase carbon offsets
-
-2. **Dietary Modifications**: 0.8 tons CO2/year reduction
-   - Reduce meat consumption (especially beef)
-   - Support local, seasonal produce
-   - Minimize food waste
-
-3. **Home Energy Efficiency**: 0.9 tons CO2/year reduction
-   - Switch to renewable energy providers
-   - Improve home insulation
-   - Use energy-efficient appliances
-
-**Systemic Change Strategies:**
-🗳️ **Political Engagement**
-- Vote for climate-conscious candidates
-- Contact representatives about climate policies
-- Support carbon pricing and renewable energy subsidies
-
-🏢 **Community Organizing**
-- Join or start climate action groups
-- Advocate for sustainable practices in schools/workplaces
-- Organize community renewable energy projects
-
-💰 **Economic Pressure**
-- Divest from fossil fuel companies
-- Support businesses with strong environmental practices
-- Advocate for corporate sustainability reporting
-
-**Avoiding Climate Anxiety:**
-• Focus on actions within your control
-• Connect with like-minded communities
-• Celebrate small wins and progress
-• Balance activism with self-care
-
-**Evidence-Based Hope:**
-- Renewable energy costs have dropped 90% in the past decade
-- Many countries are exceeding Paris Agreement commitments
-- Youth activism is driving unprecedented policy attention
-
-This comprehensive approach combines personal responsibility with systemic change advocacy, empowering you to make meaningful impact while maintaining psychological well-being.`,
-
-                    technology: `**Digital Wellness and Social Media Literacy: A Balanced Approach**
-
-As a digital wellness consultant, I'll provide evidence-based strategies for healthy technology use.
-
-**Understanding Social Media's Impact:**
-
-**Positive Effects:**
-• Enhanced social connections across distances
-• Access to diverse perspectives and communities
-• Educational content and skill development
-• Creative expression and collaboration opportunities
-
-**Documented Risks:**
-• Increased anxiety and depression rates (especially 13-17 age group)
-• Sleep disruption from blue light and stimulating content
-• Comparison culture leading to reduced self-esteem
-• Attention fragmentation affecting deep focus abilities
-
-**The Balanced Usage Framework:**
-
-**1. Intentional Consumption (What)**
-✓ Curate feeds to include educational and inspiring content
-✓ Unfollow accounts that consistently make you feel worse
-✓ Use platform tools to limit exposure to negative content
-✓ Seek out diverse viewpoints to avoid echo chambers
-
-**2. Mindful Timing (When)**
-• Implement "no-phone" zones: meals, bedrooms, study time
-• Use app timers to track and limit usage
-• Avoid social media 1 hour before bed and upon waking
-• Schedule specific times for checking platforms vs. constant notifications
-
-**3. Active vs. Passive Engagement (How)**
-• Comment thoughtfully rather than endless scrolling
-• Create and share original content
-• Use platforms for genuine communication with friends
-• Engage with educational content actively (take notes, research further)
-
-**Digital Literacy Skills:**
-🔍 **Source Verification**: Check multiple sources before believing or sharing
-🤖 **Algorithm Awareness**: Understand how platforms decide what you see
-🎭 **Curated Reality Recognition**: Remember that social media shows highlight reels
-🛡️ **Privacy Protection**: Regular security settings reviews and data awareness
-
-**Warning Signs to Monitor:**
-- Feeling anxious when unable to check devices
-- Declining real-world social interactions
-- Sleep problems or changes in sleep patterns
-- Decreased academic or work performance
-- Physical symptoms (headaches, eye strain, neck pain)
-
-**Building Healthy Tech Habits:**
-• Use technology to enhance rather than replace real-world activities
-• Practice digital minimalism - quality over quantity
-• Develop offline hobbies and interests
-• Build face-to-face communication skills
-
-This framework helps you harness technology's benefits while protecting your mental health and developing critical digital citizenship skills.`,
-
-                    education: `**Effective Study Strategies: Evidence-Based Learning Optimization**
-
-As an educational psychologist, I'll share scientifically-proven methods to enhance your learning effectiveness.
-
-**Core Learning Principles:**
-
-**1. Active Recall vs. Passive Review**
-❌ **Passive**: Re-reading notes, highlighting text
-✅ **Active**: Testing yourself, explaining concepts aloud, creating flashcards
-
-**Research Finding**: Active recall improves retention by 50-80% compared to passive review.
-
-**2. Spaced Repetition System**
-• Review material at increasing intervals: 1 day, 3 days, 1 week, 2 weeks, 1 month
-• Use apps like Anki or create a manual scheduling system
-• Focus more time on difficult concepts, less on mastered material
-
-**3. Interleaving Practice**
-Instead of studying one topic for hours (blocking), mix different topics within study sessions.
-**Example**: Math session = 20 min algebra + 20 min geometry + 20 min statistics
-
-**Practical Study Schedule Framework:**
-
-**Daily (30-90 minutes):**
-- 10 minutes: Review yesterday's material (active recall)
-- 20-60 minutes: Learn new material with active techniques
-- 10-20 minutes: Preview tomorrow's content
-
-**Weekly Review (2-3 hours):**
-- Comprehensive testing of all week's material
-- Identify weak areas for focused practice
-- Connect new learning to previously learned concepts
-
-**Monthly Deep Review (3-4 hours):**
-- Practice exams or comprehensive projects
-- Analyze learning patterns and adjust strategies
-- Celebrate progress and set new goals
-
-**Environment Optimization:**
-🎯 **Focus Techniques**:
-- Pomodoro Technique: 25 min focused work + 5 min break
-- Remove distractions (phone in another room)
-- Use website blockers during study time
-
-🧠 **Cognitive Enhancement**:
-- Study in multiple locations to strengthen memory cues
-- Use background white noise or nature sounds
-- Maintain consistent sleep schedule (7-9 hours for teens)
-- Exercise regularly to boost cognitive function
-
-**Subject-Specific Strategies:**
-• **STEM**: Focus on problem-solving practice over memorization
-• **Languages**: Immersion techniques and conversation practice
-• **History/Social Studies**: Create timelines and cause-effect maps
-• **Literature**: Discuss themes and make personal connections
-
-**Motivation and Mindset:**
-- Set specific, measurable learning goals
-- Track progress visually (charts, apps)
-- Connect learning to personal interests and future goals
-- Develop growth mindset - embrace challenges as opportunities
-
-This systematic approach transforms studying from time-consuming drudgery into efficient, effective learning that builds lasting knowledge and skills.`,
-
-                    general: `**Comprehensive Problem-Solving Framework: A Structured Approach**
-
-As an expert consultant, I'll provide you with a systematic methodology for addressing complex challenges.
-
-**The 5-Phase Problem-Solving Model:**
-
-**Phase 1: Problem Definition (20% of effort)**
-• Clearly articulate the core issue
-• Distinguish between symptoms and root causes
-• Define success criteria and constraints
-• Identify stakeholders and their perspectives
-
-**Phase 2: Information Gathering (25% of effort)**
-• Research similar challenges and solutions
-• Collect relevant data and evidence
-• Consult subject matter experts
-• Map current processes and systems
-
-**Phase 3: Solution Generation (20% of effort)**
-• Brainstorm multiple approaches without judgment
-• Use structured creativity techniques (SCAMPER, mind mapping)
-• Consider both conventional and innovative solutions
-• Evaluate feasibility, cost, and potential impact
-
-**Phase 4: Implementation Planning (25% of effort)**
-• Develop detailed action steps with timelines
-• Identify required resources and potential obstacles
-• Create contingency plans for likely scenarios
-• Establish progress metrics and checkpoints
-
-**Phase 5: Evaluation and Iteration (10% of effort)**
-• Monitor results against success criteria
-• Gather feedback from stakeholders
-• Document lessons learned
-• Adjust approach based on outcomes
-
-**Critical Thinking Tools:**
-🔍 **Root Cause Analysis**: Use "5 Whys" technique
-📊 **Data Analysis**: Look for patterns and correlations
-🎯 **Priority Matrix**: Urgent vs. Important categorization
-🔄 **Systems Thinking**: Consider interconnections and feedback loops
-
-**Decision-Making Framework:**
-1. **Identify Options**: Generate at least 3 alternatives
-2. **Evaluate Criteria**: Cost, time, risk, alignment with goals
-3. **Weight Factors**: Determine relative importance of criteria
-4. **Score Options**: Rate each alternative against criteria
-5. **Make Decision**: Choose highest-scoring option
-6. **Plan Implementation**: Detailed action steps
-
-**Common Problem-Solving Pitfalls to Avoid:**
-❌ Jumping to solutions before understanding the problem
-❌ Considering only obvious or traditional approaches
-❌ Ignoring stakeholder perspectives and constraints
-❌ Failing to test solutions before full implementation
-❌ Not learning from failures or unexpected outcomes
-
-This structured approach ensures thorough analysis while maintaining efficiency and increasing the likelihood of successful outcomes.`
-                };
-
-                return responses[topic] || responses.general;
-            }
-
-            getBadResponse(topic) {
-                const responses = {
-                    finance: `Inflation is when prices go up. It happens because of supply and demand and other economic factors. It affects the economy and people's buying power. You should probably save money and invest to protect yourself from inflation.`,
-
-                    media_literacy: `Misinformation is false information that spreads online. You should fact-check things before believing them. Look at multiple sources and be careful about what you share. Some websites are more reliable than others.`,
-
-                    environment: `Climate change is a big problem caused by pollution and greenhouse gases. You can help by recycling, using less energy, and driving less. It's important to care about the environment for future generations.`,
-
-                    technology: `Social media can be good or bad. It helps you connect with people but can also be addictive. You should limit your screen time and be careful about what you post. Privacy is important online.`,
-
-                    education: `To study better, you should make a schedule and stay organized. Take notes and review them regularly. Find a quiet place to study and avoid distractions. Ask for help if you need it.`,
-
-                    general: `This is a complex topic with many different aspects to consider. There are various approaches you could take depending on your specific situation. You should research more and maybe consult with experts to get better information.`
-                };
-
-                return responses[topic] || responses.general;
-            }
-
-            async analyzePrompt(structuredPrompt) {
-                this.showLoadingState();
-
-                try {
-                    // Generate the simplified "bad" prompt
-                    const badPrompt = this.generateBadPrompt(structuredPrompt);
-
-                    // Display the prompts
-                    document.getElementById('goodPromptText').textContent = structuredPrompt;
-                    document.getElementById('badPromptText').textContent = badPrompt;
-
-                    // Make simultaneous API calls
-                    const [goodResponse, badResponse] = await Promise.all([
-                        this.callGeminiAPI(structuredPrompt),
-                        this.callGeminiAPI(badPrompt)
-                    ]);
-
-                    // Display responses
-                    document.getElementById('goodResponse').textContent = goodResponse;
-                    document.getElementById('badResponse').textContent = badResponse;
+                    const scenario = this.getCurrentScenario();
+                    
+                    // Clear any previous content
+                    document.getElementById('goodPromptText').textContent = '';
+                    document.getElementById('badPromptText').textContent = '';
+                    document.getElementById('goodResponse').textContent = '';
+                    document.getElementById('badResponse').textContent = '';
+                    document.getElementById('analysisContent').textContent = '';
+
+                    // Show loading state
+                    this.showLoadingState();
+
+                    // Simulate network delay (2-3 seconds as specified)
+                    await new Promise(resolve => setTimeout(resolve, 2500));
+
+                    // Display the prompts for the selected scenario
+                    document.getElementById('goodPromptText').textContent = scenario.structuredPrompt;
+                    document.getElementById('badPromptText').textContent = scenario.unstructuredPrompt;
 
                     // Show results
                     this.showResults();
 
+                    // Animate the responses appearing with typewriter effect
+                    await Promise.all([
+                        this.typeWriterEffect(document.getElementById('goodResponse'), scenario.structuredResponse, 2),
+                        this.typeWriterEffect(document.getElementById('badResponse'), scenario.unstructuredResponse, 5)
+                    ]);
+
                 } catch (error) {
-                    console.error('Analysis failed:', error);
-                    // Show error state
-                    this.showErrorState(error.message);
+                    console.error('Demo error:', error);
+                    this.showErrorState('Demo encountered an error. Please try again.');
                 }
+            }
+
+            typeWriterEffect(element, text, speed = 20) {
+                return new Promise((resolve) => {
+                    // Convert markdown to HTML
+                    const htmlText = this.convertMarkdownToHTML(text);
+                    element.innerHTML = '';
+                    let i = 0;
+                    
+                    const typeInterval = setInterval(() => {
+                        if (i < htmlText.length) {
+                            element.innerHTML = htmlText.substring(0, i + 1);
+                            i++;
+                        } else {
+                            clearInterval(typeInterval);
+                            resolve();
+                        }
+                    }, speed);
+                });
+            }
+
+            convertMarkdownToHTML(text) {
+                return text
+                    // Convert **bold** to <strong>
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    // Convert *italic* to <em>
+                    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                    // Convert ```code blocks``` to <pre><code>
+                    .replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>')
+                    // Convert `inline code` to <code>
+                    .replace(/`(.*?)`/g, '<code>$1</code>')
+                    // Convert line breaks to <br>
+                    .replace(/\n/g, '<br>')
+                    // Convert bullet points (•) to proper list items
+                    .replace(/^• (.+)$/gm, '<div style="margin-left: 20px;">• $1</div>')
+                    // Convert numbered lists
+                    .replace(/^(\d+)\. (.+)$/gm, '<div style="margin-left: 20px;"><strong>$1.</strong> $2</div>')
+                    // Convert sub-items with dashes
+                    .replace(/^   - (.+)$/gm, '<div style="margin-left: 40px; color: var(--text-secondary);">- $1</div>')
+                    // Convert section headers (all caps with colons)
+                    .replace(/^([A-Z\s\-\(\)0-9]+:)$/gm, '<div style="margin: 16px 0 8px 0; font-weight: bold; color: var(--text-primary);">$1</div>');
             }
 
             showErrorState(message) {
                 document.getElementById('noPromptState').innerHTML = `
                     <div style="text-align: center; padding: 48px 32px;">
                         <div style="font-size: 3rem; margin-bottom: 16px;">⚠️</div>
-                        <h3 style="color: var(--error); margin-bottom: 16px;">Analysis Failed</h3>
+                        <h3 style="color: var(--error); margin-bottom: 16px;">Demo Error</h3>
                         <p style="color: var(--text-secondary); margin-bottom: 32px;">${message}</p>
                         <button class="btn btn-outline" onclick="location.reload()">Try Again</button>
                     </div>
@@ -858,6 +808,7 @@ This structured approach ensures thorough analysis while maintaining efficiency 
                 document.getElementById('noPromptState').style.display = 'block';
                 document.getElementById('loadingState').style.display = 'none';
                 document.getElementById('comparisonResults').style.display = 'none';
+                document.getElementById('analysisSection').style.display = 'none';
             }
         }
 
