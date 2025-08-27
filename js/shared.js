@@ -228,6 +228,17 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Setup navigation event listeners
     setupNavigationListeners();
+    
+    // Allow normal navigation for hub links
+    document.querySelectorAll('.start-here-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            // If it's an <a> tag, let the browser handle navigation
+            if (btn.tagName.toLowerCase() === 'a') {
+                // Remove any preventDefault logic from SPA navigation for these buttons
+                return;
+            }
+        });
+    });
 });
 
 /**
@@ -250,6 +261,17 @@ function setupNavigationListeners() {
     document.querySelectorAll('.feature-link, .btn[href]').forEach(link => {
         link.addEventListener('click', function(event) {
             const href = this.getAttribute('href');
+            // Allow normal navigation for educational hub pages
+            if (
+                href &&
+                (
+                    href.endsWith('ai-fundamentals-beginner.html') ||
+                    href.endsWith('mil-critical-thinking.html') ||
+                    href.endsWith('prompt-engineering-guides.html')
+                )
+            ) {
+                return; // Do NOT preventDefault, let browser navigate
+            }
             if (href && !href.startsWith('http') && !href.startsWith('#')) {
                 event.preventDefault();
                 

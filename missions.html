@@ -166,7 +166,7 @@
                 <div id="missionSelection" class="mission-selection">
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 32px; margin-bottom: 48px;">
                         <!-- Spot the Fake Mission -->
-                        <div class="mission-card" onclick="startMission('spot-fake')" style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(239, 68, 68, 0.05)); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 20px; padding: 32px; cursor: pointer; transition: all 0.3s ease;">
+                        <div class="mission-card" data-mission="spot-fake" data-total-questions="5" onclick="startMission('spot-fake')" style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(239, 68, 68, 0.05)); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 20px; padding: 32px; cursor: pointer; transition: all 0.3s ease;">
                             <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
                                 <div style="width: 60px; height: 60px; background: rgba(239, 68, 68, 0.2); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px;">🔍</div>
                                 <div>
@@ -184,15 +184,15 @@
                             <div style="display: flex; align-items: center; justify-content: between; gap: 16px;">
                                 <div style="flex: 1;">
                                     <div style="background: var(--bg-tertiary); height: 6px; border-radius: 3px; overflow: hidden;">
-                                        <div style="height: 100%; background: var(--error); width: 0%; border-radius: 3px; transition: width 0.3s ease;" class="progress-bar"></div>
+                                        <div id="progress-spot-fake" class="progress-bar" style="height: 100%; background: var(--error); width: 0%; border-radius: 3px; transition: width 0.3s ease;"></div>
                                     </div>
-                                    <div style="color: var(--text-tertiary); font-size: 12px; margin-top: 4px;">0/5 completed</div>
+                                    <div class="progress-text" style="color: var(--text-tertiary); font-size: 12px; margin-top: 4px;">0/5 completed</div>
                                 </div>
                                 <button class="btn" style="background: var(--error); padding: 8px 16px; font-size: 12px;">Start Mission</button>
                             </div>
                         </div>
                         <!-- Ethics Challenge Mission -->
-                        <div class="mission-card" onclick="startMission('ethics')" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(245, 158, 11, 0.05)); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 20px; padding: 32px; cursor: pointer; transition: all 0.3s ease;">
+                        <div class="mission-card" data-mission="ethics" data-total-questions="4" onclick="startMission('ethics')" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(245, 158, 11, 0.05)); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 20px; padding: 32px; cursor: pointer; transition: all 0.3s ease;">
                             <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
                                 <div style="width: 60px; height: 60px; background: rgba(245, 158, 11, 0.2); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px;">⚖️</div>
                                 <div>
@@ -210,15 +210,15 @@
                             <div style="display: flex; align-items: center; justify-content: between; gap: 16px;">
                                 <div style="flex: 1;">
                                     <div style="background: var(--bg-tertiary); height: 6px; border-radius: 3px; overflow: hidden;">
-                                        <div style="height: 100%; background: var(--warning); width: 0%; border-radius: 3px; transition: width 0.3s ease;" class="progress-bar"></div>
+                                        <div id="progress-ethics" class="progress-bar" style="height: 100%; background: var(--warning); width: 0%; border-radius: 3px; transition: width 0.3s ease;"></div>
                                     </div>
-                                    <div style="color: var(--text-tertiary); font-size: 12px; margin-top: 4px;">0/4 completed</div>
+                                    <div class="progress-text" style="color: var(--text-tertiary); font-size: 12px; margin-top: 4px;">0/4 completed</div>
                                 </div>
                                 <button class="btn" style="background: var(--warning); color: var(--bg-primary); padding: 8px 16px; font-size: 12px;">Start Mission</button>
                             </div>
                         </div>
                         <!-- Myth Busters Mission -->
-                        <div class="mission-card" onclick="startMission('myths')" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05)); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 20px; padding: 32px; cursor: pointer; transition: all 0.3s ease;">
+                        <div class="mission-card" data-mission="myths" data-total-questions="6" onclick="startMission('myths')" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05)); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 20px; padding: 32px; cursor: pointer; transition: all 0.3s ease;">
                             <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
                                 <div style="width: 60px; height: 60px; background: rgba(16, 185, 129, 0.2); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px;">💡</div>
                                 <div>
@@ -236,9 +236,9 @@
                             <div style="display: flex; align-items: center; justify-content: between; gap: 16px;">
                                 <div style="flex: 1;">
                                     <div style="background: var(--bg-tertiary); height: 6px; border-radius: 3px; overflow: hidden;">
-                                        <div style="height: 100%; background: var(--success); width: 0%; border-radius: 3px; transition: width 0.3s ease;" class="progress-bar"></div>
+                                        <div id="progress-myths" class="progress-bar" style="height: 100%; background: var(--success); width: 0%; border-radius: 3px; transition: width 0.3s ease;"></div>
                                     </div>
-                                    <div style="color: var(--text-tertiary); font-size: 12px; margin-top: 4px;">0/6 completed</div>
+                                    <div class="progress-text" style="color: var(--text-tertiary); font-size: 12px; margin-top: 4px;">0/6 completed</div>
                                 </div>
                                 <button class="btn btn-success" style="padding: 8px 16px; font-size: 12px;">Start Mission</button>
                             </div>
@@ -246,35 +246,35 @@
                     </div>
                     <!-- Leaderboard Section -->
                     <div style="background: var(--bg-secondary); border: 1px solid var(--border-primary); border-radius: 20px; padding: 32px; margin-top: 48px;">
-                        <div style="display: flex; align-items: center; justify-content: between; margin-bottom: 24px;">
-                            <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary);">🏆 Leaderboard</h3>
-                            <div style="background: var(--accent); color: var(--bg-primary); padding: 8px 16px; border-radius: 12px; font-size: 14px; font-weight: 600;">
-                                Your Score: <span id="userScore">0</span> points
-                            </div>
-                        </div>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px;">
-                            <div style="text-align: center; padding: 20px;">
-                                <div style="width: 60px; height: 60px; background: #FFD700; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-size: 24px;">🥇</div>
-                                <div style="font-weight: 600; color: var(--text-primary);">MIL Expert</div>
-                                <div style="color: var(--text-secondary); font-size: 14px;">250+ points</div>
-                            </div>
-                            <div style="text-align: center; padding: 20px;">
-                                <div style="width: 60px; height: 60px; background: #C0C0C0; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-size: 24px;">🥈</div>
-                                <div style="font-weight: 600; color: var(--text-primary);">Critical Thinker</div>
-                                <div style="color: var(--text-secondary); font-size: 14px;">150+ points</div>
-                            </div>
-                            <div style="text-align: center; padding: 20px;">
-                                <div style="width: 60px; height: 60px; background: #CD7F32; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-size: 24px;">🥉</div>
-                                <div style="font-weight: 600; color: var(--text-primary);">AI Aware</div>
-                                <div style="color: var(--text-secondary); font-size: 14px;">75+ points</div>
-                            </div>
-                            <div style="text-align: center; padding: 20px;">
-                                <div style="width: 60px; height: 60px; background: var(--bg-tertiary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-size: 24px;">🌱</div>
-                                <div style="font-weight: 600; color: var(--text-primary);">Beginner</div>
-                                <div style="color: var(--text-secondary); font-size: 14px;">0+ points</div>
-                            </div>
-                        </div>
-                    </div>
+    <div style="display: flex; align-items: center; justify-content: between; margin-bottom: 24px;">
+        <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin-right: 24px;">🏆 Leaderboard</h3>
+        <div style="background: var(--accent); color: var(--bg-primary); padding: 8px 16px; border-radius: 12px; font-size: 14px; font-weight: 600;">
+            Your Score: <span id="userScore">0</span> points
+        </div>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px;">
+        <div id="status-mil-expert" class="status-card" style="text-align: center; padding: 20px; border-radius: 12px;">
+            <div style="width: 60px; height: 60px; background: #FFD700; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-size: 24px;">🥇</div>
+            <div style="font-weight: 600; color: var(--text-primary);">MIL Expert</div>
+            <div style="color: var(--text-secondary); font-size: 14px;">250+ points</div>
+        </div>
+        <div id="status-critical-thinker" class="status-card" style="text-align: center; padding: 20px; border-radius: 12px;">
+            <div style="width: 60px; height: 60px; background: #C0C0C0; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-size: 24px;">🥈</div>
+            <div style="font-weight: 600; color: var(--text-primary);">Critical Thinker</div>
+            <div style="color: var(--text-secondary); font-size: 14px;">150+ points</div>
+        </div>
+        <div id="status-ai-aware" class="status-card" style="text-align: center; padding: 20px; border-radius: 12px;">
+            <div style="width: 60px; height: 60px; background: #CD7F32; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-size: 24px;">🥉</div>
+            <div style="font-weight: 600; color: var(--text-primary);">AI Aware</div>
+            <div style="color: var(--text-secondary); font-size: 14px;">75+ points</div>
+        </div>
+        <div id="status-beginner" class="status-card" style="text-align: center; padding: 20px; border-radius: 12px;">
+            <div style="width: 60px; height: 60px; background: var(--bg-tertiary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-size: 24px;">🌱</div>
+            <div style="font-weight: 600; color: var(--text-primary);">Beginner</div>
+            <div style="color: var(--text-secondary); font-size: 14px;">0+ points</div>
+        </div>
+    </div>
+</div>
                 </div>
                 <!-- Mission Interface (hidden by default) -->
                 <div id="missionInterface" style="display: none;">
