@@ -199,39 +199,72 @@
         }
 
         .hero-layout {
-            display: grid;
-            grid-template-columns: 6fr 4fr;
-            gap: 60px;
+            display: flex;
+            flex-direction: column;
             align-items: center;
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+            gap: 40px;
         }
 
         .hero-text {
-            text-align: left;
-            padding-right: 20px;
+            text-align: center;
+            width: 100%;
         }
 
         .hero-visual {
-            text-align: center;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 100%;
+        }
+
+        .gif-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 16px;
+            background: var(--bg-primary);
+            aspect-ratio: 1296/670;
+            transition: all 0.5s ease;
+            cursor: pointer;
+        }
+
+        .gif-container:hover {
+            box-shadow: 
+                0 0 5px rgba(255, 255, 255, 0.8),
+                0 0 15px rgba(255, 215, 0, 0.6),
+                0 0 20px rgba(255, 255, 255, 0.4),
+                inset 0 0 20px rgba(255, 215, 0, 0.3);
+
+            transition: all 0.3s ease;
+            transform: scale(1.02);
+        }
+
+        @media (min-width: 768px) {
+            .gif-container {
+                border-radius: 24px;
+                padding: 16px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .gif-container {
+                padding: 20px;
+                aspect-ratio: 1296/670;
+            }
         }
 
         .hero-gif {
-            max-width: 85%;
-            height: auto;
+            
+            height: 100%;
+            object-fit: cover;
             border-radius: 12px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
+            display: block;
+            margin: 0 auto;
         }
 
         .hero-gif:hover {
-            transform: scale(1.02);
-            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.3);
+            transform: scale(1.01);
         }
 
         .hero-title {
@@ -252,33 +285,55 @@
             margin-bottom: 32px;
             line-height: 1.6;
             max-width: 90%;
+            display: inline-flex;
         }
 
         .cta-primary {
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            background: linear-gradient(135deg, var(--accent), var(--text-secondary));
-            color: var(--bg-primary);
+            background: var(--bg-card);
+            color: var(--text-primary);
             padding: 16px 32px;
             border-radius: 12px;
             text-decoration: none;
             font-weight: 600;
             font-size: 1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-            border: none;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: 3px solid var(--border-primary);
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--text-secondary));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
         }
 
         .cta-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-            color: var(--bg-primary);
+            transform: translateY(-4px);
+            border-color: black;
+            box-shadow: 0 12px 30px var(--shadow);
+            color: black;
+            background-color: white;
+        }
+
+        .cta-primary:hover::before {
+            transform: scaleX(1);
         }
 
         .cta-primary:active {
-            transform: translateY(-1px);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--shadow);
         }
 
         /* Section Separators */
@@ -714,23 +769,20 @@
 
         @media (max-width: 1024px) {
             .hero-layout {
-                grid-template-columns: 1fr;
-                gap: 40px;
-                text-align: center;
+                gap: 30px;
                 padding: 10px;
             }
 
             .hero-text {
                 text-align: center;
-                padding-right: 0;
             }
 
-            .hero-visual {
-                padding: 10px;
-            }
-
-            .hero-gif {
-                max-width: 70%;
+            .gif-container {
+                aspect-ratio: 16/9;
+                min-height: 280px;
+                padding: 12px;
+                margin: 0 auto;
+                max-width: 600px;
             }
 
             .prompt-builder {
@@ -764,23 +816,20 @@
             }
             
             .hero-layout {
-                grid-template-columns: 1fr;
                 gap: 30px;
-                text-align: center;
                 padding: 0;
             }
 
             .hero-text {
                 text-align: center;
-                padding-right: 0;
             }
 
-            .hero-visual {
-                padding: 0;
-            }
-
-            .hero-gif {
-                max-width: 80%;
+            .gif-container {
+                aspect-ratio: 16/9;
+                min-height: 220px;
+                padding: 8px;
+                margin: 0 auto;
+                max-width: 500px;
             }
             
             .hero-title {
@@ -817,8 +866,12 @@
                 padding: 30px 15px;
             }
 
-            .hero-gif {
-                max-width: 90%;
+            .gif-container {
+                aspect-ratio: 16/9;
+                min-height: 180px;
+                padding: 6px;
+                margin: 0 auto;
+                max-width: 400px;
             }
 
             .cta-primary {
@@ -829,6 +882,185 @@
             .final-cta-section,
             .stats-section {
                 padding: 40px 24px;
+            }
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-primary);
+            border-radius: 24px;
+            padding: 60px 40px;
+            margin: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .faq-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 0%, rgba(255, 255, 255, 0.02) 50%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .faq-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 48px;
+            text-align: center;
+            letter-spacing: -0.02em;
+        }
+
+        .faq-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .faq-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-primary);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: var(--border-secondary);
+            box-shadow: 0 4px 20px var(--shadow);
+        }
+
+        .faq-item.active {
+            border-color: var(--accent);
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.1);
+        }
+
+        .faq-question {
+            padding: 24px 28px;
+            background: transparent;
+            border: none;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .faq-question:hover {
+            color: var(--accent);
+        }
+
+        .faq-question::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--text-secondary));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .faq-question:hover::before {
+            transform: scaleX(1);
+        }
+
+        .faq-icon {
+            font-size: 1.2rem;
+            color: var(--accent);
+            transition: all 0.3s ease;
+            min-width: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .faq-answer.active {
+            max-height: 500px;
+        }
+
+        .faq-answer-content {
+            padding: 0 28px 28px 28px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        .faq-answer-content strong {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Mobile responsiveness for FAQ */
+        @media (max-width: 768px) {
+            .faq-section {
+                padding: 40px 24px;
+                margin: 60px 0;
+            }
+
+            .faq-title {
+                font-size: 2rem;
+                margin-bottom: 32px;
+            }
+
+            .faq-question {
+                padding: 20px 24px;
+                font-size: 1rem;
+            }
+
+            .faq-answer-content {
+                padding: 0 24px 24px 24px;
+                font-size: 0.95rem;
+            }
+
+            .faq-container {
+                gap: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .faq-section {
+                padding: 32px 16px;
+            }
+
+            .faq-question {
+                padding: 18px 20px;
+                font-size: 0.95rem;
+            }
+
+            .faq-answer-content {
+                padding: 0 20px 20px 20px;
+                font-size: 0.9rem;
             }
         }
     </style>
@@ -902,7 +1134,9 @@
                     </div>
                     
                     <div class="hero-visual">
-                        <img src="assets/Prompt Builder Video .gif" alt="An animated demonstration of the Prompt Builder tool in action" class="hero-gif">
+                        <div class="gif-container" id="gifContainer">
+                            <img src="assets/Prompt Builder Video .gif" alt="An animated demonstration of the Prompt Builder tool in action" class="hero-gif" id="heroGif">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -981,6 +1215,78 @@
             </div>
         </div>
 
+        <!-- Section Separator -->
+        <div class="section-separator"></div>
+
+        <!-- FAQ Section -->
+        <div class="faq-section">
+            <div class="faq-content">
+                <h2 class="faq-title">Frequently Asked Questions</h2>
+                
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            <span>What is Prompt Builder?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                Prompt Builder is a tool designed to help you become a master of AI communication. It goes beyond simple chatbot use by teaching you how to create structured, effective prompts. By using our step-by-step methodology, you can transform from a passive AI consumer into a proactive creator, getting more precise and valuable responses from any AI.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            <span>How will this help me use AI better?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                Our comprehensive tools are built to dramatically improve your skills. You'll learn how to get <strong>400% better AI response quality</strong> by asking the right questions. Through our gamified <strong>MIL Missions</strong>, you'll develop critical thinking skills that can lead to <strong>90% improved critical thinking</strong> and <strong>85% better misinformation detection</strong>. The result is <strong>3x faster problem-solving</strong> and a more effective, responsible approach to using AI in all aspects of your life.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            <span>What is Media Information Literacy (MIL)?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                MIL, or Media Information Literacy, is the foundation of our platform. It's the set of skills you need to navigate, analyze, and ethically use information—and that includes AI-generated content. We partner with UNESCO to empower you with these skills, ensuring you can identify misinformation, understand the biases in AI, and use technology as a tool for positive change.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            <span>Do I need any prior experience with AI or coding to use this?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                Not at all. Prompt Builder is designed for everyone, from beginners to advanced users. Our guided prompts and educational resources make it easy to start your journey. You don't need any technical knowledge—just a desire to improve your AI communication and critical thinking skills.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            <span>What makes Prompt Builder different from just using a chatbot?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                While a chatbot can answer a question, Prompt Builder teaches you <strong>how</strong> to ask better questions. We provide you with a full suite of tools, including our <strong>Impact Analyzer</strong> to compare and improve your prompts, and our <strong>MIL Missions</strong> that build real-world skills. Instead of just giving you a fish, we teach you how to fish—ethically and effectively—in the vast sea of AI.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Final Call-to-Action -->
         <div class="final-cta-section">
             <div class="final-cta-content">
@@ -1022,6 +1328,84 @@
             
             if (!nav.contains(event.target) && !toggle.contains(event.target)) {
                 nav.classList.remove('active');
+            }
+        });
+
+        // GIF control functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const gifContainer = document.getElementById('gifContainer');
+            const heroGif = document.getElementById('heroGif');
+            const originalGifSrc = 'assets/Prompt Builder Video .gif';
+            const staticImageSrc = 'assets/Prompt Builder Video Static.jpg'; // You'll need to create this
+            
+            // Check if it's a mobile device
+            const isMobile = window.innerWidth <= 768;
+            
+            if (!isMobile) {
+                // Desktop: Start with static image, play GIF on hover
+                heroGif.src = staticImageSrc;
+                
+                gifContainer.addEventListener('mouseenter', function() {
+                    heroGif.src = originalGifSrc;
+                });
+                
+                gifContainer.addEventListener('mouseleave', function() {
+                    heroGif.src = staticImageSrc;
+                });
+            } else {
+                // Mobile: Always show GIF
+                heroGif.src = originalGifSrc;
+            }
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                const newIsMobile = window.innerWidth <= 768;
+                if (newIsMobile !== isMobile) {
+                    location.reload(); // Simple solution to handle orientation change
+                }
+            });
+            
+            // Fallback: if static image doesn't exist, use GIF for both states
+            heroGif.addEventListener('error', function() {
+                if (this.src.includes('Static.jpg')) {
+                    this.src = originalGifSrc;
+                }
+            });
+        });
+
+        // FAQ Toggle Functionality
+        function toggleFAQ(questionElement) {
+            const faqItem = questionElement.parentElement;
+            const answer = faqItem.querySelector('.faq-answer');
+            const icon = questionElement.querySelector('.faq-icon');
+            const isActive = faqItem.classList.contains('active');
+
+            // Close all other FAQ items
+            document.querySelectorAll('.faq-item.active').forEach(item => {
+                if (item !== faqItem) {
+                    item.classList.remove('active');
+                    item.querySelector('.faq-answer').classList.remove('active');
+                    item.querySelector('.faq-icon').textContent = '+';
+                }
+            });
+
+            // Toggle current FAQ item
+            if (isActive) {
+                faqItem.classList.remove('active');
+                answer.classList.remove('active');
+                icon.textContent = '+';
+            } else {
+                faqItem.classList.add('active');
+                answer.classList.add('active');
+                icon.textContent = '×';
+            }
+        }
+
+        // Keyboard accessibility for FAQ
+        document.addEventListener('keydown', function(e) {
+            if (e.target.classList.contains('faq-question') && (e.key === 'Enter' || e.key === ' ')) {
+                e.preventDefault();
+                toggleFAQ(e.target);
             }
         });
     </script>
