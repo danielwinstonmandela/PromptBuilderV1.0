@@ -51,7 +51,7 @@ Prompt Builder is a mobile-first web application designed to empower youth with 
 ### File Structure
 ```
 /
-├── spa.html              # Main application file with all pages
+├── index.html              # Main application file with all pages
 ├── styles/
 │   └── shared.css        # Global styles and design system
 └── js/
@@ -97,7 +97,7 @@ Prompt Builder is a mobile-first web application designed to empower youth with 
 - Social features and collaboration tools
 
 ## Getting Started
-1. Open `spa.html` in a modern web browser
+1. Open `index.html` in a modern web browser
 2. Navigate through the application using the top navigation
 3. Start with the Guided Prompt Builder to learn the methodology
 4. Try the Impact Analyzer to see prompt effectiveness
