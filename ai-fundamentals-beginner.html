@@ -5,25 +5,442 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Fundamentals - Beginner</title>
     <link rel="stylesheet" href="styles/shared.css">
+    <style>
+        body {
+            background: #101525;
+            color: #f3f4f6;
+        }
+        .learning-card {
+            background: #eaf6ff;
+            border: 1px solid #3b82f633;
+            border-radius: 20px;
+            box-shadow: 0 4px 24px rgba(59,130,246,0.08);
+            padding: 32px 48px;
+            margin: 40px auto;
+            max-width: 950px;
+        }
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #3b82f6;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-explanation {
+            color: #222;
+            margin-bottom: 18px;
+            font-size: 1.12rem;
+            font-weight: 500;
+        }
+        .progress-container {
+            width: 100%;
+            background: #eaf6ff;
+            border-radius: 8px;
+            margin: 18px 0 32px 0;
+            height: 10px;
+            box-shadow: 0 1px 6px rgba(59,130,246,0.07);
+        }
+        .progress-bar {
+            height: 10px;
+            background: linear-gradient(90deg, #3b82f6 60%, #60a5fa 100%);
+            border-radius: 8px;
+            width: 0%;
+            transition: width 0.2s;
+        }
+        .overview-takeaways-row {
+            display: flex;
+            gap: 32px;
+            margin-bottom: 32px;
+            align-items: flex-start;
+        }
+        .overview-video {
+            flex: 1 1 60%;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .overview-video iframe {
+            width: 100%;
+            max-width: 540px;
+            min-width: 340px;
+            height: 320px;
+            background: #222;
+            border-radius: 16px;
+            box-shadow: 0 2px 12px rgba(59,130,246,0.10);
+            margin-bottom: 0;
+        }
+        .takeaways {
+            flex: 1 1 40%;
+            background: #eaf6ff;
+            border: 1px solid #3b82f633;
+            border-radius: 16px;
+            padding: 18px 22px;
+            margin-bottom: 0;
+            min-width: 260px;
+            max-width: 340px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            color: #222;
+            font-size: 1.08rem;
+            font-weight: 500;
+            box-sizing: border-box;
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+        .takeaways ul {
+            padding-left: 18px;
+            margin: 0;
+        }
+        .takeaways li {
+            margin-bottom: 8px;
+            line-height: 1.45;
+        }
+        .deeper-dive-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #2563eb;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .resource-card {
+            background: #f8fafc;
+            border: 1px solid #3b82f633;
+            border-radius: 10px;
+            padding: 14px 18px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            color: #222;
+            font-size: 1.05rem;
+        }
+        .resource-card .icon {
+            font-size: 1.3rem;
+            color: #3b82f6;
+            margin-top: 2px;
+        }
+        .resource-content {
+            flex: 1;
+        }
+        .resource-title {
+            font-weight: 700;
+            color: #2563eb;
+            margin-bottom: 2px;
+        }
+        .resource-desc {
+            color: #444;
+            font-size: 1rem;
+            margin-bottom: 2px;
+        }
+        .related-news {
+            background: #f3f8ff;
+            border: 1px solid #3b82f633;
+            border-radius: 12px;
+            padding: 18px 20px;
+            margin-top: 24px;
+            color: #222;
+        }
+        .related-news-title {
+            font-weight: 700;
+            color: #3b82f6;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .news-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 10px 14px;
+            margin-bottom: 10px;
+            box-shadow: 0 1px 6px rgba(59,130,246,0.07);
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            color: #222;
+            font-size: 1.02rem;
+        }
+        .news-card .icon {
+            font-size: 1.1rem;
+            color: #3b82f6;
+            margin-top: 2px;
+        }
+        .news-content {
+            flex: 1;
+        }
+        .news-title {
+            font-weight: 700;
+            color: #2563eb;
+            margin-bottom: 2px;
+        }
+        .news-desc {
+            color: #444;
+            font-size: 0.98rem;
+        }
+        .btn-back {
+            margin-top: 32px;
+            background: var(--accent, #3b82f6);
+            color: #fff;
+            font-weight: 700;
+            padding: 12px 28px;
+            border-radius: 12px;
+            text-decoration: none;
+            box-shadow: 0 2px 12px rgba(59,130,246,0.15);
+            transition: background 0.2s;
+            display: inline-block;
+            font-size: 1.08rem;
+        }
+        .btn-back:hover {
+            background: #2563eb;
+        }
+        .btn-next {
+            margin: 40px auto 0 auto;
+            display: block;
+            background: linear-gradient(90deg, #3b82f6 60%, #60a5fa 100%);
+            color: #fff;
+            font-weight: 700;
+            padding: 14px 36px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 1.15rem;
+            box-shadow: 0 2px 12px rgba(59,130,246,0.15);
+            border: none;
+            transition: background 0.2s;
+        }
+        .btn-next:hover {
+            background: #2563eb;
+        }
+        .glossary-term {
+            color: #3b82f6;
+            text-decoration: underline dotted;
+            cursor: pointer;
+            position: relative;
+            font-weight: 700;
+        }
+        .glossary-popup {
+            display: none;
+            position: absolute;
+            left: 0;
+            top: 24px;
+            background: #eaf6ff;
+            color: #222;
+            border: 1px solid #3b82f6;
+            border-radius: 8px;
+            padding: 12px 16px;
+            min-width: 180px;
+            z-index: 10;
+            box-shadow: 0 2px 12px rgba(59,130,246,0.15);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        .glossary-term.active .glossary-popup {
+            display: block;
+        }
+        .quiz-section {
+            background: #eaf6ff;
+            border: 1px solid #3b82f633;
+            border-radius: 12px;
+            padding: 18px 20px;
+            margin-bottom: 24px;
+            margin-top: 18px;
+            color: #222;
+            font-size: 1.08rem;
+            font-weight: 500;
+        }
+        .quiz-question {
+            margin-bottom: 14px;
+        }
+        .quiz-feedback {
+            font-weight: 700;
+            margin-top: 8px;
+            color: #2563eb;
+        }
+        .quiz-btn {
+            background: #3b82f6;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 6px 18px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 6px;
+            transition: background 0.2s;
+            font-size: 1.05rem;
+        }
+        .quiz-btn:hover {
+            background: #2563eb;
+        }
+        @media (max-width: 1200px) {
+            .learning-card { max-width: 98vw; }
+            .overview-video iframe { max-width: 98vw; }
+        }
+        @media (max-width: 900px) {
+            .learning-card { padding: 18px 6vw; }
+            .overview-takeaways-row { flex-direction: column; gap: 0; }
+            .overview-video, .takeaways { margin-bottom: 18px; }
+            .takeaways { max-width: 100%; }
+            .overview-video iframe { width: 100%; height: 220px; }
+        }
+        @media (max-width: 600px) {
+            .learning-card { padding: 8px 2vw; }
+            .overview-video iframe { height: 160px; }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>AI Fundamentals</h1>
-            <p>Beginner Level: Learn the basics of artificial intelligence, machine learning, and how AI impacts our daily lives.</p>
+        <div class="header" style="text-align:center;">
+            <div class="logo">
+                <div class="logo-icon">P</div>
+                <span style="font-weight: 700;">Prompt Builder</span>
+                <div style="font-size: 10px; color: var(--text-tertiary); margin-left: 8px; padding: 2px 6px; background: rgba(255,255,255,0.1); border-radius: 4px;">UNESCO MIL</div>
+            </div>
         </div>
-        <div class="content-section" style="background: var(--bg-secondary); border-radius: 16px; padding: 32px; margin-top: 32px;">
-            <h2>Getting Started</h2>
-            <ul>
-                <li><a href="https://www.unesco.org/en/artificial-intelligence" target="_blank">UNESCO: What is AI?</a></li>
-                <li><a href="https://www.youtube.com/watch?v=2ePf9rue1Ao" target="_blank">Crash Course: AI Explained</a></li>
-            </ul>
-            <h2>Overview Video</h2>
-            <iframe width="400" height="225" src="https://www.youtube.com/embed/2ePf9rue1Ao" title="Crash Course: AI Explained" frameborder="0" allowfullscreen style="border-radius: 12px;"></iframe>
+        <div class="header" style="text-align:center;">
+            <h1 style="color:#3b82f6;font-weight:800;">AI Fundamentals</h1>
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <p style="color:#fff;font-size:1.08rem;">Beginner Level: Learn the basics of artificial intelligence, machine learning, and how AI impacts our daily lives.</p>
         </div>
-        <div style="margin-top: 32px;">
-            <a href="learning.html" class="btn btn-outline">← Back to Hub</a>
+        <div class="learning-card">
+            <div class="section-title"><span class="icon">🤖</span> Getting Started</div>
+            <div class="section-explanation">
+                <span class="glossary-term">AI
+                    <span class="glossary-popup">Artificial Intelligence: computer systems that can perform tasks that usually require human intelligence.</span>
+                </span>
+                is transforming the way we live, work, and interact with technology. This section introduces you to the core concepts of AI, its history, and its impact on society. Start your journey with trusted resources and a beginner-friendly video.
+            </div>
+            <div class="overview-takeaways-row">
+                <div class="overview-video">
+                    <div class="section-title"><span class="icon">🎬</span> Overview Video</div>
+                    <iframe src="https://www.youtube.com/embed/2ePf9rue1Ao" title="Crash Course: AI Explained" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div class="takeaways">
+                    <div class="takeaways-title"><span class="icon">💡</span> Key Takeaways</div>
+                    <ul>
+                        <li><span class="glossary-term">AI
+                            <span class="glossary-popup">Artificial Intelligence: computer systems that can perform tasks that usually require human intelligence.</span>
+                        </span> builds smart machines that mimic human intelligence.</li>
+                        <li><span class="glossary-term">Machine learning
+                            <span class="glossary-popup">A subset of AI that enables computers to learn from data and improve over time.</span>
+                        </span> enables systems to learn from data.</li>
+                        <li>AI is present in daily life: search, recommendations, assistants.</li>
+                        <li>Understanding AI helps you use technology responsibly.</li>
+                        <li>Explore trusted resources to deepen your knowledge.</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Quiz Section -->
+            <div class="quiz-section">
+                <div class="quiz-question" id="quiz-q1">
+                    <strong>1. What does "AI" stand for?</strong><br>
+                    <button class="quiz-btn" onclick="checkQuiz('q1','a')">Artificial Intelligence</button>
+                    <button class="quiz-btn" onclick="checkQuiz('q1','b')">Automated Input</button>
+                    <button class="quiz-btn" onclick="checkQuiz('q1','c')">Amazing Ideas</button>
+                    <div class="quiz-feedback" id="quiz-fb-q1"></div>
+                </div>
+                <div class="quiz-question" id="quiz-q2">
+                    <strong>2. What is the main purpose of <span class="glossary-term">machine learning
+                        <span class="glossary-popup">A subset of AI that enables computers to learn from data and improve over time.</span>
+                    </span>?</strong><br>
+                    <button class="quiz-btn" onclick="checkQuiz('q2','a')">To make computers look cool</button>
+                    <button class="quiz-btn" onclick="checkQuiz('q2','b')">To help computers learn from data</button>
+                    <button class="quiz-btn" onclick="checkQuiz('q2','c')">To replace all humans</button>
+                    <div class="quiz-feedback" id="quiz-fb-q2"></div>
+                </div>
+                <div class="quiz-question" id="quiz-q3">
+                    <strong>3. Which of these is a real-world example of AI?</strong><br>
+                    <button class="quiz-btn" onclick="checkQuiz('q3','a')">A digital assistant like Siri</button>
+                    <button class="quiz-btn" onclick="checkQuiz('q3','b')">A regular calculator</button>
+                    <button class="quiz-btn" onclick="checkQuiz('q3','c')">A bicycle</button>
+                    <div class="quiz-feedback" id="quiz-fb-q3"></div>
+                </div>
+            </div>
+            <div class="deeper-dive-title"><span class="icon">🔎</span> Deeper Dive</div>
+            <div class="section-explanation">
+                Now that you have the basics, let's explore some of these concepts from other trusted sources.
+            </div>
+            <div class="resource-card">
+                <span class="icon">🌐</span>
+                <div class="resource-content">
+                    <div class="resource-title">UNESCO: What is AI?</div>
+                    <div class="resource-desc">Discover the fundamentals of AI, its history, and its ethical implications from a global perspective.</div>
+                    <a href="https://www.unesco.org/en/artificial-intelligence" target="_blank">Visit Resource</a>
+                </div>
+            </div>
+            <div class="resource-card">
+                <span class="icon">🎥</span>
+                <div class="resource-content">
+                    <div class="resource-title">Crash Course: AI Explained</div>
+                    <div class="resource-desc">A beginner-friendly video that breaks down AI concepts and real-world applications in an engaging format.</div>
+                    <a href="https://www.youtube.com/watch?v=2ePf9rue1Ao" target="_blank">Watch Video</a>
+                </div>
+            </div>
+            <div class="related-news">
+                <div class="related-news-title"><span class="icon">📰</span> AI in the Real World</div>
+                <div class="news-card">
+                    <span class="icon">🗞️</span>
+                    <div class="news-content">
+                        <div class="news-title">UN News: AI and its impact on society</div>
+                        <div class="news-desc">How AI is shaping global development, ethics, and the future of work.</div>
+                        <a href="https://news.un.org/en/story/2023/05/1136367" target="_blank">Read Article</a>
+                    </div>
+                </div>
+                <div class="news-card">
+                    <span class="icon">🗞️</span>
+                    <div class="news-content">
+                        <div class="news-title">BBC: How AI is changing the world</div>
+                        <div class="news-desc">A look at the latest breakthroughs in AI and their impact on everyday life.</div>
+                        <a href="https://www.bbc.com/news/technology-64999648" target="_blank">Read Article</a>
+                    </div>
+                </div>
+            </div>
         </div>
+        <a href="learning.html" class="btn-back">← Back to Hub</a>
+        <a href="mil-critical-thinking.html" class="btn-next">Next: MIL & Critical Thinking →</a>
     </div>
+    <script>
+        // Progress Bar on Scroll
+        window.addEventListener('scroll', function() {
+            const scrollTop = window.scrollY;
+            const docHeight = document.body.scrollHeight - window.innerHeight;
+            const scrolled = (scrollTop / docHeight) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+        });
+
+        // Glossary pop-up logic
+        document.querySelectorAll('.glossary-term').forEach(function(term) {
+            term.addEventListener('click', function(e) {
+                e.stopPropagation();
+                document.querySelectorAll('.glossary-term').forEach(function(t) {
+                    if (t !== term) t.classList.remove('active');
+                });
+                term.classList.toggle('active');
+            });
+        });
+        document.body.addEventListener('click', function() {
+            document.querySelectorAll('.glossary-term').forEach(function(t) {
+                t.classList.remove('active');
+            });
+        });
+
+        // Quiz logic
+        function checkQuiz(q, ans) {
+            const feedbacks = {
+                q1: {a: "Correct!", b: "Not quite, watch the video again to learn more.", c: "Not quite, watch the video again to learn more."},
+                q2: {b: "Correct!", a: "Not quite, watch the video again to learn more.", c: "Not quite, watch the video again to learn more."},
+                q3: {a: "Correct!", b: "Not quite, watch the video again to learn more.", c: "Not quite, watch the video again to learn more."}
+            };
+            document.getElementById('quiz-fb-' + q).textContent = feedbacks[q][ans];
+        }
+    </script>
 </body>
 </html>
