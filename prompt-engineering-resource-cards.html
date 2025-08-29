@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Engineering Resource Cards</title>
+    <link rel="stylesheet" href="styles/shared.css">
+    <style>
+        body {
+            background: #000000;
+            color: #f3f4f6;
+            font-family: 'Inter', Arial, sans-serif;
+        }
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 32px;
+            max-width: 1200px;
+            margin: 48px auto;
+            padding: 0 24px;
+        }
+        .resource-card {
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 4px 24px rgba(245,158,11,0.10);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: box-shadow 0.2s, transform 0.18s;
+            border: 1px solid #e5e7eb;
+        }
+        .resource-card:hover {
+            box-shadow: 0 12px 36px rgba(59,130,246,0.18), 0 2px 16px rgba(0,0,0,0.10);
+            transform: translateY(-8px) scale(1.03);
+            z-index: 2;
+        }
+        .resource-img {
+            width: 100%;
+            height: 170px;
+            object-fit: cover;
+            background: #fff8e6;
+        }
+        .resource-content {
+            padding: 22px 22px 18px 22px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .resource-title {
+            font-size: 1.18rem;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 6px;
+        }
+        .resource-desc {
+            color: #444;
+            font-size: 1.03rem;
+            margin-bottom: 16px;
+        }
+        .resource-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+        .tag {
+            font-size: 0.95rem;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 8px;
+            background: #fff8e6;
+            color: #d97706;
+            border: none;
+            display: inline-block;
+        }
+        .tag.orange {
+            background: #fff8e6;
+            color: #d97706;
+        }
+        .tag.red {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        .tag.purple {
+            background: #ede9fe;
+            color: #6366f1;
+        }
+        .resource-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: auto;
+        }
+        .action-btn {
+            background: none;
+            border: 2px solid #d97706;
+            color: #d97706;
+            font-weight: 600;
+            padding: 7px 22px;
+            border-radius: 10px;
+            font-size: 1.07rem;
+            cursor: pointer;
+            transition: background 0.18s, color 0.18s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .action-btn:hover {
+            background: #d97706;
+            color: #fff;
+        }
+        .action-icons {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: auto;
+        }
+        .action-icons .icon {
+            font-size: 1.15rem;
+            color: #bdbdbd;
+            cursor: pointer;
+            transition: color 0.18s;
+        }
+        .action-icons .icon:hover {
+            color: #d97706;
+        }
+        @media (max-width: 900px) {
+            .resource-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            .resource-card { min-width: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header" style="text-align:center;">
+            <div class="logo">
+                <div class="logo-icon">P</div>
+                <span style="font-weight: 700;">Prompt Builder</span>
+                <div style="font-size: 10px; color: var(--text-tertiary); margin-left: 8px; padding: 2px 6px; background: rgba(255,255,255,0.1); border-radius: 4px;">UNESCO MIL</div>
+            </div>
+        </div>
+        <div class="header" style="text-align:center;">
+            <h1 style="font-weight:800">Prompt Engineering Guides CARDS</h1>
+            <p style="color:#fff;font-size:1.08rem;">Choose which topic that interest you the most!</p>
+        </div>
+    </div>
+    <div class="resource-grid">
+        <!-- Card 1 -->
+        <div class="resource-card">
+            <img class="resource-img" src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80" alt="Prompt Engineering Overview">
+            <div class="resource-content">
+                <div class="resource-title">Prompt Engineering Overview</div>
+                <div class="resource-desc">Master the art of crafting effective prompts for AI tools and unlock new possibilities.</div>
+                <div class="resource-tags">
+                    <span class="tag orange">Expert Review</span>
+                    <span class="tag red">4 min read</span>
+                    <span class="tag purple">#Advanced</span>
+                </div>
+                <div class="resource-actions">
+                    <a href="#" class="action-btn">Learn More</a>
+                    <div class="action-icons">
+                        <span class="icon">📝</span>
+                        <span class="icon">🔗</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Card 2 -->
+        <div class="resource-card">
+            <img class="resource-img" src="https://images.unsplash.com/photo-1465101178521-c1a6bca7a0c1?auto=format&fit=crop&w=600&q=80" alt="Prompting Guide">
+            <div class="resource-content">
+                <div class="resource-title">Prompt Engineering Guide</div>
+                <div class="resource-desc">Explore advanced techniques and strategies for crafting effective prompts for generative AI.</div>
+                <div class="resource-tags">
+                    <span class="tag orange">Community Guide</span>
+                    <span class="tag red">5 min read</span>
+                    <span class="tag purple">#Advanced</span>
+                </div>
+                <div class="resource-actions">
+                    <a href="#" class="action-btn">Read Article</a>
+                    <div class="action-icons">
+                        <span class="icon">📝</span>
+                        <span class="icon">🔗</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Card 3 -->
+        <div class="resource-card">
+            <img class="resource-img" src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80" alt="Learn Prompting">
+            <div class="resource-content">
+                <div class="resource-title">Learn Prompting</div>
+                <div class="resource-desc">A comprehensive guide to prompt engineering, including examples and best practices for various AI models.</div>
+                <div class="resource-tags">
+                    <span class="tag orange">Expert Review</span>
+                    <span class="tag red">6 min read</span>
+                    <span class="tag purple">#Advanced</span>
+                </div>
+                <div class="resource-actions">
+                    <a href="#" class="action-btn">Learn More</a>
+                    <div class="action-icons">
+                        <span class="icon">📝</span>
+                        <span class="icon">🔗</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Card 4 -->
+        <div class="resource-card">
+            <img class="resource-img" src="https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=600&q=80" alt="Prompting in the Real World">
+            <div class="resource-content">
+                <div class="resource-title">Prompting in the Real World</div>
+                <div class="resource-desc">How prompt engineering is shaping the future of AI and human-computer interaction.</div>
+                <div class="resource-tags">
+                    <span class="tag orange">Expert Review</span>
+                    <span class="tag red">7 min read</span>
+                    <span class="tag purple">#Advanced</span>
+                </div>
+                <div class="resource-actions">
+                    <a href="#" class="action-btn">Read Article</a>
+                    <div class="action-icons">
+                        <span class="icon">📝</span>
+                        <span class="icon">🔗</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Card 5 -->
+        <div class="resource-card">
+            <img class="resource-img" src="https://images.unsplash.com/photo-1526378722401-3b1c2b1e0c49?auto=format&fit=crop&w=600&q=80" alt="Prompting for Beginners">
+            <div class="resource-content">
+                <div class="resource-title">Prompting for Beginners</div>
+                <div class="resource-desc">Start your journey with prompt engineering basics and how to get better results from AI.</div>
+                <div class="resource-tags">
+                    <span class="tag orange">Made by Marginalized Communities</span>
+                    <span class="tag red">5 min read</span>
+                    <span class="tag purple">#Beginner</span>
+                </div>
+                <div class="resource-actions">
+                    <a href="#" class="action-btn">Learn More</a>
+                    <div class="action-icons">
+                        <span class="icon">📝</span>
+                        <span class="icon">🔗</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Card 6 -->
+        <div class="resource-card">
+            <img class="resource-img" src="https://images.unsplash.com/photo-1465101178521-c1a6bca7a0c1?auto=format&fit=crop&w=600&q=80" alt="Future of Prompt Engineering">
+            <div class="resource-content">
+                <div class="resource-title">Future of Prompt Engineering</div>
+                <div class="resource-desc">Explore the future challenges and opportunities for prompt engineering in AI.</div>
+                <div class="resource-tags">
+                    <span class="tag orange">Written by Marginalized Communities</span>
+                    <span class="tag red">7 min read</span>
+                    <span class="tag purple">#Advanced</span>
+                </div>
+                <div class="resource-actions">
+                    <a href="#" class="action-btn">Read Article</a>
+                    <div class="action-icons">
+                        <span class="icon">📝</span>
+                        <span class="icon">🔗</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
