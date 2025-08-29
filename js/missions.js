@@ -7,11 +7,55 @@ let userTotalScore = parseInt(localStorage.getItem('milScore') || '0');
 // Mission data
 const missions = {
     'spot-fake': {
+        initializeDragAndDrop: function() {
+            const draggables = document.querySelectorAll('.draggable');
+            const dropzones = document.querySelectorAll('.dropzone');
+            const nextButton = document.getElementById('nextQuestionBtn');
+
+            draggables.forEach(draggable => {
+                draggable.addEventListener('dragstart', () => {
+                    draggable.classList.add('dragging');
+                });
+
+                draggable.addEventListener('dragend', () => {
+                    draggable.classList.remove('dragging');
+                });
+            });
+
+            dropzones.forEach(dropzone => {
+                dropzone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    const dragging = document.querySelector('.dragging');
+                    dropzone.appendChild(dragging);
+                });
+
+                dropzone.addEventListener('drop', () => {
+                    const dragging = document.querySelector('.dragging');
+                    dropzone.appendChild(dragging);
+
+                    // Show the Next Button after a drop
+                    nextButton.style.display = 'inline-block';
+                });
+            });
+        },
         title: 'Spot the Fake',
         icon: '🔍',
         difficulty: 'MEDIUM',
         pointsPerQuestion: 10,
         questions: [
+            {
+                type: 'drag-and-drop',
+                question: 'Drag the statements to the correct categories: Real or Fake.',
+                content: {
+                    statements: [
+                        'AI can write poetry indistinguishable from humans.',
+                        'AI can think and feel emotions like humans.',
+                        'AI is used to detect diseases earlier than doctors.',
+                        'AI can predict the future with 100% accuracy.',
+                    ],
+                },
+                explanation: 'Drag the statements to the correct categories to test your understanding of AI capabilities.',
+            },
             {
                 type: 'image',
                 question: 'Which of these images is AI-generated?',
@@ -19,9 +63,9 @@ const missions = {
                 content: {
                     optionA: { img: 'assets/real 1.jpg', isAI: false },
                     optionB: { img: 'assets/ai 1.jpg', isAI: true },
-                    optionC: { img: 'assets/real 2.jpg', isAI: false }
+                    optionC: { img: 'assets/real 2.jpg', isAI: false },
                 },
-                explanation: 'AI-generated portraits often have subtle asymmetries and unnatural details in eyes, teeth, or hair patterns.'
+                explanation: 'AI-generated portraits often have subtle asymmetries and unnatural details in eyes, teeth, or hair patterns.',
             },
             {
                 type: 'text',
@@ -207,61 +251,149 @@ function startMission(missionType) {
 function loadCurrentQuestion() {
     const question = currentMission.questions[currentQuestionIndex];
     const totalQuestions = currentMission.questions.length;
-    
+
     // Update progress
     document.getElementById('missionProgress').textContent = `Question ${currentQuestionIndex + 1} of ${totalQuestions}`;
     document.getElementById('missionScore').textContent = `Score: ${missionScore}`;
-    
-    // Create question HTML
-    let questionHTML = `
-        <div style="margin-bottom: 32px;">
-            <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 24px; color: var(--text-primary);">
-                ${question.question}
-            </h3>
-            <div id="questionOptions" style="display: flex; flex-direction: column; gap: 16px;">
-    `;
-    
-    // Add options based on question type
-    const options = Object.keys(question.content);
-    options.forEach((optionKey, index) => {
-        const option = question.content[optionKey];
-        const letter = String.fromCharCode(65 + index); // A, B, C, etc.
 
-        questionHTML += `
-            <div class="question-option" onclick="selectAnswer('${optionKey}')" 
-                 style="background: var(--bg-tertiary); border: 2px solid var(--border-primary); border-radius: 12px; padding: 20px; cursor: pointer; transition: all 0.3s ease;">
-                <div style="display: flex; align-items: center; gap: 24px;">
-                    <div style="width: 32px; height: 32px; background: var(--accent); color: var(--bg-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">${letter}</div>
-                    ${
-                        option.img
-                            ? `<div style="flex:1; display:flex; justify-content:center;">
-                                    <img src="${option.img}" alt="Option ${letter}" style="height: 160px; width: 160px; object-fit: cover; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.12);">
-                               </div>`
-                            : option.audio
-                                ? `<div style="flex:1; display:flex; flex-direction:column; align-items:center;">
-                                        <audio controls src="${option.audio}" style="width: 220px; margin-bottom: 8px;"></audio>
-                                        <span style="color: var(--text-secondary); font-size: 13px;">${option.text || ''}</span>
-                                   </div>`
-                            : `<span style="color: var(--text-primary); font-weight: 500;">${option.text}</span>`
-                    }
+    // Check the question type
+    if (question.type === 'drag-and-drop') {
+        // Render drag-and-drop question
+        const dragAndDropHTML = `
+            <h3 style="color: var(--text-primary); margin-bottom: 16px;">${question.question}</h3>
+            <div style="display: flex; gap: 32px; margin-top: 20px;">
+                <!-- Draggable Items -->
+                <div style="flex: 1;">
+                    <h4 style="color: var(--text-primary); margin-bottom: 12px;">Drag These Statements:</h4>
+                    <div id="draggable-items" style="display: flex; flex-direction: column; gap: 12px;">
+                        ${question.content.statements
+                            .map(
+                                (statement) => `
+                                <div class="draggable" draggable="true" style="padding: 12px; background: var(--bg-secondary); border: 1px solid var(--border-primary); border-radius: 8px; cursor: grab;">
+                                    ${statement}
+                                </div>
+                            `
+                            )
+                            .join('')}
+                    </div>
+                </div>
+
+                <!-- Droppable Areas -->
+                <div style="flex: 1;">
+                    <h4 style="color: var(--text-primary); margin-bottom: 12px;">Drop Here:</h4>
+                    <div id="real-dropzone" class="dropzone" style="padding: 16px; background: rgba(16, 185, 129, 0.1); border: 2px dashed var(--success); border-radius: 8px; min-height: 150px;">
+                        <h5 style="color: var(--success); text-align: center;">Real</h5>
+                    </div>
+                    <div id="fake-dropzone" class="dropzone" style="padding: 16px; background: rgba(239, 68, 68, 0.1); border: 2px dashed var(--danger); border-radius: 8px; min-height: 150px; margin-top: 16px;">
+                        <h5 style="color: var(--danger); text-align: center;">Fake</h5>
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top: 20px; text-align: center;">
+                <button id="nextQuestionBtn" class="btn btn-success" style="display: none; padding: 12px 24px; font-size: 1.2rem; font-weight: 600; border-radius: 8px; cursor: pointer;">
+                    Next Question
+                </button>
+            </div>
+        `;
+
+        // Log rendering information
+        console.log('Rendering drag-and-drop question...');
+        console.log(dragAndDropHTML);
+        
+        // Insert drag-and-drop HTML into the mission content
+        document.getElementById('missionContent').innerHTML = dragAndDropHTML;
+
+        // Initialize drag-and-drop functionality
+        initializeDragAndDrop();
+
+        // Add event listener for the Next Button
+        document.getElementById('nextQuestionBtn').addEventListener('click', () => {
+            nextMissionQuestion();
+        });
+    } else {
+        // Handle other question types if necessary
+    } if (question.type === 'image') {
+        // Render image question
+        const imageQuestionHTML = `
+            <h3 style="color: var(--text-primary); margin-bottom: 16px;">${question.question}</h3>
+            <div style="display: flex; gap: 16px; justify-content: center;">
+                ${Object.keys(question.content)
+                    .map(
+                        (key) => `
+                        <div class="image-option" onclick="selectAnswer('${key}')" style="cursor: pointer;">
+                            <img src="${question.content[key].img}" alt="Option ${key}" style="width: 200px; height: 200px; object-fit: cover; border-radius: 8px; border: 2px solid var(--border-primary);">
+                        </div>
+                    `
+                    )
+                    .join('')}
+            </div>
+        `;
+
+        document.getElementById('missionContent').innerHTML = imageQuestionHTML;
+    }
+    
+    function renderDragDropQuestion(question, container) {
+        container.innerHTML = `
+            <div class="drag-drop-container">
+                <div class="draggable-section">
+                    <h4 class="section-title">Draggable Items</h4>
+                    <div id="draggableItems" class="draggable-items">
+                        ${question.content.statements
+                            .map(
+                                (statement) => `
+                                <div class="draggable" draggable="true" data-statement="${statement}">
+                                    ${statement}
+                                </div>
+                            `
+                            )
+                            .join('')}
+                    </div>
+                </div>
+                <div class="dropzone-section">
+                    <h4 class="section-title">Drop Zones</h4>
+                    <div id="realDropzone" class="dropzone real">
+                        <div class="dropzone-title">Real</div>
+                    </div>
+                    <div id="fakeDropzone" class="dropzone fake">
+                        <div class="dropzone-title">Fake</div>
+                    </div>
                 </div>
             </div>
         `;
+    
+        initializeDragAndDrop();
+    }
+// Handle answer selection
+function initializeDragAndDrop() {
+    const draggables = document.querySelectorAll('.draggable');
+    const dropzones = document.querySelectorAll('.dropzone');
+    const nextButton = document.getElementById('nextQuestionBtn');
+
+    draggables.forEach(draggable => {
+        draggable.addEventListener('dragstart', () => {
+            draggable.classList.add('dragging');
+        });
+
+        draggable.addEventListener('dragend', () => {
+            draggable.classList.remove('dragging');
+        });
     });
-    
-    questionHTML += `
-            </div>
-        </div>
-        <div id="questionFeedback" style="display: none; background: var(--bg-tertiary); border-radius: 12px; padding: 20px; margin-top: 20px;">
-            <div id="feedbackContent"></div>
-        </div>
-    `;
-    
-    document.getElementById('missionContent').innerHTML = questionHTML;
-    
-    // Hide/show navigation buttons
-    document.getElementById('missionNextBtn').style.display = 'none';
-    document.getElementById('missionCompleteBtn').style.display = 'none';
+
+    dropzones.forEach(dropzone => {
+        dropzone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            const dragging = document.querySelector('.dragging');
+            dropzone.appendChild(dragging);
+        });
+
+        dropzone.addEventListener('drop', () => {
+            const dragging = document.querySelector('.dragging');
+            dropzone.appendChild(dragging);
+
+            // Show the Next Button after a drop
+            nextButton.style.display = 'inline-block';
+        });
+    });
 }
 
 // Handle answer selection
@@ -466,11 +598,12 @@ function toggleReviewDetails(idx) {
     }
 }
 
-// Close mission review popup
-function closeMissionReviewPopup() {
-    document.getElementById('missionReviewPopup').style.display = 'none';
-}
-
+}   
+    renderDragDropQuestion(question, contentContainer);
+    if (scoreElement) {
+        scoreElement.textContent = userTotalScore;
+    }
+    highlightStatusCard(userTotalScore);
 // Return to mission selection
 function returnToMissions() {
     document.getElementById('missionSelection').style.display = 'block';
@@ -478,14 +611,30 @@ function returnToMissions() {
     currentMission = null;
 }
 
-// Update user score display
-function updateUserScore() {
-    const scoreElement = document.getElementById('userScore');
-    if (scoreElement) {
+// Load current question
+function loadCurrentQuestion() {
+    const question = currentMission.questions[currentQuestionIndex];
+    const totalQuestions = currentMission.questions.length;
+
+    // Update progress
+    document.getElementById('missionProgress').textContent = `Question ${currentQuestionIndex + 1} of ${totalQuestions}`;
+    document.getElementById('missionScore').textContent = `Score: ${missionScore}`;
+    document.getElementById('questionText').textContent = question.question;
+
+    const contentContainer = document.getElementById('questionContent');
+    contentContainer.innerHTML = '';
+
+    if (question.type === 'drag-and-drop') {
+        renderDragDropQuestion(question, contentContainer);
+    } else if (question.type === 'image') {
+        renderImageQuestion(question, contentContainer);
+    } else if (question.type === 'text') {
+        renderMultipleChoiceQuestion(question, contentContainer);
+    }
+}   if (scoreElement) {
         scoreElement.textContent = userTotalScore;
     }
     highlightStatusCard(userTotalScore);
-}
 
 function highlightStatusCard(score) {
     // Remove active from all
@@ -812,3 +961,18 @@ document.addEventListener('DOMContentLoaded', function() {
     // Always highlight status card on load
     highlightStatusCard(userTotalScore);
 });
+function renderMultipleChoiceQuestion(question, container) {
+    container.innerHTML = `
+        <div class="answer-options">
+            ${Object.keys(question.content)
+                .map(
+                    (key) => `
+                    <div class="answer-option" onclick="selectAnswer('${key}')">
+                        <span>${question.content[key].text}</span>
+                    </div>
+                `
+                )
+                .join('')}
+        </div>
+    `;
+}
