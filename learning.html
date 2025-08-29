@@ -87,6 +87,80 @@
             .nav-link { width: 100%; justify-content: flex-start; padding: 12px 16px; }
             .navbar-title { display: none; }
         }
+        .guided-path-card {
+            background: rgba(255, 255, 255, 0.05);;
+            border-radius: 22px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+            padding: 44px 0 38px 0;
+            margin: 36px auto 64px auto; /* space above and below */
+            max-width: 650px;
+            text-align: center;
+            border: 1px solid #2d323b;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: box-shadow 0.2s, transform 0.18s, background 0.18s;
+        }
+        .guided-path-card:hover {
+            box-shadow: 0 8px 32px rgba(59,130,246,0.18);
+            transform: translateY(-8px) scale(1.03);
+        }
+        .guided-path-title {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            color: #fff;
+        }
+
+        .guided-path-icon {
+            background: #23272f;
+            color: #fff;
+            border-radius: 50%;
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.7rem;
+        }
+
+        .guided-path-desc {
+            font-size: 1.13rem;
+            color: #e0e7ef;
+            margin-bottom: 28px;
+            max-width: 440px;
+        }
+
+        /* Use this for your "Start Here" button in the guided path card */
+        .guided-path-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 38px;
+            font-size: 1.18rem;
+            font-weight: 700;
+            border-radius: 14px;
+            border: none;
+            background: linear-gradient(90deg, #3b82f6 60%, #60a5fa 100%);
+            color: #fff;
+            box-shadow: 0 2px 12px rgba(59,130,246,0.12);
+            cursor: pointer;
+            transition: background 0.18s, transform 0.18s, box-shadow 0.18s;
+            text-align: center;
+            text-decoration: none;
+            margin-top: 8px;
+        }
+        .guided-path-btn:hover {
+            background: linear-gradient(90deg, #60a5fa 60%, #3b82f6 100%);
+            transform: translateY(-2px) scale(1.04);
+            box-shadow: 0 6px 24px rgba(59,130,246,0.18);
+        }
+
     </style>
 </head>
 <body>
@@ -141,14 +215,17 @@
             <h1>Educational Content Hub</h1>
             <p>Explore curated resources, guides, and videos to deepen your understanding of AI, MIL, and prompt engineering</p>
         </div>
-        <div class="start-here-section">
-            <h2 class="start-here-heading">New to AI?</h2>
-            <p class="start-here-desc">
-                Not sure where to begin? Start your guided journey with our AI Fundamentals learning path designed for beginners. Get a clear introduction before exploring advanced topics!
-            </p>
-            <button id="startHereBtn" class="start-here-btn">
+        <div class="guided-path-card">
+            <div class="guided-path-title">
+                <span class="guided-path-icon">🧑‍💻</span>
+                New to AI? Start Here
+            </div>
+            <div class="guided-path-desc">
+                Unsure where to begin? Follow our guided path of 3 essential articles to quickly learn the basics of AI. Get the most important info first—perfect for beginners!
+            </div>
+            <a href="ai-resource-cards.html" class="guided-path-btn">
                 🚀 Start Here
-            </button>
+            </a>
         </div>
         <div class="card">
             <div class="learning-section" style="padding: 48px 32px;">
