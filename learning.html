@@ -87,6 +87,80 @@
             .nav-link { width: 100%; justify-content: flex-start; padding: 12px 16px; }
             .navbar-title { display: none; }
         }
+        .guided-path-card {
+            background: rgba(255, 255, 255, 0.05);;
+            border-radius: 22px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+            padding: 44px 0 38px 0;
+            margin: 36px auto 64px auto; /* space above and below */
+            max-width: 650px;
+            text-align: center;
+            border: 1px solid #2d323b;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: box-shadow 0.2s, transform 0.18s, background 0.18s;
+        }
+        .guided-path-card:hover {
+            box-shadow: 0 8px 32px rgba(59,130,246,0.18);
+            transform: translateY(-8px) scale(1.03);
+        }
+        .guided-path-title {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            color: #fff;
+        }
+
+        .guided-path-icon {
+            background: #23272f;
+            color: #fff;
+            border-radius: 50%;
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.7rem;
+        }
+
+        .guided-path-desc {
+            font-size: 1.13rem;
+            color: #e0e7ef;
+            margin-bottom: 28px;
+            max-width: 440px;
+        }
+
+        /* Use this for your "Start Here" button in the guided path card */
+        .guided-path-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 38px;
+            font-size: 1.18rem;
+            font-weight: 700;
+            border-radius: 14px;
+            border: none;
+            background: linear-gradient(90deg, #3b82f6 60%, #60a5fa 100%);
+            color: #fff;
+            box-shadow: 0 2px 12px rgba(59,130,246,0.12);
+            cursor: pointer;
+            transition: background 0.18s, transform 0.18s, box-shadow 0.18s;
+            text-align: center;
+            text-decoration: none;
+            margin-top: 8px;
+        }
+        .guided-path-btn:hover {
+            background: linear-gradient(90deg, #60a5fa 60%, #3b82f6 100%);
+            transform: translateY(-2px) scale(1.04);
+            box-shadow: 0 6px 24px rgba(59,130,246,0.18);
+        }
+
     </style>
 </head>
 <body>
@@ -107,6 +181,28 @@
             <button class="mobile-menu-toggle" id="mobileMenuToggle">☰</button>
         </div>
     </nav>
+    <div id="didYouKnowPopup" style="
+        position: fixed;
+        top: 90px;
+        right: 32px;
+        z-index: 9999;
+        background: rgba(30,41,59,0.97);
+        color: #fff;
+        border-radius: 14px;
+        box-shadow: 0 4px 24px rgba(59,130,246,0.18);
+        padding: 18px 28px;
+        font-size: 1.08rem;
+        font-weight: 500;
+        max-width: 340px;
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        transition: opacity 0.3s;
+    ">
+        <span style="font-size:1.3rem;">💡</span>
+        <span id="didYouKnowText"></span>
+        <button id="closeDidYouKnow" style="margin-left:auto;background:none;border:none;color:#fff;font-size:1.2rem;cursor:pointer;">×</button>
+    </div>
     <div class="container">
         <div class="header">
             <div class="logo">
@@ -119,14 +215,17 @@
             <h1>Educational Content Hub</h1>
             <p>Explore curated resources, guides, and videos to deepen your understanding of AI, MIL, and prompt engineering</p>
         </div>
-        <div class="start-here-section">
-            <h2 class="start-here-heading">New to AI?</h2>
-            <p class="start-here-desc">
-                Not sure where to begin? Start your guided journey with our AI Fundamentals learning path designed for beginners. Get a clear introduction before exploring advanced topics!
-            </p>
-            <button id="startHereBtn" class="start-here-btn">
+        <div class="guided-path-card">
+            <div class="guided-path-title">
+                <span class="guided-path-icon">🧑‍💻</span>
+                New to AI? Start Here
+            </div>
+            <div class="guided-path-desc">
+                Unsure where to begin? Follow our guided path of 3 essential articles to quickly learn the basics of AI. Get the most important info first—perfect for beginners!
+            </div>
+            <a href="ai-resource-cards.html" class="guided-path-btn">
                 🚀 Start Here
-            </button>
+            </a>
         </div>
         <div class="card">
             <div class="learning-section" style="padding: 48px 32px;">
@@ -146,7 +245,7 @@
                             <li><a href="https://www.unesco.org/en/artificial-intelligence" target="_blank">UNESCO: What is AI?</a></li>
                             <li><a href="https://www.youtube.com/watch?v=2ePf9rue1Ao" target="_blank">Crash Course: AI Explained</a></li>
                         </ul>
-                        <a href="ai-fundamentals-beginner.html" class="learning-hub-btn ai" target="_self">Go to AI Fundamentals</a>
+                        <a href="ai-resource-cards.html" class="learning-hub-btn ai" target="_self">Go to AI Fundamentals</a>
                     </div>
                     <div class="learning-card" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05)); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 20px; padding: 32px;">
                         <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
@@ -163,7 +262,7 @@
                             <li><a href="https://en.unesco.org/themes/media-and-information-literacy" target="_blank">UNESCO: MIL Resources</a></li>
                             <li><a href="https://www.youtube.com/watch?v=QzZyua4X1sI" target="_blank">Video: Critical Thinking in the Age of AI</a></li>
                         </ul>
-                        <a href="mil-critical-thinking.html" class="learning-hub-btn mil" target="_self">Go to MIL & Critical Thinking</a>
+                        <a href="mil-resource-cards.html" class="learning-hub-btn mil" target="_self">Go to MIL & Critical Thinking</a>
                     </div>
                     <div class="learning-card" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(245, 158, 11, 0.05)); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 20px; padding: 32px;">
                         <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
@@ -180,7 +279,7 @@
                             <li><a href="https://learnprompting.org/" target="_blank">Learn Prompting</a></li>
                             <li><a href="https://www.promptingguide.ai/" target="_blank">Prompt Engineering Guide</a></li>
                         </ul>
-                        <a href="prompt-engineering-guides.html" class="learning-hub-btn prompt" target="_self">Go to Prompt Engineering Guides</a>
+                        <a href="prompt-engineering-resource-cards.html" class="learning-hub-btn prompt" target="_self">Go to Prompt Engineering Guides</a>
                     </div>
                 </div>
                 <div style="background: var(--bg-secondary); border: 1px solid var(--border-primary); border-radius: 20px; padding: 32px;">
@@ -219,6 +318,30 @@
                 nav.classList.remove('active');
             }
         });
+    </script>
+    <script>
+        const didYouKnowFacts = [
+            "Did you know that AI models can reflect biases in their training data, leading to unfair outcomes?",
+            "Did you know that some countries have created AI ethics guidelines to protect human rights?",
+            "Did you know that AI can help detect fake news, but can also spread misinformation if not monitored?",
+            "Did you know that AI systems are used to help doctors diagnose diseases more accurately?",
+            "Did you know that ethical AI design includes transparency, fairness, and accountability?",
+            "Did you know that AI can automate tasks, but may also impact job opportunities in some industries?",
+            "Did you know that you can help reduce bias in AI by using diverse and representative data?",
+            "Did you know that AI is being used to fight climate change by optimizing energy use?",
+            "Did you know that AI-powered chatbots can improve customer service but must respect user privacy?",
+            "Did you know that UNESCO promotes responsible AI to ensure technology benefits everyone?"
+        ];
+
+        function showDidYouKnow() {
+            const fact = didYouKnowFacts[Math.floor(Math.random() * didYouKnowFacts.length)];
+            document.getElementById('didYouKnowText').textContent = fact;
+            document.getElementById('didYouKnowPopup').style.opacity = '1';
+        }
+        document.getElementById('closeDidYouKnow').onclick = function() {
+            document.getElementById('didYouKnowPopup').style.opacity = '0';
+        };
+        window.addEventListener('DOMContentLoaded', showDidYouKnow);
     </script>
 </body>
 </html>

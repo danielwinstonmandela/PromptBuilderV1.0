@@ -7,18 +7,17 @@
     <link rel="stylesheet" href="styles/shared.css">
     <style>
         body {
-            background: #18120a;
+            background: #000000;
             color: #f3f4f6;
         }
         .learning-card {
-            /* Make container wider and less tall */
-            max-width: 950px;
-            padding: 32px 48px;
-            background: #fff8e6;
-            border: 1px solid #f59e0b33;
+            background: rgba(245, 158, 11, 0.18); /* yellow transparent */
+            border: 1px solid #f59e0b;
             border-radius: 20px;
-            box-shadow: 0 4px 24px rgba(245,158,11,0.08);
+            box-shadow: 0 4px 24px rgba(245,158,11,0.18);
+            padding: 32px 48px;
             margin: 40px auto;
+            max-width: 950px;
         }
         .section-title {
             font-size: 1.5rem;
@@ -30,7 +29,7 @@
             gap: 10px;
         }
         .section-explanation {
-            color: #222;
+            color: #fffbe6;
             margin-bottom: 18px;
             font-size: 1.12rem;
             font-weight: 500;
@@ -185,38 +184,29 @@
             color: #444;
             font-size: 0.98rem;
         }
-        .btn-back {
-            margin-top: 32px;
-            background: var(--accent, #f59e0b);
-            color: #fff;
-            font-weight: 700;
-            padding: 12px 28px;
-            border-radius: 12px;
-            text-decoration: none;
-            box-shadow: 0 2px 12px rgba(245,158,11,0.15);
-            transition: background 0.2s;
+        .btn-back, .btn-next {
             display: inline-block;
-            font-size: 1.08rem;
-        }
-        .btn-back:hover {
-            background: #d97706;
-        }
-        .btn-next {
-            margin: 40px auto 0 auto;
-            display: block;
+            padding: 14px 32px;
+            font-size: 1.13rem;
+            font-weight: 700;
+            border-radius: 12px;
+            border: none;
             background: linear-gradient(90deg, #f59e0b 60%, #fbbf24 100%);
             color: #fff;
-            font-weight: 700;
-            padding: 14px 36px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-size: 1.15rem;
-            box-shadow: 0 2px 12px rgba(245,158,11,0.15);
-            border: none;
-            transition: background 0.2s;
+            box-shadow: 0 2px 12px rgba(245,158,11,0.12);
+            margin: 18px 0 0 0;
+            cursor: pointer;
+            transition: background 0.18s, transform 0.18s, box-shadow 0.18s;
+            text-align: center;
+            min-width: 220px;
         }
-        .btn-next:hover {
-            background: #d97706;
+        .btn-back {
+            margin-right: 18px;
+        }
+        .btn-back:hover, .btn-next:hover {
+            background: linear-gradient(90deg, #fbbf24 60%, #f59e0b 100%);
+            transform: translateY(-2px) scale(1.04);
+            box-shadow: 0 6px 24px rgba(245,158,11,0.18);
         }
         iframe {
             border-radius: 12px;
@@ -253,38 +243,82 @@
             display: block;
         }
         .quiz-section {
-            background: #fffbe6;
-            border: 1px solid #f59e0b33;
-            border-radius: 12px;
-            padding: 18px 20px;
-            margin-bottom: 24px;
-            margin-top: 18px;
+            background: rgba(245, 158, 11, 0.18); /* yellow transparent */
+            border: 1px solid #f59e0b;
+            border-radius: 18px;
+            padding: 28px 32px;
+            margin-bottom: 32px;
+            margin-top: 24px;
             color: #222;
-            font-size: 1.08rem;
+            font-size: 1.13rem;
             font-weight: 500;
+            box-shadow: 0 2px 16px rgba(245,158,11,0.10);
+            transition: box-shadow 0.2s, transform 0.18s;
+            text-align: center;
+        }
+        .quiz-section:hover {
+            box-shadow: 0 8px 32px rgba(245,158,11,0.18);
+            transform: translateY(-4px) scale(1.01);
         }
         .quiz-question {
-            margin-bottom: 14px;
+            margin-bottom: 22px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #f59e0b33;
+            text-align: center;
+        }
+        .quiz-question:last-child {
+            border-bottom: none;
+        }
+        .quiz-btn {
+            background: linear-gradient(90deg, #f59e0b 60%, #fbbf24 100%);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 8px 22px;
+            font-weight: 700;
+            cursor: pointer;
+            margin: 8px 8px 0 0;
+            font-size: 1.07rem;
+            box-shadow: 0 2px 8px rgba(245,158,11,0.10);
+            transition: background 0.2s, transform 0.18s;
+            display: inline-block;
+            min-width: 220px;
+            text-align: center;
+        }
+        .quiz-btn.selected.correct {
+            background: linear-gradient(90deg, #22c55e 60%, #4ade80 100%);
+            color: #fff;
+        }
+        .quiz-btn.selected.incorrect {
+            background: linear-gradient(90deg, #ef4444 60%, #f87171 100%);
+            color: #fff;
+        }
+        .quiz-btn:hover {
+            background: #f59e0b;
+            transform: scale(1.07);
         }
         .quiz-feedback {
             font-weight: 700;
-            margin-top: 8px;
-            color: #d97706;
+            margin-top: 10px;
+            color: #f59e0b;
+            font-size: 1.08rem;
+            min-height: 24px;
+            display: block;
+            transition: color 0.2s;
+            text-align: center;
         }
-        .quiz-btn {
-            background: #f59e0b;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            padding: 6px 18px;
+        .quiz-section strong {
+            color: #f59e0b;
+            font-size: 1.11rem;
             font-weight: 700;
-            cursor: pointer;
-            margin-top: 6px;
-            transition: background 0.2s;
-            font-size: 1.05rem;
         }
-        .quiz-btn:hover {
-            background: #d97706;
+        .button-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 24px;
+            margin-top: 28px;
+            margin-bottom: 32px;
         }
         @media (max-width: 1200px) {
             .learning-card { max-width: 98vw; }
@@ -413,8 +447,9 @@
                 </div>
             </div>
         </div>
-        <a href="learning.html" class="btn-back">← Back to Hub</a>
-        <a href="mil-critical-thinking.html" class="btn-next">Next: MIL & Critical Thinking →</a>
+        <div class="button-row">
+            <a href="prompt-engineering-resource-cards.html" class="btn-back">← Back to Cards</a>
+        </div>
     </div>
     <script>
         // Progress Bar on Scroll
@@ -444,10 +479,21 @@
         // Quiz logic
         function checkQuiz(q, ans) {
             const feedbacks = {
-                q1: {b: "Correct!", a: "Not quite, watch the video again to learn more.", c: "Not quite, watch the video again to learn more."},
-                q2: {b: "Correct!", a: "Not quite, watch the video again to learn more.", c: "Not quite, watch the video again to learn more."},
-                q3: {a: "Correct!", b: "Not quite, watch the video again to learn more.", c: "Not quite, watch the video again to learn more."}
+                q1: {b: "Correct!", a: "Not quite, try again.", c: "Not quite, try again."},
+                q2: {b: "Correct!", a: "Not quite, try again.", c: "Not quite, try again."},
+                q3: {a: "Correct!", b: "Not quite, try again.", c: "Not quite, try again."}
             };
+            document.querySelectorAll('#quiz-' + q + ' .quiz-btn').forEach(function(btn) {
+                btn.classList.remove('selected', 'correct', 'incorrect');
+            });
+            let correctAns = Object.keys(feedbacks[q]).find(key => feedbacks[q][key] === "Correct!");
+            let eventBtn = event.target;
+            eventBtn.classList.add('selected');
+            if (ans === correctAns) {
+                eventBtn.classList.add('correct');
+            } else {
+                eventBtn.classList.add('incorrect');
+            }
             document.getElementById('quiz-fb-' + q).textContent = feedbacks[q][ans];
         }
     </script>
