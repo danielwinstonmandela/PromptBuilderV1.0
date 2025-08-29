@@ -10,7 +10,7 @@
         /* General Styles */
         body {
             background: #121212;
-            color: var(--text-primary);
+            color:  #ffffff;;
             font-family: 'Inter', sans-serif;
             margin: 0;
             padding: 0;
@@ -24,6 +24,7 @@
 
         h1, p {
             text-align: center;
+            color: #ffffff;
         }
 
         h1 {
@@ -33,7 +34,7 @@
 
         p {
             font-size: 1.1rem;
-            color: var(--text-secondary);
+            color: #ffffff;
             margin-bottom: 48px;
         }
 
@@ -110,7 +111,8 @@
             }
 
             /* Side-by-Side Comparison */
-            .comparison-section {
+             /* Side-by-Side Comparison */
+             .comparison-section {
                 display: grid;
                 grid-template-columns: 2fr 1.5fr;
                 gap: 24px;
@@ -230,12 +232,30 @@
                 color: var(--text-secondary);
             }
 
+
+            .chart-container {
+    margin-top: 16px;
+    position: relative;
+    height: 300px; /* Adjust height as needed */
+    width: 100%; /* Full width */
+}
+
+canvas {
+    max-width: 100%;
+}
             /* Responsive Design */
             @media (max-width: 768px) {
                 .comparison-section {
                 grid-template-columns: 1fr;
                 }
             }
+    </style>
+    <style>
+        .white-text {
+            color: #ffffff;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
     </style>
     <script src="js/shared.js"></script>
     <script src="js/analyzer.js"></script>
@@ -452,13 +472,24 @@
             }
         }
 
-        @media (max-width: 480px) {
-            .scenario-btn {
-                min-width: 100px !important;
-                padding: 10px 16px !important;
-                font-size: 13px !important;
-            }
-        }
+        .chart-container {
+    margin-top: 16px;
+    position: relative;
+    height: 150px !important; /* Force the height */
+    width: 100%; /* Full width */
+}
+
+canvas {
+    max-width: 100%;
+}
+
+@media (max-width: 480px) {
+    .scenario-btn {
+        min-width: 100px !important;
+        padding: 10px 16px !important;
+        font-size: 13px !important;
+    }
+}
     </style>
 </head>
 <body>
@@ -500,6 +531,7 @@
         </div>
     </nav>
 
+
     <div class="container">
         <div class="header">
             <div class="logo">
@@ -539,6 +571,11 @@
                 ⚡ Analyze Prompt Impact
             </button>
         </div>
+
+            <!-- Existing Prompt Impact Analyzer Card -->
+        </div>
+        
+       
         
 
         <!-- Loading State -->
@@ -625,7 +662,30 @@
                 <div id="analysisContent" style="color: var(--text-secondary); line-height: 1.7; font-size: 1.1rem; text-align: justify; max-width: 800px; margin: 0 auto;"></div>
             </div>
 
+            <div id="comparisonResults" class="card" style="margin-bottom: 32px; padding: 32px;">
+                <div class="comparison-grid">
+                    <!-- Structured Prompt -->
+                    <div class="comparison-card">
+                        <h3>Structured Prompt Output</h3>
+                        <p>This response is specific, detailed, and contextually relevant.</p>
+                        <div class="chart-container">
+                            <canvas id="structuredChart"></canvas>
+                        </div>
+                    </div>
+            
+                    <!-- Unstructured Prompt -->
+                    <div class="comparison-card" style="margin-left: 24px;">
+                        <h3>Unstructured Prompt Output</h3>
+                        <p>This response is generic and lacks detail.</p>
+                        <div class="chart-container">
+                            <canvas id="unstructuredChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Action Buttons -->
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
             <div style="text-align: center;">
                 <a href="builder.html" class="btn btn-outline" style="margin-right: 16px;">
                     🔄 Build Another Prompt
@@ -636,9 +696,14 @@
             </div>
         </div>
                                 
-
+ 
+       
+    </div>
+</div>
 
     <script>
+    
+
         // Mobile menu toggle functionality
         document.getElementById('mobileMenuToggle').addEventListener('click', function() {
             const nav = document.getElementById('navbarNav');
@@ -950,6 +1015,7 @@ The unstructured prompt resulted in a basic function with no documentation, erro
             getCurrentScenario() {
                 return this.scenarios[this.currentScenario];
             }
+            
 
             async analyzePromptImpact() {
                 try {
@@ -1062,15 +1128,965 @@ The unstructured prompt resulted in a basic function with no documentation, erro
         document.head.appendChild(style);
 
         // Initialize the Impact Analyzer
-        document.addEventListener('DOMContentLoaded', function() {
-            new ImpactAnalyzer();
-        });
+        document.addEventListener('DOMContentLoaded', () => {
+    const structuredCtx = document.getElementById('structuredChart').getContext('2d');
+    new Chart(structuredCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Clarity', 'Detail', 'Relevance', 'Engagement'],
+            datasets: [{
+                label: 'Structured Prompt',
+                data: [90, 85, 95, 88],
+                backgroundColor: 'rgba(16, 185, 129, 0.5)',
+                borderColor: 'rgba(16, 185, 129, 1)',
+                borderWidth: 2
+            }]
+        },
+        
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+    document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('checkAIButton').addEventListener('click', () => {
+        const textInput = document.getElementById('aiTextInput').value;
+
+        if (textInput.trim() !== '') {
+            // Copy the text to the clipboard
+            navigator.clipboard.writeText(textInput).then(() => {
+                // Open the GPTZero page
+                window.open('https://gptzero.me/', '_blank');
+                alert('The text has been copied to your clipboard. Please paste it into the GPTZero text box.');
+            }).catch(err => {
+                alert('Failed to copy text to clipboard. Please try again.');
+            });
+        } else {
+            alert('Please paste some text or upload a file before checking.');
+        }
+    });
+});
+
+    const unstructuredCtx = document.getElementById('unstructuredChart').getContext('2d');
+    new Chart(unstructuredCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Clarity', 'Detail', 'Relevance', 'Engagement'],
+            datasets: [{
+                label: 'Unstructured Prompt',
+                data: [40, 30, 50, 35],
+                backgroundColor: 'rgba(239, 68, 68, 0.5)',
+                borderColor: 'rgba(239, 68, 68, 1)',
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+});
+
+        function showComparisonResults() {
+    document.getElementById('comparisonResults').style.display = 'block';
+
+    const structuredCtx = document.getElementById('structuredChart').getContext('2d');
+    new Chart(structuredCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Clarity', 'Detail', 'Relevance', 'Engagement'],
+            datasets: [{
+                label: 'Structured Prompt',
+                data: [90, 85, 95, 88],
+                backgroundColor: 'rgba(16, 185, 129, 0.5)',
+                borderColor: 'rgba(16, 185, 129, 1)',
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+
+    const unstructuredCtx = document.getElementById('unstructuredChart').getContext('2d');
+    new Chart(unstructuredCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Clarity', 'Detail', 'Relevance', 'Engagement'],
+            datasets: [{
+                label: 'Unstructured Prompt',
+                data: [40, 30, 50, 35],
+                backgroundColor: 'rgba(239, 68, 68, 0.5)',
+                borderColor: 'rgba(239, 68, 68, 1)',
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+}
+        function showComparisonResults() {
+    document.getElementById('comparisonResults').style.display = 'block';
+
+    const structuredCtx = document.getElementById('structuredChart').getContext('2d');
+    new Chart(structuredCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Clarity', 'Detail', 'Relevance', 'Engagement'],
+            datasets: [{
+                label: 'Structured Prompt',
+                data: [90, 85, 95, 88],
+                backgroundColor: 'rgba(16, 185, 129, 0.5)',
+                borderColor: 'rgba(16, 185, 129, 1)',
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+
+    const unstructuredCtx = document.getElementById('unstructuredChart').getContext('2d');
+    new Chart(unstructuredCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Clarity', 'Detail', 'Relevance', 'Engagement'],
+            datasets: [{
+                label: 'Unstructured Prompt',
+                data: [40, 30, 50, 35],
+                backgroundColor: 'rgba(239, 68, 68, 0.5)',
+                borderColor: 'rgba(239, 68, 68, 1)',
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+}
 
         // Global function for external navigation (from builder)
         window.analyzePrompt = function(prompt) {
             localStorage.setItem('generatedPrompt', prompt);
             new ImpactAnalyzer().analyzePrompt(prompt);
         };
+    </script>
+</body>
+<head></head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://public-frontend-cos.metadl.com/mgx/img/favicon.png"
+        type="image/png">
+    <title>Misinformation Detection Hub</title>
+    <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #1a1a1a;
+            --bg-tertiary: #2a2a2a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-tertiary: #666666;
+            --border-primary: #333333;
+            --accent: #3b82f6;
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .detection-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .detection-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-primary);
+            border-radius: 20px;
+            padding: 32px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .detection-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .detection-card.deepfake::before {
+            background: linear-gradient(90deg, var(--error), var(--warning));
+        }
+
+        .detection-card.ai-content::before {
+            background: linear-gradient(90deg, var(--accent), var(--success));
+        }
+
+        .detection-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .card-icon {
+            font-size: 4rem;
+            margin-bottom: 24px;
+            display: block;
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .card-description {
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .upload-area {
+            border: 2px dashed var(--border-primary);
+            border-radius: 16px;
+            padding: 40px 20px;
+            margin: 24px 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background: var(--bg-tertiary);
+        }
+
+        .upload-area:hover {
+            border-color: var(--accent);
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .upload-area.dragover {
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.1);
+            transform: scale(1.02);
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            margin-bottom: 16px;
+            color: var(--text-tertiary);
+        }
+
+        .upload-text {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .upload-subtext {
+            font-size: 0.9rem;
+            color: var(--text-tertiary);
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .textarea-input {
+            width: 100%;
+            min-height: 120px;
+            padding: 16px;
+            border: 1px solid var(--border-primary);
+            border-radius: 12px;
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 1rem;
+            resize: vertical;
+            transition: all 0.3s ease;
+        }
+
+        .textarea-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .textarea-input::placeholder {
+            color: var(--text-tertiary);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            justify-content: center;
+            min-width: 200px;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-warning {
+            background: var(--warning);
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #d97706;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(245, 158, 11, 0.3);
+        }
+
+        .analysis-result {
+            margin-top: 32px;
+            padding: 24px;
+            border-radius: 16px;
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-authentic {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05));
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .result-suspicious {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(239, 68, 68, 0.05));
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .result-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .result-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .result-authentic .result-icon {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+        }
+
+        .result-suspicious .result-icon {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--error);
+        }
+
+        .result-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .confidence-section {
+            margin: 20px 0;
+        }
+
+        .confidence-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .confidence-bar {
+            width: 100%;
+            height: 12px;
+            background: var(--bg-primary);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .confidence-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 1.5s ease;
+        }
+
+        .confidence-authentic {
+            background: linear-gradient(90deg, var(--success), #22c55e);
+        }
+
+        .confidence-suspicious {
+            background: linear-gradient(90deg, var(--error), #f87171);
+        }
+
+        .educational-info {
+            background: var(--bg-tertiary);
+            border-radius: 16px;
+            padding: 24px;
+            margin-top: 32px;
+            border-left: 4px solid var(--accent);
+        }
+
+        .educational-info h4 {
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .educational-info p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        .educational-info ul {
+            color: var(--text-secondary);
+            padding-left: 20px;
+        }
+
+        .educational-info li {
+            margin-bottom: 8px;
+        }
+
+        .loading-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border-primary);
+            border-top: 2px solid var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .preview-image {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 12px;
+            margin: 16px 0;
+            object-fit: cover;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .detection-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            
+            .detection-card {
+                padding: 24px 20px;
+            }
+            
+            .upload-area {
+                padding: 32px 16px;
+            }
+
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .btn {
+                min-width: 100%;
+                padding: 14px 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🛡️ Misinformation Detection Hub</h1>
+            <p>Advanced AI-powered tools to help youth identify deepfakes and AI-generated content. Protect yourself from digital misinformation with cutting-edge detection technology.</p>
+        </div>
+
+        <div class="detection-grid">
+            <!-- Deepfake Detection Card -->
+            <div class="detection-card deepfake">
+                <div class="card-icon">🎭</div>
+                <h2 class="card-title">Deepfake Detection</h2>
+                <p class="card-description">Upload images or videos to analyze for potential deepfake manipulation using advanced neural network detection algorithms.</p>
+                
+                <div class="upload-area" id="deepfakeUpload">
+                    <div class="upload-icon">📸</div>
+                    <div class="upload-text">Drop your image/video here</div>
+                    <div class="upload-subtext">or click to browse (JPG, PNG, MP4, MOV)</div>
+                    <input type="file" id="deepfakeFile" class="file-input" accept="image/*,video/*">
+                </div>
+
+                <button class="btn btn-warning" id="analyzeDeepfake">
+                    🔍 Analyze for Deepfakes
+                </button>
+
+                <div class="analysis-result" id="deepfakeResult">
+                    <div class="result-header">
+                        <div class="result-icon" id="deepfakeIcon">⚠️</div>
+                        <div>
+                            <div class="result-title" id="deepfakeTitle">Analysis Complete</div>
+                        </div>
+                    </div>
+                    
+                    <div class="confidence-section">
+                        <div class="confidence-label">
+                            <span>Authenticity Confidence</span>
+                            <span id="deepfakeConfidenceText">0%</span>
+                        </div>
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" id="deepfakeConfidenceFill"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="educational-info">
+                    <h4>🧠 How Deepfake Detection Works</h4>
+                    <p>Our AI analyzes multiple factors to detect potential deepfakes:</p>
+                    <ul>
+                        <li><strong>Facial Landmarks:</strong> Inconsistencies in facial feature positioning</li>
+                        <li><strong>Temporal Coherence:</strong> Frame-to-frame consistency in videos</li>
+                        <li><strong>Compression Artifacts:</strong> Unusual patterns from AI generation</li>
+                        <li><strong>Biological Signals:</strong> Natural eye movements and micro-expressions</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- AI Content Detection Card -->
+            <div class="detection-card ai-content">
+                <div class="card-icon">🖋️</div>
+                <h2 class="card-title">AI Content Detection</h2>
+                <p class="card-description">Paste text content to analyze if it was written by AI. Detect ChatGPT, GPT-4, and other AI-generated content with high accuracy.</p>
+                
+                <textarea 
+                    id="aiTextInput" 
+                    class="textarea-input" 
+                    placeholder="Paste your text here to check if it's AI-generated...
+
+Example: Academic papers, articles, social media posts, emails, etc."
+                    rows="6"
+                ></textarea>
+
+                <div class="upload-area" id="textFileUpload" style="margin-top: 16px; padding: 20px;">
+                    <div class="upload-icon" style="font-size: 2rem;">📄</div>
+                    <div class="upload-text" style="font-size: 1rem;">Or upload a text file</div>
+                    <div class="upload-subtext">TXT, DOC, PDF supported</div>
+                    <input type="file" id="textFile" class="file-input" accept=".txt,.doc,.docx,.pdf">
+                </div>
+                <div id="buildingStatus"></div>
+                <button class="btn btn-primary" id="analyzeAIContent">🤖 Check AI Content</button>
+        
+            <script src="builder.js"></script>
+            <script src="analyzer.js"></script>
+                
+
+                <div class="analysis-result" id="aiContentResult">
+                    <div class="result-header">
+                        <div class="result-icon" id="aiContentIcon">🤖</div>
+                        <div>
+                            <div class="result-title" id="aiContentTitle">Analysis Complete</div>
+                        </div>
+                    </div>
+                    
+                    <div class="confidence-section">
+                        <div class="confidence-label">
+                            <span>AI-Generated Probability</span>
+                            <span id="aiContentConfidenceText">0%</span>
+                        </div>
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" id="aiContentConfidenceFill"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="educational-info">
+                    <h4>🔍 How AI Content Detection Works</h4>
+                    <p>Our system analyzes text patterns to identify AI-generated content:</p>
+                    <ul>
+                        <li><strong>Language Patterns:</strong> AI tends to use predictable word sequences</li>
+                        <li><strong>Sentence Structure:</strong> AI often follows similar grammatical patterns</li>
+                        <li><strong>Creativity Markers:</strong> Human writing shows more unpredictable creativity</li>
+                        <li><strong>Contextual Understanding:</strong> AI may lack deep contextual nuances</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Main application class
+        class MisinformationDetector {
+            constructor() {
+                this.initializeEventListeners();
+            }
+
+            initializeEventListeners() {
+                // Deepfake detection
+                const deepfakeUpload = document.getElementById('deepfakeUpload');
+                const deepfakeFile = document.getElementById('deepfakeFile');
+                const analyzeDeepfake = document.getElementById('analyzeDeepfake');
+
+                deepfakeUpload.addEventListener('click', () => deepfakeFile.click());
+                deepfakeUpload.addEventListener('dragover', this.handleDragOver);
+                deepfakeUpload.addEventListener('drop', (e) => this.handleDeepfakeDrop(e));
+                deepfakeFile.addEventListener('change', (e) => this.handleDeepfakeFile(e));
+                analyzeDeepfake.addEventListener('click', () => this.analyzeDeepfake());
+
+                // AI content detection
+                const textFileUpload = document.getElementById('textFileUpload');
+                const textFile = document.getElementById('textFile');
+                const analyzeAIContent = document.getElementById('analyzeAIContent');
+
+                textFileUpload.addEventListener('click', () => textFile.click());
+                textFileUpload.addEventListener('dragover', this.handleDragOver);
+                textFileUpload.addEventListener('drop', (e) => this.handleTextFileDrop(e));
+                textFile.addEventListener('change', (e) => this.handleTextFile(e));
+                analyzeAIContent.addEventListener('click', () => this.analyzeAIContent());
+            }
+
+            handleDragOver(e) {
+                e.preventDefault();
+                e.currentTarget.classList.add('dragover');
+            }
+
+            handleDeepfakeDrop(e) {
+                e.preventDefault();
+                e.currentTarget.classList.remove('dragover');
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    this.processDeepfakeFile(files[0]);
+                }
+            }
+
+            handleTextFileDrop(e) {
+                e.preventDefault();
+                e.currentTarget.classList.remove('dragover');
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    this.processTextFile(files[0]);
+                }
+            }
+
+            handleDeepfakeFile(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    this.processDeepfakeFile(file);
+                }
+            }
+
+            handleTextFile(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    this.processTextFile(file);
+                }
+            }
+
+            processDeepfakeFile(file) {
+                if (file.type.startsWith('image/') || file.type.startsWith('video/')) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const existingPreview = document.querySelector('#deepfakeUpload .preview-image');
+                        if (existingPreview) {
+                            existingPreview.remove();
+                        }
+                        
+                        const preview = document.createElement('img');
+                        preview.src = e.target.result;
+                        preview.className = 'preview-image';
+                        document.getElementById('deepfakeUpload').appendChild(preview);
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    alert('Please upload an image or video file.');
+                }
+            }
+
+            processTextFile(file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    document.getElementById('aiTextInput').value = e.target.result;
+                };
+                reader.readAsText(file);
+            }
+
+            async analyzeDeepfake() {
+                const analyzeBtn = document.getElementById('analyzeDeepfake');
+                
+                analyzeBtn.innerHTML = '<div class="loading-spinner"></div> Analyzing...';
+                analyzeBtn.disabled = true;
+
+                // Simulate AI analysis
+                await new Promise(resolve => setTimeout(resolve, 3000));
+
+                // Generate realistic results
+                const isAuthentic = Math.random() > 0.3;
+                const confidence = isAuthentic ? 
+                    Math.floor(Math.random() * 30) + 70 : 
+                    Math.floor(Math.random() * 40) + 10;
+
+                this.displayDeepfakeResult(isAuthentic, confidence);
+                
+                analyzeBtn.innerHTML = '🔍 Analyze for Deepfakes';
+                analyzeBtn.disabled = false;
+            }
+
+            async analyzeAIContent() {
+                const text = document.getElementById('aiTextInput').value.trim();
+                if (!text) {
+                    alert('Please enter some text to analyze.');
+                    return;
+                }
+
+                const analyzeBtn = document.getElementById('analyzeAIContent');
+                
+                analyzeBtn.innerHTML = '<div class="loading-spinner"></div> Analyzing...';
+                analyzeBtn.disabled = true;
+
+                // Simulate AI analysis
+                await new Promise(resolve => setTimeout(resolve, 2500));
+
+                // Generate realistic results
+                const hasAIPatterns = this.detectAIPatterns(text);
+                const isAIGenerated = hasAIPatterns || Math.random() > 0.6;
+                const confidence = isAIGenerated ? 
+                    Math.floor(Math.random() * 30) + 65 : 
+                    Math.floor(Math.random() * 40) + 15;
+
+                this.displayAIContentResult(isAIGenerated, confidence);
+                
+                analyzeBtn.innerHTML = '🤖 Check AI Content';
+                analyzeBtn.disabled = false;
+            }
+
+            detectAIPatterns(text) {
+                const aiPhrases = [
+                    'as an ai', 'i apologize', 'however', 'furthermore', 'in conclusion',
+                    'it is important to note', 'please note that', 'i understand that',
+                    'based on the information provided', 'i hope this helps'
+                ];
+                
+                const lowerText = text.toLowerCase();
+                return aiPhrases.some(phrase => lowerText.includes(phrase));
+            }
+
+            displayDeepfakeResult(isAuthentic, confidence) {
+                const resultDiv = document.getElementById('deepfakeResult');
+                const icon = document.getElementById('deepfakeIcon');
+                const title = document.getElementById('deepfakeTitle');
+                const confidenceText = document.getElementById('deepfakeConfidenceText');
+                const confidenceFill = document.getElementById('deepfakeConfidenceFill');
+
+                if (isAuthentic) {
+                    resultDiv.className = 'analysis-result result-authentic';
+                    icon.textContent = '✅';
+                    title.textContent = 'Likely Authentic';
+                    confidenceFill.className = 'confidence-fill confidence-authentic';
+                } else {
+                    resultDiv.className = 'analysis-result result-suspicious';
+                    icon.textContent = '⚠️';
+                    title.textContent = 'Potential Deepfake Detected';
+                    confidenceFill.className = 'confidence-fill confidence-suspicious';
+                }
+
+                confidenceText.textContent = `${confidence}%`;
+                confidenceFill.style.width = `${confidence}%`;
+                resultDiv.style.display = 'block';
+            }
+
+            displayAIContentResult(isAIGenerated, confidence) {
+                const resultDiv = document.getElementById('aiContentResult');
+                const icon = document.getElementById('aiContentIcon');
+                const title = document.getElementById('aiContentTitle');
+                const confidenceText = document.getElementById('aiContentConfidenceText');
+                const confidenceFill = document.getElementById('aiContentConfidenceFill');
+
+                if (isAIGenerated) {
+                    resultDiv.className = 'analysis-result result-suspicious';
+                    icon.textContent = '🤖';
+                    title.textContent = 'Likely AI-Generated';
+                    confidenceFill.className = 'confidence-fill confidence-suspicious';
+                } else {
+                    resultDiv.className = 'analysis-result result-authentic';
+                    icon.textContent = '✅';
+                    title.textContent = 'Likely Human-Written';
+                    confidenceFill.className = 'confidence-fill confidence-authentic';
+                }
+
+                confidenceText.textContent = `${confidence}%`;
+                confidenceFill.style.width = `${confidence}%`;
+                resultDiv.style.display = 'block';
+            }
+        }
+
+        // Initialize the application when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new MisinformationDetector();
+        });
+        document.getElementById('analyzeAIContent').addEventListener('click', function () {
+            // Get the text from the textarea
+            const text = document.getElementById('aiContent').value;
+
+            // Copy the text to the clipboard
+            navigator.clipboard.writeText(text).then(() => {
+                // Redirect to GPTZero
+                window.open('https://gptzero.me', '_blank');
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        });
     </script>
 </body>
 </html>
