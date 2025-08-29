@@ -116,4 +116,21 @@ function showComponentBreakdown(components) {
 // Run analysis on page load
 document.addEventListener('DOMContentLoaded', function() {
     analyzePrompt();
-});
+    
+    document.getElementById('analyzeAIContent').addEventListener('click', function () {
+        // Check if there is a prompt to copy
+        if (currentPrompt.trim() === '') {
+            alert('Please build a prompt before analyzing!');
+            return;
+        }
+
+        // Copy the prompt to the clipboard
+        navigator.clipboard.writeText(currentPrompt).then(() => {
+            // Redirect to GPTZero
+            window.open('https://gptzero.me', '_blank');
+        }).catch(err => {
+            console.error('Failed to copy text: ', err);
+        });
+    });
+}); 
+  
